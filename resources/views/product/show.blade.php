@@ -72,10 +72,18 @@
                 $videos = json_decode($videos, true) ?: [];
               }
               $videos = array_values(array_filter($videos));
+              $videoUrls = array_map(fn($path) => Storage::disk('public')->url($path), $videos);
+
+              // Build combined media list: each item has type (image/video) and url
+              $mediaList = array_map(fn($url) => ['type' => 'image', 'url' => $url], $imageUrls);
+              foreach ($videoUrls as $vUrl) {
+                $mediaList[] = ['type' => 'video', 'url' => $vUrl];
+              }
             @endphp
 
             <div class="product-gallery"
-              data-images='@json($imageUrls)'>
+              data-images='@json($imageUrls)'
+              data-media='@json($mediaList)'>
 
               <div class="product-gallery-main">
                 @php
@@ -94,35 +102,51 @@
                       padding-left: {{ $pl }}px !important;
                     }
                   }
+                  .product-gallery-video {
+                    display: none;
+                    width: 100%;
+                    max-height: 100%;
+                    background: #000;
+                    border-radius: 0.5rem;
+                  }
                 </style>
                 <div style="width:100%; height:100%; overflow:hidden; display:flex; align-items:center; justify-content:center;">
                   <img src="{{ $mainImage }}" alt="{{ $product->name }}"
                     class="product-main-img"
                     style="display:block; width:auto; max-width:100%; height:auto; max-height:100%; object-fit:contain; box-sizing:border-box;" />
-                </div>
-              </div>
-            </div>
-
-            {{-- Product Videos - shown inside the same column, directly below gallery --}}
-            @if(count($videos) > 0)
-              <div class="product-videos mt-3">
-                @foreach($videos as $videoPath)
-                  @php $videoUrl = Storage::disk('public')->url($videoPath); @endphp
-                  <div class="product-video-wrap mb-3">
+                  @if(count($videoUrls) > 0)
                     <video
+                      class="product-gallery-video"
                       controls
                       preload="metadata"
-                      playsinline
-                      class="w-100 rounded-3"
-                      style="max-height: 360px; background: #000;">
-                      <source src="{{ $videoUrl }}" type="video/mp4">
-                      <source src="{{ $videoUrl }}" type="video/webm">
-                      Your browser does not support the video tag.
+                      playsinline>
                     </video>
-                  </div>
-                @endforeach
+                  @endif
+                </div>
               </div>
-            @endif
+
+              {{-- Thumbnail dots/strip --}}
+              @if(count($mediaList) > 1)
+                <div class="product-gallery-thumbs mt-2 d-flex gap-2 justify-content-center flex-wrap">
+                  @foreach($mediaList as $i => $media)
+                    <button type="button"
+                      class="gallery-thumb {{ $i === 0 ? 'active' : '' }}"
+                      data-index="{{ $i }}"
+                      aria-label="Slide {{ $i + 1 }}"
+                      style="width:52px; height:52px; border:2px solid {{ $i === 0 ? '#b08d57' : '#e0e0e0' }}; border-radius:6px; overflow:hidden; padding:0; background:#f5f5f5; cursor:pointer; flex-shrink:0; transition:border-color .2s;">
+                      @if($media['type'] === 'image')
+                        <img src="{{ $media['url'] }}" alt="Thumb {{ $i + 1 }}"
+                          style="width:100%; height:100%; object-fit:cover; display:block;" />
+                      @else
+                        <span style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; color:#555; font-size:20px;">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      @endif
+                    </button>
+                  @endforeach
+                </div>
+              @endif
+            </div>
           </div>
 
           <div class="col-lg-6">

@@ -142,23 +142,93 @@
       });
     });
 
-    // ===== PRODUCT DETAIL GALLERY =====
+    // ===== PRODUCT DETAIL GALLERY (images + video combined) =====
     var galleryRoot = document.querySelector('.product-gallery');
     if (galleryRoot) {
-      var imageData = galleryRoot.getAttribute('data-images');
+      var mediaList = [];
       try {
-        var imageUrls = imageData ? JSON.parse(imageData) : [];
-      } catch (err) {
-        imageUrls = [];
+        mediaList = JSON.parse(galleryRoot.getAttribute('data-media') || '[]');
+      } catch (e) {
+        mediaList = [];
       }
-      var galleryImg = document.querySelector('.product-gallery-main img');
-      if (galleryImg && imageUrls.length > 1) {
-        var currentIndex = 0;
-        setInterval(function () {
-          currentIndex = (currentIndex + 1) % imageUrls.length;
-          galleryImg.src = imageUrls[currentIndex];
+
+      var galleryImg   = document.querySelector('.product-gallery-main img');
+      var galleryVideo = document.querySelector('.product-gallery-video');
+      var thumbBtns    = document.querySelectorAll('.gallery-thumb');
+      var autoTimer    = null;
+      var currentIndex = 0;
+
+      function showMediaAt(index) {
+        if (!mediaList.length) return;
+        currentIndex = index;
+        var item = mediaList[index];
+
+        if (item.type === 'video') {
+          // Show video, hide image
+          if (galleryImg)   { galleryImg.style.display   = 'none'; }
+          if (galleryVideo) {
+            galleryVideo.style.display = 'block';
+            galleryVideo.src = item.url;
+            galleryVideo.load();
+          }
+        } else {
+          // Show image, hide video
+          if (galleryVideo) {
+            galleryVideo.pause();
+            galleryVideo.style.display = 'none';
+            galleryVideo.src = '';
+          }
+          if (galleryImg) {
+            galleryImg.style.display = 'block';
+            galleryImg.src = item.url;
+          }
+        }
+
+        // Update thumbnail active state
+        thumbBtns.forEach(function (btn, i) {
+          btn.classList.toggle('active', i === index);
+          btn.style.borderColor = (i === index) ? '#b08d57' : '#e0e0e0';
+        });
+      }
+
+      function startAutoSlide() {
+        if (mediaList.length <= 1) return;
+        stopAutoSlide();
+        autoTimer = setInterval(function () {
+          var next = (currentIndex + 1) % mediaList.length;
+          // Skip auto-advance while a video is playing
+          if (galleryVideo && !galleryVideo.paused && !galleryVideo.ended) return;
+          showMediaAt(next);
         }, 3200);
       }
+
+      function stopAutoSlide() {
+        if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+      }
+
+      // Thumbnail click handlers
+      thumbBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          stopAutoSlide();
+          showMediaAt(parseInt(btn.getAttribute('data-index'), 10));
+          startAutoSlide();
+        });
+      });
+
+      // Resume auto-slide after video ends
+      if (galleryVideo) {
+        galleryVideo.addEventListener('ended', function () {
+          startAutoSlide();
+        });
+        // Pause auto-slide while user is watching video
+        galleryVideo.addEventListener('play', function () {
+          stopAutoSlide();
+        });
+      }
+
+      // Kick off
+      showMediaAt(0);
+      startAutoSlide();
     }
 
     function syncProductGalleryHeight() {
