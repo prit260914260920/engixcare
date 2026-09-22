@@ -102,15 +102,8 @@
                       padding-left: {{ $pl }}px !important;
                     }
                   }
-                  .product-gallery-video {
-                    display: none;
-                    width: 100%;
-                    max-height: 100%;
-                    background: #000;
-                    border-radius: 0.5rem;
-                  }
                 </style>
-                <div style="width:100%; height:100%; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                <div style="width:100%; height:100%; overflow:hidden; display:flex; align-items:center; justify-content:center; position:relative;">
                   <img src="{{ $mainImage }}" alt="{{ $product->name }}"
                     class="product-main-img"
                     style="display:block; width:auto; max-width:100%; height:auto; max-height:100%; object-fit:contain; box-sizing:border-box;" />
@@ -119,7 +112,8 @@
                       class="product-gallery-video"
                       controls
                       preload="metadata"
-                      playsinline>
+                      playsinline
+                      style="display:none; width:100%; height:100%; max-height:100%; background:#000; border-radius:0.5rem; position:absolute; top:0; left:0; object-fit:contain;">
                     </video>
                   @endif
                 </div>
