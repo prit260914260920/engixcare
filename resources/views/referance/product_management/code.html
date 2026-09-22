@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EngixCare Admin - Product Management</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#d9e3f6",
+                    "on-secondary-fixed": "#00164e",
+                    "primary-container": "#10b981",
+                    "outline": "#6c7a71",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#00422b",
+                    "surface-container": "#e6eeff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-fixed": "#6ffbbe",
+                    "secondary-container": "#8fa7fe",
+                    "surface-tint": "#006c49",
+                    "on-surface": "#121c2a",
+                    "on-surface-variant": "#3c4a42",
+                    "secondary-fixed": "#dce1ff",
+                    "on-tertiary-container": "#523200",
+                    "on-secondary-fixed-variant": "#264191",
+                    "tertiary-container": "#e29100",
+                    "on-background": "#121c2a",
+                    "on-error": "#ffffff",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "inverse-surface": "#27313f",
+                    "tertiary": "#855300",
+                    "background": "#f8f9ff",
+                    "primary-fixed-dim": "#4edea3",
+                    "secondary": "#4059aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "outline-variant": "#bbcabf",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-highest": "#d9e3f6",
+                    "on-primary-fixed": "#002113",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#d0dbed",
+                    "on-primary-fixed-variant": "#005236",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#1d3989",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-secondary": "#ffffff",
+                    "primary": "#006c49",
+                    "inverse-primary": "#4edea3",
+                    "surface-container-high": "#dee9fc",
+                    "secondary-fixed-dim": "#b6c4ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "32px",
+                    "gutter": "24px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "base": "4px",
+                    "xl": "48px",
+                    "margin-desktop": "32px",
+                    "sm": "16px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .glass-sidebar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        /* Custom scrollbar for data tables */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #bbcabf; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #006c49; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-low/80 glass-sidebar border-r border-outline-variant/30 shadow-sm z-50 flex flex-col py-md overflow-y-auto custom-scrollbar">
+<div class="px-md mb-xl flex items-center gap-xs">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">EngixCare</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Admin Dashboard</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-base">
+<!-- Navigation Items Mapping from JSON -->
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-sm px-md py-xs bg-primary-container/10 text-primary border-l-4 border-primary font-bold font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span> Products
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">category</span> Categories
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">science</span> Ingredients
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">verified</span> Why Choose Us
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">article</span> Articles/Blog
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">campaign</span> Offers &amp; Promotions
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">confirmation_number</span> Coupons
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">shopping_cart</span> Orders
+            </a>
+<div class="my-xs border-t border-outline-variant/10 mx-md"></div>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">payments</span> Payments
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">group</span> Users
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">star</span> Reviews &amp; Ratings
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">contact_support</span> Customer Inquiries
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span> General Settings
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">account_circle</span> Profile
+            </a>
+<a class="flex items-center gap-sm px-md py-xs text-error hover:bg-error-container/20 transition-colors font-label-md text-label-md mb-md" href="#">
+<span class="material-symbols-outlined">logout</span> Logout
+            </a>
+</nav>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 left-0 ml-[280px] h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 flex justify-between items-center px-margin-desktop z-40 shadow-sm">
+<div class="flex items-center gap-md flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-xl pl-10 py-2 text-body-sm focus:ring-2 focus:ring-primary/20" placeholder="Global system search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<div class="h-8 w-px bg-outline-variant/30 mx-xs"></div>
+<button class="flex items-center gap-xs pl-xs pr-base py-base hover:bg-surface-variant/50 rounded-full transition-all">
+<img class="w-8 h-8 rounded-full border border-primary/20 object-cover" data-alt="A professional headshot of a female healthcare administrator with a kind smile, wearing a modern white lab coat over a professional emerald green blouse. The lighting is bright and clean, mimicking a high-end clinical office environment with a soft-focus background of a glass-walled medical center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQbDUj4TJmDlc4gFnri_mnqHiTE10y1QmfrYnEv9OwGThkk8n6WNRviAJNeGlR1tAcmtakxgNGFBoPxsjS_Gjy4L9JMI1eSuqrJVtbv6DVcMO7LpSHvam3JSEq1vb2C0le-rdrx2N0Ek1GFua2rx8ezyBwqqTkVBygVH60bYoYYnf1p42jLHfN5hzBAmIQe2ZbmWeqTbQQpzeIJ-tFxpHBclfSrA7JD5jXPr53yWUcO_Eq8h1bjSw"/>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] pt-24 pb-xl px-margin-desktop min-h-screen">
+<!-- Page Header & Actions -->
+<div class="flex justify-between items-end mb-lg">
+<div class="space-y-1">
+<nav class="flex items-center gap-xs text-on-surface-variant text-label-sm font-label-sm mb-1">
+<a class="hover:text-primary" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-semibold">Inventory Management</span>
+</nav>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Product Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80">Oversee your clinical product catalog, manage stock levels, and configure visibility.</p>
+</div>
+<button class="flex items-center gap-xs bg-primary text-white px-md py-sm rounded-xl font-label-md text-label-md shadow-lg shadow-primary/20 hover:bg-primary-fixed-dim hover:text-on-primary-fixed transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform">add</span>
+                Add New Product
+            </button>
+</div>
+<!-- Filter & Control Bar -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-sm shadow-sm flex flex-wrap items-center justify-between gap-md mb-gutter">
+<div class="flex flex-wrap items-center gap-sm">
+<!-- Search -->
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">inventory</span>
+<input class="w-full bg-surface border-outline-variant/50 rounded-lg pl-10 py-2 text-body-sm focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Filter by Name or SKU..." type="text"/>
+</div>
+<!-- Category Dropdown -->
+<select class="bg-surface border-outline-variant/50 rounded-lg px-md py-2 text-body-sm focus:border-primary focus:ring-1 focus:ring-primary min-w-[160px]">
+<option disabled="" selected="">All Categories</option>
+<option>Supplements</option>
+<option>Equipment</option>
+<option>Personal Care</option>
+<option>Diagnostics</option>
+</select>
+<!-- Status Filter -->
+<div class="flex bg-surface-container border border-outline-variant/50 rounded-lg p-1">
+<button class="px-sm py-1 bg-surface-container-lowest shadow-sm rounded-md text-label-sm font-label-sm text-primary">All</button>
+<button class="px-sm py-1 text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors">Active</button>
+<button class="px-sm py-1 text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors">Inactive</button>
+</div>
+<!-- Featured Toggle -->
+<label class="flex items-center gap-xs cursor-pointer select-none">
+<div class="relative inline-block w-10 h-5 transition duration-200 ease-in-out">
+<input class="opacity-0 w-0 h-0 peer" type="checkbox"/>
+<span class="absolute inset-0 bg-surface-variant/50 rounded-full transition-colors peer-checked:bg-primary-container"></span>
+<span class="absolute left-1 top-1 bg-white w-3 h-3 rounded-full transition-transform peer-checked:translate-x-5"></span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Featured Only</span>
+</label>
+</div>
+<!-- Bulk Actions -->
+<div class="flex items-center gap-xs">
+<span class="text-label-sm font-label-sm text-on-surface-variant mr-xs">2 selected</span>
+<button class="flex items-center gap-xs border border-error/30 text-error hover:bg-error-container/20 px-sm py-2 rounded-lg transition-colors font-label-sm">
+<span class="material-symbols-outlined text-[18px]">delete</span> Delete
+                </button>
+<button class="flex items-center gap-xs border border-outline-variant text-on-surface-variant hover:bg-surface-variant px-sm py-2 rounded-lg transition-colors font-label-sm">
+<span class="material-symbols-outlined text-[18px]">download</span> Export CSV
+                </button>
+</div>
+</div>
+<!-- Advanced Data Table -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50 border-b border-outline-variant/10">
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider w-12 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</th>
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Product Info</th>
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">SKU</th>
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Category</th>
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Price</th>
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Stock</th>
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Featured</th>
+<th class="px-md py-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-md text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-md">
+<img class="w-12 h-12 rounded-xl object-cover border border-outline-variant/20 shadow-sm" data-alt="A premium amber glass bottle of high-potency Vitamin D3 supplements. The label is clean, medical-grade white with emerald green typography. It sits on a polished marble surface with soft clinical backlighting, emphasizing a luxury healthcare product feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU5t8lUp5LzUnMXAtRqFcE5lX8hZGvXYVE1va1_gvGzteWl8MO8G4-KSeQye7s6UAnm7Xp48jR0PUZrrPI2L1Ra_u4wJG-Xq_TtCX9CqUIidWj_GCPTGcnVfrs4HIbGG289YNFHyv9eRekjFOqKusLAssRsoipC5DfzB7TBhZQ5CKNwWka9vPtb0RwQ24koDS1aIaMULRvswP91tWRveZYJalxj1nV13krUVNq-Y6lOsQdvNZDlOs"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">EngixCare D3 Ultra</div>
+<div class="text-label-sm text-on-surface-variant opacity-70">60 Capsules / 5000 IU</div>
+</div>
+</div>
+</td>
+<td class="px-md py-md text-body-sm font-mono text-on-surface-variant">EC-VIT-001</td>
+<td class="px-md py-md">
+<span class="bg-secondary-container/20 text-on-secondary-container px-sm py-1 rounded-full text-label-sm font-label-sm">Supplements</span>
+</td>
+<td class="px-md py-md text-body-sm font-semibold text-on-surface">$24.99</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs">
+<span class="text-body-sm font-semibold text-on-surface">1,240</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs text-primary font-semibold text-label-sm bg-primary-container/10 px-sm py-1 rounded-full w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Active
+                                </div>
+</td>
+<td class="px-md py-md">
+<span class="material-symbols-outlined text-tertiary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+</td>
+<td class="px-md py-md text-right">
+<div class="flex items-center justify-end gap-xs">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-lg"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-md text-center">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-md">
+<img class="w-12 h-12 rounded-xl object-cover border border-outline-variant/20 shadow-sm" data-alt="A modern, sleek digital blood pressure monitor with a large high-contrast display. The cuff is a dark charcoal fabric. The device has minimalist green button accents. It is staged in a well-lit medical consulting room with soft ambient light and a premium clinic vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqaKkKj7wJSy1MlXZlZgaLmRlS-mXqz6EPWJKoevJxsKFNioc2_GgLHhu4tXfKzUElaT13xdp789MrSs9nVs2pbHYuNuT4RakkXEpvvjRoTHxAXvwsFDu4-RVVN_7It88F67O0RPDZx8O4QNunwEvvQDCzpnJrL2y6O90ABwSWEeyVyPj8qspBxOS_Nt74XNisI2iBcaznZiaLwDcq5izITKXrzR3e9SHua5zuq7diU86R5G5l4Yo"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">Precision-BP Pro</div>
+<div class="text-label-sm text-on-surface-variant opacity-70">Wireless Digital Monitor</div>
+</div>
+</div>
+</td>
+<td class="px-md py-md text-body-sm font-mono text-on-surface-variant">EC-DEV-982</td>
+<td class="px-md py-md">
+<span class="bg-secondary-container/20 text-on-secondary-container px-sm py-1 rounded-full text-label-sm font-label-sm">Diagnostics</span>
+</td>
+<td class="px-md py-md text-body-sm font-semibold text-on-surface">$129.00</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs">
+<span class="text-body-sm font-semibold text-error">12</span>
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+</div>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs text-primary font-semibold text-label-sm bg-primary-container/10 px-sm py-1 rounded-full w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Active
+                                </div>
+</td>
+<td class="px-md py-md">
+<span class="material-symbols-outlined text-outline-variant text-[20px]">stars</span>
+</td>
+<td class="px-md py-md text-right">
+<div class="flex items-center justify-end gap-xs">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-lg"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-md text-center">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-md">
+<img class="w-12 h-12 rounded-xl object-cover border border-outline-variant/20 shadow-sm" data-alt="A glass jar of organic therapeutic-grade magnesium body butter. The cream is thick and white with a subtle swirl. The jar has a dark wood lid and a minimal waterproof label. Background is a serene, spa-like environment with soft green leaves and warm, natural sunlight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADxAr_b3N9TxD6bPyQj_AxV6BBvhfkesTesskjLBFJF2i2-NINWO71cLOERl_Qi-oyJ7e4dDel-xQr0kGAQHNFE5Sx3XEhqdcUkCitpS8ziELbI7qRHOSClegT9EUAUGW5wRzvQgVbhdIU1bSsvfMKtv1oF5tZwu6uDH-zvCiy3S3cqY0HfKaHa99dHU5LHCfd2HmZw--PgPI7R1Ot6DGM5E1c8nuJluOVSQBwJPvZtS9dPL37mRg"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">Magnesium Relief Balm</div>
+<div class="text-label-sm text-on-surface-variant opacity-70">200ml Organic Base</div>
+</div>
+</div>
+</td>
+<td class="px-md py-md text-body-sm font-mono text-on-surface-variant">EC-SKN-442</td>
+<td class="px-md py-md">
+<span class="bg-secondary-container/20 text-on-secondary-container px-sm py-1 rounded-full text-label-sm font-label-sm">Personal Care</span>
+</td>
+<td class="px-md py-md text-body-sm font-semibold text-on-surface">$38.50</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs">
+<span class="text-body-sm font-semibold text-on-surface">312</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs text-on-surface-variant font-semibold text-label-sm bg-surface-variant/40 px-sm py-1 rounded-full w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Inactive
+                                </div>
+</td>
+<td class="px-md py-md">
+<span class="material-symbols-outlined text-tertiary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+</td>
+<td class="px-md py-md text-right">
+<div class="flex items-center justify-end gap-xs">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-lg"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-md text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-md">
+<img class="w-12 h-12 rounded-xl object-cover border border-outline-variant/20 shadow-sm" data-alt="A professional medical-grade infrared thermometer gun. High-tech ergonomic design in matte white and healthcare green. Digital LED screen showing a clear temperature reading. Shot on a clean laboratory workbench with a bright, clinical high-key lighting style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC12LxODui0J8cimFpiucC68u95_xvNs71W8NXvrlfSKn4JSKRCct6yJR1iaX75A-KzQ141A7Cx_eqZh2UPeb2KBNPsUf6v2OzPGhCXzA_9xZtKFEEKl174-ubikGG1SF8BMmKP2q-IHTJNx3ziDkSAxiVB7FFllwi951K3wiy-HhhPjFYvsnVAbuoBfqxyxQHj2Cv1BEbASlY5mLwlcvFgIU9CQgmVbACvpLz0FYkQvfS2mOH5QHY"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">Scan-Safe IR Thermometer</div>
+<div class="text-label-sm text-on-surface-variant opacity-70">Non-contact Infrared</div>
+</div>
+</div>
+</td>
+<td class="px-md py-md text-body-sm font-mono text-on-surface-variant">EC-DEV-056</td>
+<td class="px-md py-md">
+<span class="bg-secondary-container/20 text-on-secondary-container px-sm py-1 rounded-full text-label-sm font-label-sm">Diagnostics</span>
+</td>
+<td class="px-md py-md text-body-sm font-semibold text-on-surface">$59.95</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs">
+<span class="text-body-sm font-semibold text-on-surface">58</span>
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+</div>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs text-primary font-semibold text-label-sm bg-primary-container/10 px-sm py-1 rounded-full w-fit">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Active
+                                </div>
+</td>
+<td class="px-md py-md">
+<span class="material-symbols-outlined text-outline-variant text-[20px]">stars</span>
+</td>
+<td class="px-md py-md text-right">
+<div class="flex items-center justify-end gap-xs">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-lg"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-md py-md bg-surface-container-low/30 flex items-center justify-between border-t border-outline-variant/10">
+<p class="text-body-sm text-on-surface-variant">Showing <span class="font-bold text-on-surface">1 - 4</span> of 142 products</p>
+<div class="flex items-center gap-base">
+<button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined">first_page</span>
+</button>
+<button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex items-center gap-1 mx-xs">
+<button class="w-8 h-8 rounded-lg bg-primary text-white font-bold text-label-md">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-variant text-on-surface-variant font-medium text-label-md">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-variant text-on-surface-variant font-medium text-label-md">3</button>
+<span class="px-1 text-on-surface-variant">...</span>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-variant text-on-surface-variant font-medium text-label-md">36</button>
+</div>
+<button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-white">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<button class="p-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-white">
+<span class="material-symbols-outlined">last_page</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Shell -->
+<footer class="mt-xl flex justify-between items-center py-md border-t border-outline-variant/10 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-sm">
+<span class="font-semibold text-primary">EngixCare System v2.4.0</span>
+<span class="opacity-40">|</span>
+<span>© 2024 All Rights Reserved</span>
+</div>
+<div class="flex items-center gap-md">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</footer>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select All Functionality
+            const masterCheckbox = document.querySelector('thead input[type="checkbox"]');
+            const rowCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            
+            masterCheckbox.addEventListener('change', (e) => {
+                rowCheckboxes.forEach(cb => {
+                    cb.checked = e.target.checked;
+                    const row = cb.closest('tr');
+                    if(e.target.checked) {
+                        row.classList.add('bg-primary-container/5');
+                    } else {
+                        row.classList.remove('bg-primary-container/5');
+                    }
+                });
+            });
+
+            rowCheckboxes.forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const row = e.target.closest('tr');
+                    if(e.target.checked) {
+                        row.classList.add('bg-primary-container/5');
+                    } else {
+                        row.classList.remove('bg-primary-container/5');
+                    }
+                    
+                    // Check if all are selected
+                    const allChecked = Array.from(rowCheckboxes).every(r => r.checked);
+                    masterCheckbox.checked = allChecked;
+                });
+            });
+        });
+    </script>
+</body></html>

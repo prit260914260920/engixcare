@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EngixCare | Order Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "outline-variant": "#bbcabf",
+                    "tertiary-fixed": "#ffddb8",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#8fa7fe",
+                    "on-surface": "#121c2a",
+                    "on-secondary-fixed": "#00164e",
+                    "surface-container": "#e6eeff",
+                    "inverse-primary": "#4edea3",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#d9e3f6",
+                    "primary-fixed": "#6ffbbe",
+                    "tertiary": "#855300",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "tertiary-container": "#e29100",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#121c2a",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "on-secondary-fixed-variant": "#264191",
+                    "primary-container": "#10b981",
+                    "outline": "#6c7a71",
+                    "on-primary-container": "#00422b",
+                    "surface-tint": "#006c49",
+                    "inverse-surface": "#27313f",
+                    "secondary-fixed": "#dce1ff",
+                    "on-primary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-surface-variant": "#3c4a42",
+                    "primary-fixed-dim": "#4edea3",
+                    "secondary-fixed-dim": "#b6c4ff",
+                    "on-tertiary-container": "#523200",
+                    "on-error": "#ffffff",
+                    "secondary": "#4059aa",
+                    "surface-bright": "#f8f9ff",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#005236",
+                    "surface-dim": "#d0dbed",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-variant": "#d9e3f6",
+                    "on-secondary-container": "#1d3989",
+                    "surface-container-high": "#dee9fc",
+                    "primary": "#006c49"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "xs": "8px",
+                    "base": "4px",
+                    "md": "24px",
+                    "lg": "32px",
+                    "sm": "16px",
+                    "margin-desktop": "32px",
+                    "xl": "48px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .glass-effect { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #bbcabf; border-radius: 10px; }
+        .card-shadow { shadow: 0px 4px 20px rgba(31, 41, 55, 0.05); }
+    </style>
+</head>
+<body class="text-on-surface bg-background">
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-low/80 backdrop-blur-xl border-r border-outline-variant/30 shadow-sm z-50 flex flex-col h-full py-md">
+<div class="px-md mb-lg">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">EngixCare</h1>
+<p class="font-label-md text-label-md text-on-surface-variant/70">Admin Dashboard</p>
+</div>
+<nav class="flex-1 overflow-y-auto custom-scrollbar">
+<div class="space-y-base px-xs">
+<!-- Nav Item Factory -->
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-primary">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs bg-primary-container/10 text-primary border-l-4 border-primary font-bold" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Payments</span>
+</a>
+<div class="h-[1px] bg-outline-variant/20 my-md mx-md"></div>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">General Settings</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-error">logout</span>
+<span class="font-label-md text-label-md text-error">Logout</span>
+</a>
+</div>
+</nav>
+<div class="mt-auto px-md pt-md">
+<div class="bg-primary/5 rounded-xl p-sm border border-primary/10">
+<p class="font-label-sm text-label-sm text-on-surface-variant">System Status</p>
+<div class="flex items-center gap-xs mt-base">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<span class="font-label-md text-label-md text-primary">All systems operational</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center h-16 px-margin-desktop sticky top-0 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 shadow-sm">
+<div class="flex items-center gap-md flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-xl pr-md py-xs text-body-sm focus:ring-2 focus:ring-primary/20" placeholder="Search orders, customers..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<div class="w-[1px] h-6 bg-outline-variant/30 mx-xs"></div>
+<div class="flex items-center gap-sm pl-sm">
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-surface">Dr. Sarah Chen</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70">Administrator</p>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary/20 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a healthcare administrator, a woman in her late 30s with professional attire. The background is a clean, modern medical office with soft, bright lighting consistent with a high-end corporate aesthetic. The overall mood is confident and warm, matching the EngixCare clinical precision and human-centric warmth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-ad3-9-ZQSMBMKr9XU5c7dPBd9DtZgiwfAB-BClR3BJ61hFJYLtek-PH82yjVX2KaeaLZGhRuDyjaXYd-wL4wuQhBru9PGlSCj6fFG-sJk9ykqy3Zg8Ki0xRZhen-OyJK2dQz79VX5M6QdC-vIW3zbr6JhsbSTvCFdgEhSeMEJIARETrfweG5U-YTuXuGAswlIaEQgEkRJUlAY7M7FN8AAPfuOb8L-y02gcIUwFPDvxix9yGvnU0"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-margin-desktop space-y-lg">
+<!-- Page Header Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Order Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Overview and lifecycle tracking for patient prescriptions and medical supplies.</p>
+</div>
+<div class="flex items-center gap-sm">
+<button class="flex items-center gap-xs px-md py-xs bg-surface border border-outline-variant/50 rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">file_download</span>
+                        Export
+                    </button>
+<button class="flex items-center gap-xs px-md py-xs bg-primary text-on-primary rounded-xl font-label-md text-label-md shadow-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        New Order
+                    </button>
+</div>
+</div>
+<!-- Dashboard Style Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="bg-surface p-md rounded-xl border border-outline-variant/20 shadow-sm">
+<p class="font-label-md text-label-md text-on-surface-variant">Total Orders</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-xs">1,284</h3>
+<div class="flex items-center gap-xs mt-xs text-primary">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="font-label-sm text-label-sm">+12.5% from last month</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/20 shadow-sm">
+<p class="font-label-md text-label-md text-on-surface-variant">Pending Fulfillment</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-xs">48</h3>
+<div class="flex items-center gap-xs mt-xs text-tertiary">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-label-sm text-label-sm">Requires attention</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/20 shadow-sm">
+<p class="font-label-md text-label-md text-on-surface-variant">Revenue (MTD)</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-xs">$42,920</h3>
+<div class="flex items-center gap-xs mt-xs text-primary">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="font-label-sm text-label-sm">+8% vs target</span>
+</div>
+</div>
+<div class="bg-surface p-md rounded-xl border border-outline-variant/20 shadow-sm">
+<p class="font-label-md text-label-md text-on-surface-variant">Order Accuracy</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-xs">99.8%</h3>
+<div class="flex items-center gap-xs mt-xs text-secondary">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span class="font-label-sm text-label-sm">System benchmark met</span>
+</div>
+</div>
+</div>
+<!-- Filters Bar -->
+<div class="bg-surface-container-low p-sm rounded-xl flex flex-wrap items-center gap-md">
+<div class="flex items-center gap-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">Status:</span>
+<select class="bg-surface border-outline-variant/30 rounded-lg text-label-md font-label-md py-1 px-md focus:ring-primary/20">
+<option>All Statuses</option>
+<option>Processing</option>
+<option>Shipped</option>
+<option>Delivered</option>
+<option>Cancelled</option>
+</select>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">Payment:</span>
+<select class="bg-surface border-outline-variant/30 rounded-lg text-label-md font-label-md py-1 px-md focus:ring-primary/20">
+<option>All Payments</option>
+<option>Paid</option>
+<option>Pending</option>
+<option>Failed</option>
+</select>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">Date Range:</span>
+<div class="flex items-center gap-xs bg-surface border border-outline-variant/30 rounded-lg px-sm py-1">
+<span class="material-symbols-outlined text-[18px] text-outline">calendar_today</span>
+<input class="bg-transparent border-none p-0 text-label-md font-label-md focus:ring-0 w-40" type="text" value="Oct 01 - Oct 31, 2024"/>
+</div>
+</div>
+<button class="ml-auto text-primary font-label-md text-label-md hover:underline">Clear all filters</button>
+</div>
+<!-- Robust Data Table -->
+<div class="bg-surface rounded-xl border border-outline-variant/20 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant/20">
+<tr>
+<th class="px-md py-sm font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Order ID</th>
+<th class="px-md py-sm font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Customer</th>
+<th class="px-md py-sm font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Products</th>
+<th class="px-md py-sm font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Amount</th>
+<th class="px-md py-sm font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Payment</th>
+<th class="px-md py-sm font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Order Status</th>
+<th class="px-md py-sm font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Date</th>
+<th class="px-md py-sm font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-md py-md font-label-md text-label-md font-bold text-on-surface">#ORD-90210</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary font-bold text-xs">JD</div>
+<span class="font-body-sm text-body-sm text-on-surface">John Doe</span>
+</div>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs">
+<span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs font-label-sm">3 Items</span>
+<span class="text-xs text-outline font-label-sm truncate max-w-[100px]">Insulin, Syringes...</span>
+</div>
+</td>
+<td class="px-md py-md font-body-sm text-body-sm">$450.00</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-primary-container/10 text-primary">
+                                        Paid
+                                    </span>
+</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-secondary-container/20 text-secondary">
+                                        Shipped
+                                    </span>
+</td>
+<td class="px-md py-md font-label-sm text-label-sm text-on-surface-variant">Oct 24, 2024</td>
+<td class="px-md py-md text-right">
+<button class="text-primary hover:text-on-primary-container font-label-md text-label-md">View Details</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-md py-md font-label-md text-label-md font-bold text-on-surface">#ORD-90211</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-sm">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A portrait of an elderly male patient with a friendly expression. The visual style is crisp and bright, matching a clinical but inviting environment. Soft, even lighting creates a high-quality, professional photography look suitable for a medical administrative dashboard profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnMtPxh33LzugVKbcs13Dc3J5tHj6t7sjC7irU4jDYaBdmo41BEVm6MMhCcDTD9JrRSYE7goV7s70cwKfO7RyaW0roe9Tllom_iKqdyjGrRBrzyCeregiY6pU6D1C6VKYb2KeDg1ZAkPcGt_Y40-CPRuMEwIqqdckHJdgH2BuD_rPgduuqtO7hKG14Fd7MbqeKbQUL94Pn7bq1uc14VHzqZsDRNqU_tUBldKeZPqqFmwxMmERPekQ"/>
+<span class="font-body-sm text-body-sm text-on-surface">Robert Smith</span>
+</div>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs">
+<span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs font-label-sm">1 Item</span>
+<span class="text-xs text-outline font-label-sm">Pulse Oximeter</span>
+</div>
+</td>
+<td class="px-md py-md font-body-sm text-body-sm">$85.20</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-tertiary-container/10 text-tertiary">
+                                        Pending
+                                    </span>
+</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-surface-variant text-on-surface-variant">
+                                        Processing
+                                    </span>
+</td>
+<td class="px-md py-md font-label-sm text-label-sm text-on-surface-variant">Oct 24, 2024</td>
+<td class="px-md py-md text-right">
+<button class="text-primary hover:text-on-primary-container font-label-md text-label-md">View Details</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-md py-md font-label-md text-label-md font-bold text-on-surface">#ORD-90212</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-bold text-xs">MA</div>
+<span class="font-body-sm text-body-sm text-on-surface">Maria Garcia</span>
+</div>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs">
+<span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs font-label-sm">5 Items</span>
+<span class="text-xs text-outline font-label-sm truncate max-w-[100px]">Vitamins, First Aid...</span>
+</div>
+</td>
+<td class="px-md py-md font-body-sm text-body-sm">$1,240.00</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-primary-container/10 text-primary">
+                                        Paid
+                                    </span>
+</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-primary/10 text-primary">
+                                        Delivered
+                                    </span>
+</td>
+<td class="px-md py-md font-label-sm text-label-sm text-on-surface-variant">Oct 23, 2024</td>
+<td class="px-md py-md text-right">
+<button class="text-primary hover:text-on-primary-container font-label-md text-label-md">View Details</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-md py-md font-label-md text-label-md font-bold text-on-surface">#ORD-90213</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-error-container/20 flex items-center justify-center text-error font-bold text-xs">KL</div>
+<span class="font-body-sm text-body-sm text-on-surface">Kevin Lee</span>
+</div>
+</td>
+<td class="px-md py-md">
+<div class="flex items-center gap-xs">
+<span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs font-label-sm">2 Items</span>
+<span class="text-xs text-outline font-label-sm">Mobility Aid</span>
+</div>
+</td>
+<td class="px-md py-md font-body-sm text-body-sm">$320.50</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-error-container/20 text-error">
+                                        Failed
+                                    </span>
+</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-label-sm bg-error-container/10 text-error">
+                                        Hold
+                                    </span>
+</td>
+<td class="px-md py-md font-label-sm text-label-sm text-on-surface-variant">Oct 23, 2024</td>
+<td class="px-md py-md text-right">
+<button class="text-primary hover:text-on-primary-container font-label-md text-label-md">View Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-surface-container-low/50 px-md py-sm border-t border-outline-variant/20 flex items-center justify-between">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Showing 1 to 4 of 1,284 results</p>
+<div class="flex items-center gap-base">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface border border-outline-variant/30 text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-label-sm text-label-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface border border-outline-variant/30 text-on-surface-variant hover:bg-surface-variant transition-colors font-label-sm text-label-sm">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface border border-outline-variant/30 text-on-surface-variant hover:bg-surface-variant transition-colors font-label-sm text-label-sm">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface border border-outline-variant/30 text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bento Layout Detail Cards (Lower Section) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<div class="lg:col-span-2 bg-surface p-md rounded-xl border border-outline-variant/20 shadow-sm">
+<div class="flex justify-between items-center mb-md">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Recent Order Activity</h4>
+<button class="text-primary font-label-md text-label-md flex items-center gap-xs">
+                            Full Log <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<div class="space-y-md">
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5"></div>
+<div class="w-[1px] flex-1 bg-outline-variant/30 my-xs"></div>
+</div>
+<div class="pb-md">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-bold">Order #ORD-90210</span> was marked as <span class="text-secondary font-bold">Shipped</span></p>
+<p class="font-label-sm text-label-sm text-outline-variant mt-xs">Today at 14:32 PM • By System (Auto-fulfillment)</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-tertiary mt-1.5"></div>
+<div class="w-[1px] flex-1 bg-outline-variant/30 my-xs"></div>
+</div>
+<div class="pb-md">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-bold">Robert Smith</span> requested a delivery address change for <span class="font-bold">#ORD-90211</span></p>
+<p class="font-label-sm text-label-sm text-outline-variant mt-xs">Today at 11:15 AM • Requires Admin Approval</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5"></div>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-bold">Payment Confirmed</span> for <span class="font-bold">#ORD-90212</span></p>
+<p class="font-label-sm text-label-sm text-outline-variant mt-xs">Yesterday at 17:05 PM • Stripe Transaction ID: TXN_8829</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 rounded-xl border border-primary/20 p-md flex flex-col items-center justify-center text-center relative overflow-hidden group">
+<!-- Glassmorphic Accent -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<span class="material-symbols-outlined text-primary text-[48px] mb-sm" style="font-variation-settings: 'FILL' 1;">inventory</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Inventory Alert</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs px-md">3 critical medical supplies are running low. Review stock levels to prevent order delays.</p>
+<button class="mt-md px-md py-xs bg-primary text-on-primary rounded-xl font-label-md text-label-md hover:shadow-lg transition-all">
+                        Inventory Manager
+                    </button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="flex justify-between items-center px-margin-desktop py-md border-t border-outline-variant/10 bg-surface">
+<div class="flex items-center gap-md">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 EngixCare. System v2.4.0</p>
+</div>
+<div class="flex items-center gap-lg">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</footer>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple hover animation for table rows
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.transform = 'scale(1.002)';
+                row.style.zIndex = '10';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'scale(1)';
+                row.style.zIndex = '1';
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Details | EngixCare Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "error": "#ba1a1a",
+                "outline-variant": "#bbcabf",
+                "tertiary-fixed": "#ffddb8",
+                "error-container": "#ffdad6",
+                "secondary-container": "#8fa7fe",
+                "on-surface": "#121c2a",
+                "on-secondary-fixed": "#00164e",
+                "surface-container": "#e6eeff",
+                "inverse-primary": "#4edea3",
+                "on-tertiary": "#ffffff",
+                "surface-container-highest": "#d9e3f6",
+                "primary-fixed": "#6ffbbe",
+                "tertiary": "#855300",
+                "on-primary": "#ffffff",
+                "on-secondary": "#ffffff",
+                "background": "#f8f9ff",
+                "tertiary-fixed-dim": "#ffb95f",
+                "tertiary-container": "#e29100",
+                "surface-container-lowest": "#ffffff",
+                "on-background": "#121c2a",
+                "on-tertiary-fixed-variant": "#653e00",
+                "surface-container-low": "#eff4ff",
+                "surface": "#f8f9ff",
+                "on-secondary-fixed-variant": "#264191",
+                "primary-container": "#10b981",
+                "outline": "#6c7a71",
+                "on-primary-container": "#00422b",
+                "surface-tint": "#006c49",
+                "inverse-surface": "#27313f",
+                "secondary-fixed": "#dce1ff",
+                "on-primary-fixed": "#002113",
+                "inverse-on-surface": "#eaf1ff",
+                "on-surface-variant": "#3c4a42",
+                "primary-fixed-dim": "#4edea3",
+                "secondary-fixed-dim": "#b6c4ff",
+                "on-tertiary-container": "#523200",
+                "on-error": "#ffffff",
+                "secondary": "#4059aa",
+                "surface-bright": "#f8f9ff",
+                "on-error-container": "#93000a",
+                "on-primary-fixed-variant": "#005236",
+                "surface-dim": "#d0dbed",
+                "on-tertiary-fixed": "#2a1700",
+                "surface-variant": "#d9e3f6",
+                "on-secondary-container": "#1d3989",
+                "surface-container-high": "#dee9fc",
+                "primary": "#006c49"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "margin-mobile": "16px",
+                "xs": "8px",
+                "base": "4px",
+                "md": "24px",
+                "lg": "32px",
+                "sm": "16px",
+                "margin-desktop": "32px",
+                "xl": "48px",
+                "gutter": "24px"
+            },
+            "fontFamily": {
+                "body-sm": ["Inter"],
+                "headline-md": ["Inter"],
+                "body-md": ["Inter"],
+                "display-lg": ["Inter"],
+                "label-md": ["Inter"],
+                "label-sm": ["Inter"],
+                "headline-sm": ["Inter"],
+                "headline-lg": ["Inter"],
+                "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .glass-nav { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .card-shadow { shadow: 0px 4px 20px rgba(31, 41, 55, 0.05); }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-low/80 backdrop-blur-xl border-r border-outline-variant/30 shadow-sm z-50 flex flex-col h-full py-md">
+<div class="px-md mb-xl">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">EngixCare</h1>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">Admin Dashboard</p>
+</div>
+<nav class="flex-1 overflow-y-auto space-y-base px-xs">
+<!-- Active Navigation Logic: Orders -->
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs bg-primary-container/10 text-primary border-l-4 border-primary font-bold" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Payments</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">General Settings</span>
+</a>
+</nav>
+<div class="px-md pt-md border-t border-outline-variant/10 mt-auto">
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 right-0 left-0 ml-[280px] h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 flex justify-between items-center px-margin-desktop z-40">
+<div class="flex items-center bg-surface-container-low px-sm py-xs rounded-full w-96 border border-outline-variant/20">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-full ml-xs" placeholder="Search orders, invoices, or customers..." type="text"/>
+</div>
+<div class="flex items-center gap-md">
+<button class="bg-primary hover:bg-on-primary-fixed-variant text-white px-md py-xs rounded-lg font-label-md transition-all">
+                Quick Add
+            </button>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">mail</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">dark_mode</span>
+</div>
+<div class="h-8 w-8 rounded-full bg-secondary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a medical administrator in a sleek modern healthcare office setting. The lighting is soft and natural, reflecting a clean, clinical yet warm ambiance. The background shows blurred high-tech medical monitors and minimalist decor in shades of light blue and pristine white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZcPFyzkg402uj2l4tkbss68yNL7vuU9rjvsOkTIhjeBJbIYZqWyn_Qz8t7G1xvssn8C7799ECYxKEr2eHDqEXgPkifDShBBZKczfp-0J98_XZnprPXAyrXx1g6yPvEnlhz2z-Dqk-0kqBVCg_haZtiKJp-lew4XC9X-5EhgI4eGs6VfN0ZCpAdIpVXyXMj-U2JwaYJW15AUGI_08hldwJ6yidUX-7j_Ko6zaJOFyAx73aDFhdGbI"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] pt-16 min-h-screen px-margin-desktop py-lg">
+<!-- Header Actions -->
+<div class="flex justify-between items-center mb-lg">
+<div>
+<nav class="flex gap-xs text-label-sm text-on-surface-variant mb-base">
+<span>Orders</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-primary font-bold">ORD-28491-XC</span>
+</nav>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Order Details</h2>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-sm border border-outline-variant text-on-surface font-label-md rounded-xl hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">print</span>
+                    Print Labels
+                </button>
+<button class="flex items-center gap-xs px-md py-sm bg-primary text-white font-label-md rounded-xl hover:opacity-90 transition-all shadow-sm">
+<span class="material-symbols-outlined">download</span>
+                    Download Invoice
+                </button>
+</div>
+</div>
+<!-- Dashboard Layout: Bento Grid -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- LEFT COLUMN: Order Summary & Customer Info -->
+<div class="col-span-8 space-y-gutter">
+<!-- Order Items Card -->
+<section class="bg-white rounded-xl p-md border border-outline-variant/20 shadow-[0px_4px_20px_rgba(31,41,55,0.05)]">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+                            Order Items (3)
+                        </h3>
+<span class="px-sm py-xs bg-primary/10 text-primary rounded-full font-label-sm">Processing</span>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant/10 text-label-md text-on-surface-variant">
+<th class="pb-sm font-semibold">Product Details</th>
+<th class="pb-sm font-semibold">Price</th>
+<th class="pb-sm font-semibold text-center">Quantity</th>
+<th class="pb-sm font-semibold text-right">Total</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="group">
+<td class="py-md">
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio product shot of clinical-grade vitamins in a minimalist glass bottle. The lighting is crisp and medical, with soft shadows against a pure white background. The color palette is dominated by medicinal green and transparent glass textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj2AP7qejkLjd2Li0vYt5ycmHWbHuusxDx0KAFe9Xz4aZ1asMALx1euRkIFUqCAoTaJGr6yAYTGH9wspug5plSwbJUGfcfS9mktfhu1-w-3peqX_VyxnjK8n16mKRiKD5m2eSFwb2YJFoT74UW4s3hoTAs1i_U2Aw51NIB7DdzbQ_i0ajtToiLUxKWkwfUWgzQvPpHQ4Hg6tmMrZpre9iqHgdOzjr_iWKNrAZUDdjH4scVPvV0XJ4"/>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">VitaCare Multi-Complex</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">SKU: ENG-VT-001</p>
+</div>
+</div>
+</td>
+<td class="py-md font-body-md text-on-surface">$45.00</td>
+<td class="py-md font-body-md text-on-surface text-center">2</td>
+<td class="py-md font-body-md text-on-surface text-right font-bold">$90.00</td>
+</tr>
+<tr class="group">
+<td class="py-md">
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up view of high-quality surgical face masks in a sleek, branded EngixCare box. The setting is a brightly lit, sterile pharmaceutical lab with clean white surfaces and blue surgical accents. The image conveys health safety and industrial precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjVnPsb60OEDcInkUYy9NbPp3TCXtA9Tu0Kr_2MZebs6SPRYeLHQhExSrsDs8omM72vQfqFhmepqejdp9oOYX964OmpZQ_VXasle4akydOmYiFtoOiWdo85AyExM8bs86iqc03QB6qKCaA76DWtFqBgd5OrYrw23I7nr7JsqJeiJ3u3ysJ2gQmp97BR5Jd6Hn7yV9A331Y5lmjBtMP-EuqZIhZ57cK4aMqGoJk4Rl-jSasVKNMwXI"/>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Premium Protective Mask (Box of 50)</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">SKU: ENG-MSK-050</p>
+</div>
+</div>
+</td>
+<td class="py-md font-body-md text-on-surface">$22.50</td>
+<td class="py-md font-body-md text-on-surface text-center">1</td>
+<td class="py-md font-body-md text-on-surface text-right font-bold">$22.50</td>
+</tr>
+</tbody>
+</table>
+<div class="mt-md pt-md border-t border-outline-variant/30 flex justify-end">
+<div class="w-64 space-y-xs">
+<div class="flex justify-between font-body-sm text-on-surface-variant">
+<span>Subtotal</span>
+<span>$112.50</span>
+</div>
+<div class="flex justify-between font-body-sm text-on-surface-variant">
+<span>Shipping (Standard)</span>
+<span>$12.00</span>
+</div>
+<div class="flex justify-between font-body-sm text-on-surface-variant">
+<span>Estimated Tax</span>
+<span>$9.45</span>
+</div>
+<div class="flex justify-between font-headline-sm text-headline-sm text-on-surface pt-sm">
+<span>Total Paid</span>
+<span class="text-primary">$133.95</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Customer and Shipping Cards (Side by Side) -->
+<div class="grid grid-cols-2 gap-gutter">
+<section class="bg-white rounded-xl p-md border border-outline-variant/20 shadow-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-md">Customer Information</h3>
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary font-bold">
+                                JD
+                            </div>
+<div>
+<p class="font-body-md text-body-md font-bold text-on-surface">Dr. Jane Doe</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">jane.doe@medical-clinic.org</p>
+</div>
+</div>
+<div class="space-y-xs text-body-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-outline text-[18px]">phone</span>
+<span class="text-on-surface">+1 (555) 012-3456</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-outline text-[18px]">history</span>
+<span class="text-on-surface">Customer since Jan 2022</span>
+</div>
+</div>
+</section>
+<section class="bg-white rounded-xl p-md border border-outline-variant/20 shadow-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-md">Shipping Address</h3>
+<div class="space-y-xs text-body-sm">
+<p class="font-bold text-on-surface">St. Jude Medical Center</p>
+<p class="text-on-surface-variant leading-relaxed">
+                                123 Health Boulevard, Suite 400<br/>
+                                San Francisco, CA 94103<br/>
+                                United States
+                            </p>
+<div class="pt-xs flex items-center gap-xs text-primary font-semibold">
+<span class="material-symbols-outlined text-[18px]">map</span>
+<a class="hover:underline" href="#">View on Map</a>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- RIGHT COLUMN: Order Timeline & Activity -->
+<div class="col-span-4 space-y-gutter">
+<!-- Order Timeline Card -->
+<section class="bg-white rounded-xl p-md border border-outline-variant/20 shadow-sm sticky top-24">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-lg flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">timeline</span>
+                        Order Timeline
+                    </h3>
+<div class="relative space-y-lg pl-8">
+<!-- Timeline Line -->
+<div class="absolute left-[15px] top-1 bottom-1 w-[2px] bg-outline-variant/20"></div>
+<!-- Step 1: Completed -->
+<div class="relative flex items-start gap-md">
+<div class="absolute -left-8 w-[32px] h-[32px] rounded-full bg-primary flex items-center justify-center text-white z-10 border-4 border-white shadow-sm">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Order Placed</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">May 12, 2024 at 10:45 AM</p>
+<p class="font-label-sm text-label-sm text-outline-variant mt-xs">Source: Web Dashboard</p>
+</div>
+</div>
+<!-- Step 2: Completed -->
+<div class="relative flex items-start gap-md">
+<div class="absolute -left-8 w-[32px] h-[32px] rounded-full bg-primary flex items-center justify-center text-white z-10 border-4 border-white shadow-sm">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Payment Confirmed</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">May 12, 2024 at 10:48 AM</p>
+<p class="font-label-sm text-label-sm text-outline-variant mt-xs">Via Stripe Terminal</p>
+</div>
+</div>
+<!-- Step 3: Current -->
+<div class="relative flex items-start gap-md">
+<div class="absolute -left-8 w-[32px] h-[32px] rounded-full bg-primary-container flex items-center justify-center text-primary z-10 border-4 border-white shadow-sm">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+<div class="bg-surface-container-low p-sm rounded-lg border border-primary/20 w-full">
+<p class="font-label-md text-label-md font-bold text-primary">Shipped</p>
+<p class="font-body-sm text-body-sm text-on-surface">May 13, 2024 at 09:15 AM</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-xs">FedEx Tracking: #9283741029</p>
+</div>
+</div>
+<!-- Step 4: Pending -->
+<div class="relative flex items-start gap-md opacity-50">
+<div class="absolute -left-8 w-[32px] h-[32px] rounded-full bg-surface-variant flex items-center justify-center text-outline-variant z-10 border-4 border-white">
+<span class="material-symbols-outlined text-[16px]">delivery_dining</span>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Out for Delivery</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Expected: May 14, 2024</p>
+</div>
+</div>
+<!-- Step 5: Pending -->
+<div class="relative flex items-start gap-md opacity-50">
+<div class="absolute -left-8 w-[32px] h-[32px] rounded-full bg-surface-variant flex items-center justify-center text-outline-variant z-10 border-4 border-white">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Delivered</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Requires Signature</p>
+</div>
+</div>
+</div>
+<!-- Internal Note Placeholder -->
+<div class="mt-xl pt-md border-t border-outline-variant/20">
+<label class="font-label-md text-label-md text-on-surface-variant mb-xs block">Internal Admin Note</label>
+<textarea class="w-full rounded-xl border border-outline-variant/30 bg-surface-container-low text-body-sm p-sm focus:ring-primary focus:border-primary placeholder:text-outline-variant" placeholder="Add a private note regarding this shipment..." rows="3"></textarea>
+<button class="mt-sm text-primary font-label-md hover:underline">Save Note</button>
+</div>
+</section>
+<!-- Support & Help -->
+<div class="bg-secondary-container/20 rounded-xl p-md border border-secondary-container/30 flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary text-[32px]">contact_support</span>
+<div>
+<p class="font-label-md text-label-md font-bold text-secondary">Need help with this order?</p>
+<p class="text-body-sm text-on-secondary-container">Contact fulfillment team</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="ml-[280px] border-t border-outline-variant/10 py-md px-margin-desktop bg-surface flex justify-between items-center mt-xl">
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">© 2024 EngixCare. System v2.4.0</p>
+<div class="flex gap-lg">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</footer>
+<!-- Interactive Layer for Feedback -->
+<script>
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const originalText = this.innerHTML;
+                if(this.innerText.includes('Download Invoice')) {
+                    this.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Generating...';
+                    setTimeout(() => {
+                        this.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Invoice Ready';
+                        setTimeout(() => this.innerHTML = originalText, 2000);
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+</body></html>

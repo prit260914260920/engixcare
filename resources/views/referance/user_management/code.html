@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EngixCare | User Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "outline-variant": "#bbcabf",
+                    "tertiary-fixed": "#ffddb8",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#8fa7fe",
+                    "on-surface": "#121c2a",
+                    "on-secondary-fixed": "#00164e",
+                    "surface-container": "#e6eeff",
+                    "inverse-primary": "#4edea3",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#d9e3f6",
+                    "primary-fixed": "#6ffbbe",
+                    "tertiary": "#855300",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#f8f9ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "tertiary-container": "#e29100",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#121c2a",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "on-secondary-fixed-variant": "#264191",
+                    "primary-container": "#10b981",
+                    "outline": "#6c7a71",
+                    "on-primary-container": "#00422b",
+                    "surface-tint": "#006c49",
+                    "inverse-surface": "#27313f",
+                    "secondary-fixed": "#dce1ff",
+                    "on-primary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-surface-variant": "#3c4a42",
+                    "primary-fixed-dim": "#4edea3",
+                    "secondary-fixed-dim": "#b6c4ff",
+                    "on-tertiary-container": "#523200",
+                    "on-error": "#ffffff",
+                    "secondary": "#4059aa",
+                    "surface-bright": "#f8f9ff",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#005236",
+                    "surface-dim": "#d0dbed",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-variant": "#d9e3f6",
+                    "on-secondary-container": "#1d3989",
+                    "surface-container-high": "#dee9fc",
+                    "primary": "#006c49"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "xs": "8px",
+                    "base": "4px",
+                    "md": "24px",
+                    "lg": "32px",
+                    "sm": "16px",
+                    "margin-desktop": "32px",
+                    "xl": "48px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-sidebar {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #bbcabf; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased overflow-hidden flex h-screen">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-low/80 glass-sidebar border-r border-outline-variant/30 shadow-sm flex flex-col py-md z-50">
+<div class="px-md mb-xl">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">EngixCare</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Admin Dashboard</p>
+</div>
+<nav class="flex-1 overflow-y-auto custom-scrollbar px-sm space-y-base">
+<!-- Navigation Items Mapping -->
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">category</span>
+<span class="font-label-md text-label-md">Categories</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">science</span>
+<span class="font-label-md text-label-md">Ingredients</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label-md text-label-md">Why Choose Us</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">article</span>
+<span class="font-label-md text-label-md">Articles/Blog</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-label-md text-label-md">Offers &amp; Promotions</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">confirmation_number</span>
+<span class="font-label-md text-label-md">Coupons</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Payments</span>
+</a>
+<!-- Active State Logic: Mapping Users as Active -->
+<a class="flex items-center gap-sm px-md py-xs bg-primary-container/10 text-primary border-l-4 border-primary font-bold transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">star</span>
+<span class="font-label-md text-label-md">Reviews &amp; Ratings</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label-md text-label-md">Customer Inquiries</span>
+</a>
+<div class="pt-sm mt-sm border-t border-outline-variant/20">
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">General Settings</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-error hover:bg-error/5 transition-colors rounded-lg group mt-auto" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-[280px] flex flex-col h-full overflow-hidden relative">
+<!-- TopNavBar Anchor -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 h-16 px-margin-desktop flex justify-between items-center shrink-0">
+<div class="flex items-center gap-md flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant/30 rounded-xl text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Search users, emails, or IDs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-sm ml-md">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-sm py-2 rounded-lg flex items-center gap-xs hover:bg-primary/90 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                    Quick Add
+                </button>
+<div class="h-8 w-[1px] bg-outline-variant/30 mx-xs"></div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<div class="ml-xs flex items-center gap-xs">
+<img class="w-8 h-8 rounded-full border border-outline-variant/50 object-cover" data-alt="A professional headshot of a female healthcare administrator in her late 30s, wearing a crisp white clinic coat and a stethoscope around her neck. The setting is a brightly lit, high-end medical office with clinical green and white accents. The lighting is soft and flattering, creating a premium and trustworthy corporate look for an admin profile avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq-gFihdZpbvL-AbrwULvm_GDJxuholDxXGE4Fi0C0drZZtpqPfN-wbFShQqwzgo02XNP8C-VTUMsmSz5AZ_F-Fm_1Msx_BqDjlKn5xtRsK2TdNcokMVenKKSeLr86QsLEZM0Uwgh5Eo16yul3IeF6aHJjBbAozJ4VAeNyUtx-vpvFvLqsWxHEubNx5fl-QZAtOAXFsWGF_412yFbk6ZgBG8VPEnFWcdq4lf47ndB0lTAOQThZq8I"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 overflow-y-auto p-margin-desktop bg-background custom-scrollbar">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-sm mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">User Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">View and manage all registered healthcare practitioners and customers.</p>
+</div>
+<div class="flex items-center gap-sm">
+<div class="flex bg-surface-container-high p-1 rounded-xl">
+<button class="px-4 py-1.5 rounded-lg bg-surface-container-lowest shadow-sm text-primary font-label-md text-label-md">All Users</button>
+<button class="px-4 py-1.5 rounded-lg text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md">Admins</button>
+<button class="px-4 py-1.5 rounded-lg text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md">Customers</button>
+</div>
+<button class="p-2 border border-outline-variant/50 text-on-surface-variant rounded-xl hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Dashboard Stats Row (Clinical Precision Style) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-lg">
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-xs">
+<span class="p-2 bg-primary/10 text-primary rounded-lg">
+<span class="material-symbols-outlined">group</span>
+</span>
+<span class="text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +12%
+                        </span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Total Users</p>
+<h3 class="text-headline-md font-headline-md text-on-surface">12,482</h3>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-xs">
+<span class="p-2 bg-secondary-container/20 text-secondary rounded-lg">
+<span class="material-symbols-outlined">verified_user</span>
+</span>
+<span class="text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +5%
+                        </span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Active Admins</p>
+<h3 class="text-headline-md font-headline-md text-on-surface">142</h3>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-xs">
+<span class="p-2 bg-tertiary-fixed/30 text-tertiary rounded-lg">
+<span class="material-symbols-outlined">payments</span>
+</span>
+<span class="text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +24%
+                        </span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Avg. Spending</p>
+<h3 class="text-headline-md font-headline-md text-on-surface">$1,240</h3>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-outline-variant/10">
+<div class="flex justify-between items-start mb-xs">
+<span class="p-2 bg-error-container/30 text-error rounded-lg">
+<span class="material-symbols-outlined">person_off</span>
+</span>
+<span class="text-error font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_down</span> -2%
+                        </span>
+</div>
+<p class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Inactive</p>
+<h3 class="text-headline-md font-headline-md text-on-surface">329</h3>
+</div>
+</div>
+<!-- Bento Data Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-outline-variant/10 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50 border-b border-outline-variant/10">
+<th class="px-md py-4 font-label-md text-label-md text-on-surface-variant">USER</th>
+<th class="px-md py-4 font-label-md text-label-md text-on-surface-variant">CONTACT INFO</th>
+<th class="px-md py-4 font-label-md text-label-md text-on-surface-variant">REG. DATE</th>
+<th class="px-md py-4 font-label-md text-label-md text-on-surface-variant">ORDERS</th>
+<th class="px-md py-4 font-label-md text-label-md text-on-surface-variant">TOTAL SPENDING</th>
+<th class="px-md py-4 font-label-md text-label-md text-on-surface-variant">STATUS</th>
+<th class="px-md py-4 font-label-md text-label-md text-on-surface-variant text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-md py-4">
+<div class="flex items-center gap-sm">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Close-up portrait of a male doctor in his 40s with a warm, kind smile. He is wearing a medical scrub top in soft teal. Professional studio lighting with a clean, clinical background that complements the healthcare dashboard's green and blue palette. High resolution and modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4iMu-3sz77jF7jfc5_dfl1_P4LqBnSL_q8FAPPPlP-JcMijHz8mfQ_UvFgEpu07vdrQ1ikgsRjyEDiPW_GvmBK10Eot97UQ3c43G4v8xAIpnR2TY8djYWAINhM3mvd9Tjmib2MuZzt8-PhBdlyvKTGAPGBsgQc_BnCdTNkQ-DEVak-cS6AZ8M2srVncGhn_2ygOKMuwQ2BTNUpGw2sazJlnpk2k9q6eygWKAU9Z35xcofIIq6ifc"/>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Dr. Alexander Thorne</p>
+<p class="font-label-sm text-label-sm text-primary bg-primary/5 px-1.5 py-0.5 rounded w-max">Admin</p>
+</div>
+</div>
+</td>
+<td class="px-md py-4">
+<p class="font-body-sm text-body-sm text-on-surface">a.thorne@engixcare.com</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">+1 (555) 012-3456</p>
+</td>
+<td class="px-md py-4 font-body-sm text-body-sm text-on-surface-variant">Oct 12, 2023</td>
+<td class="px-md py-4 font-body-sm text-body-sm text-on-surface">42</td>
+<td class="px-md py-4 font-body-md text-body-md font-semibold text-on-surface">$5,240.50</td>
+<td class="px-md py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mr-1.5"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-md py-4 text-right">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-md py-4">
+<div class="flex items-center gap-sm">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A portrait of a young woman in her late 20s, styled as a typical healthcare customer or patient. She has a natural, friendly look and is wearing a soft pastel blue sweater. The background is a brightly lit, modern apartment with large windows, giving it a warm, human-centric feel that fits a health app's supportive atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApoYv9Or1YLSkNny-BIcteQsD2wgguFWNd4aOJDvGo5ZR9fAXNaH1nd1vGt8bv-jiu7g910H6O2t5Qb_PoMR2o0N2vnGYEuMwVN1VdcNCrXnCftv_AAuSkQLz0F5qKXJxb2InWV7mlo5JKUGSdixaZp2qEKnHqbEGjRlboNllKL26u_PIgRpjJK9yQZyld1nJcED-HXcEGVBVpLm1ABbuQ_3myYxU-yjAantwWejG0-muLlHHb4N0"/>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Sarah Jenkins</p>
+<p class="font-label-sm text-label-sm text-on-secondary-container bg-secondary-container/10 px-1.5 py-0.5 rounded w-max">Customer</p>
+</div>
+</div>
+</td>
+<td class="px-md py-4">
+<p class="font-body-sm text-body-sm text-on-surface">sarah.j@gmail.com</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">+1 (555) 987-6543</p>
+</td>
+<td class="px-md py-4 font-body-sm text-body-sm text-on-surface-variant">Jan 05, 2024</td>
+<td class="px-md py-4 font-body-sm text-body-sm text-on-surface">12</td>
+<td class="px-md py-4 font-body-md text-body-md font-semibold text-on-surface">$1,120.00</td>
+<td class="px-md py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mr-1.5"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-md py-4 text-right">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-md py-4">
+<div class="flex items-center gap-sm">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A portrait of an elderly man in his 60s, looking distinguished and healthy. He is wearing a casual, high-quality linen shirt. The setting is a minimalist library with soft, warm wooden tones. The image projects an aura of wellness and longevity, consistent with the clinical yet human-centric EngixCare design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7EQ5Zi_aRJT2ovT5LBEm4sD-EDLWgF0yikZaxnFCtOnfwBtJpk6STR890_m_3db30w4_PdXkaLtQ0fLjAzJw2ywB3Gf9gbeBA9_R22Ebx_YvRg5KXCKuWc5QoENzdbXkV3sjIKsiRVs_vOXZVCC_ZZYLp1pKfjxyU-ZYsqfDYTOkykblhlPi94cnux1-9aNFo4jrdiWCbu_s05KI415To04DdQOn_TYOpgOGD-xWCNiFuPDdmXeg"/>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Robert Chen</p>
+<p class="font-label-sm text-label-sm text-on-secondary-container bg-secondary-container/10 px-1.5 py-0.5 rounded w-max">Customer</p>
+</div>
+</div>
+</td>
+<td class="px-md py-4">
+<p class="font-body-sm text-body-sm text-on-surface">r.chen@outlook.com</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">+1 (555) 234-5678</p>
+</td>
+<td class="px-md py-4 font-body-sm text-body-sm text-on-surface-variant">Nov 28, 2023</td>
+<td class="px-md py-4 font-body-sm text-body-sm text-on-surface">0</td>
+<td class="px-md py-4 font-body-md text-body-md font-semibold text-on-surface">$0.00</td>
+<td class="px-md py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-variant text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-outline mr-1.5"></span>
+                                        Inactive
+                                    </span>
+</td>
+<td class="px-md py-4 text-right">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="px-md py-4">
+<div class="flex items-center gap-sm">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A portrait of a confident female pharmacist in her early 30s. She is wearing a professional medical uniform and smiling brightly. The background shows a modern, blurred pharmacy setting with organized shelves and soft blue-green lighting. The image emphasizes professional care and modern medical technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJDNfnW8F6z1JLeMJbdHd0-H2ZjonyEBDjpo1QhpYEbg8My8IcFncz5ysIXa-qy_wlItUrvdw2Q2B93nzgJDxmv8IsnAdEet0NzZjuYAPkMWqmG4ETKHQTHeKAnexPnJCwILvORTPZjWZkee0_LWyjiW9GaB0Ca_399sIdPdn-h7ISi8LT6PxsdHgmfXlu2fuagkSxQrZ4MdKr-Nptc1xKlUQ4J_jbP28ajpbQ5EGB7kYJmORhwDY"/>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Elena Rodriguez</p>
+<p class="font-label-sm text-label-sm text-on-secondary-container bg-secondary-container/10 px-1.5 py-0.5 rounded w-max">Customer</p>
+</div>
+</div>
+</td>
+<td class="px-md py-4">
+<p class="font-body-sm text-body-sm text-on-surface">elena.r@pharmacare.org</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">+1 (555) 456-7890</p>
+</td>
+<td class="px-md py-4 font-body-sm text-body-sm text-on-surface-variant">Feb 14, 2024</td>
+<td class="px-md py-4 font-body-sm text-body-sm text-on-surface">8</td>
+<td class="px-md py-4 font-body-md text-body-md font-semibold text-on-surface">$745.20</td>
+<td class="px-md py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mr-1.5"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-md py-4 text-right">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-md py-4 bg-surface-container-low/30 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-sm">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Showing 1 to 4 of 12,482 users</p>
+<div class="flex items-center gap-base">
+<button class="p-2 border border-outline-variant/30 rounded-lg hover:bg-surface-variant transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-9 h-9 bg-primary text-on-primary rounded-lg font-label-md text-label-md">1</button>
+<button class="w-9 h-9 hover:bg-surface-variant rounded-lg font-label-md text-label-md transition-colors">2</button>
+<button class="w-9 h-9 hover:bg-surface-variant rounded-lg font-label-md text-label-md transition-colors">3</button>
+<span class="px-2 text-on-surface-variant">...</span>
+<button class="w-9 h-9 hover:bg-surface-variant rounded-lg font-label-md text-label-md transition-colors">120</button>
+<button class="p-2 border border-outline-variant/30 rounded-lg hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Anchor -->
+<footer class="w-full py-md bg-surface border-t border-outline-variant/10 shrink-0 px-margin-desktop flex justify-between items-center">
+<div class="flex items-center gap-md">
+<p class="font-label-md text-label-md font-semibold text-on-surface-variant">© 2024 EngixCare. System v2.4.0</p>
+<div class="hidden md:flex items-center gap-sm">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<span class="w-1 h-1 rounded-full bg-outline-variant/50"></span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<span class="w-1 h-1 rounded-full bg-outline-variant/50"></span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Server Status: Optimal</span>
+</div>
+</footer>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Placeholder for search functionality
+            const searchInput = document.querySelector('input[type="text"]');
+            searchInput.addEventListener('input', (e) => {
+                console.log('Searching for:', e.target.value);
+                // Implementation of live filtering would go here
+            });
+
+            // Tab switching animation
+            const tabButtons = document.querySelectorAll('.flex.bg-surface-container-high button');
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabButtons.forEach(b => {
+                        b.classList.remove('bg-surface-container-lowest', 'shadow-sm', 'text-primary');
+                        b.classList.add('text-on-surface-variant');
+                    });
+                    btn.classList.add('bg-surface-container-lowest', 'shadow-sm', 'text-primary');
+                    btn.classList.remove('text-on-surface-variant');
+                });
+            });
+        });
+    </script>
+</body></html>

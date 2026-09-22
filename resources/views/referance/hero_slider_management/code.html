@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hero Slider Management | EngixCare Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#d9e3f6",
+                        "on-secondary-fixed": "#00164e",
+                        "primary-container": "#10b981",
+                        "outline": "#6c7a71",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#00422b",
+                        "surface-container": "#e6eeff",
+                        "surface-bright": "#f8f9ff",
+                        "primary-fixed": "#6ffbbe",
+                        "secondary-container": "#8fa7fe",
+                        "surface-tint": "#006c49",
+                        "on-surface": "#121c2a",
+                        "on-surface-variant": "#3c4a42",
+                        "secondary-fixed": "#dce1ff",
+                        "on-tertiary-container": "#523200",
+                        "on-secondary-fixed-variant": "#264191",
+                        "tertiary-container": "#e29100",
+                        "on-background": "#121c2a",
+                        "on-error": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "inverse-surface": "#27313f",
+                        "tertiary": "#855300",
+                        "background": "#f8f9ff",
+                        "primary-fixed-dim": "#4edea3",
+                        "secondary": "#4059aa",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "outline-variant": "#bbcabf",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-highest": "#d9e3f6",
+                        "on-primary-fixed": "#002113",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d0dbed",
+                        "on-primary-fixed-variant": "#005236",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#1d3989",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-secondary": "#ffffff",
+                        "primary": "#006c49",
+                        "inverse-primary": "#4edea3",
+                        "surface-container-high": "#dee9fc",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "32px",
+                        "gutter": "24px",
+                        "xs": "8px",
+                        "md": "24px",
+                        "base": "4px",
+                        "xl": "48px",
+                        "margin-desktop": "32px",
+                        "sm": "16px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "60px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; color: #121c2a; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-sidebar { background: rgba(239, 244, 255, 0.8); backdrop-filter: blur(20px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #bbcabf; border-radius: 10px; }
+        .banner-preview-overlay { background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%); }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface-container-low/80 backdrop-blur-xl border-r border-outline-variant/30 shadow-sm flex flex-col py-md z-50">
+<div class="px-md mb-xl">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">EngixCare</h1>
+<p class="font-label-md text-label-md text-on-surface-variant/70 uppercase tracking-widest mt-base">Admin Dashboard</p>
+</div>
+<nav class="flex-1 overflow-y-auto px-xs custom-scrollbar">
+<ul class="space-y-1">
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">dashboard</span><span class="font-label-md text-label-md">Dashboard</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs bg-primary-container/10 text-primary border-l-4 border-primary font-bold rounded-r-lg" href="#"><span class="material-symbols-outlined">campaign</span><span class="font-label-md text-label-md">Offers &amp; Promotions</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">inventory_2</span><span class="font-label-md text-label-md">Products</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">category</span><span class="font-label-md text-label-md">Categories</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">science</span><span class="font-label-md text-label-md">Ingredients</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">article</span><span class="font-label-md text-label-md">Articles/Blog</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">confirmation_number</span><span class="font-label-md text-label-md">Coupons</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-md text-label-md">Orders</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">payments</span><span class="font-label-md text-label-md">Payments</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">group</span><span class="font-label-md text-label-md">Users</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">star</span><span class="font-label-md text-label-md">Reviews &amp; Ratings</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">contact_support</span><span class="font-label-md text-label-md">Customer Inquiries</span></a></li>
+<li><a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-variant/50 transition-colors rounded-lg group" href="#"><span class="material-symbols-outlined">settings</span><span class="font-label-md text-label-md">General Settings</span></a></li>
+</ul>
+</nav>
+<div class="px-md mt-auto pt-md border-t border-outline-variant/20">
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:text-error transition-colors" href="#"><span class="material-symbols-outlined">logout</span><span class="font-label-md text-label-md">Logout</span></a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] min-h-screen flex flex-col">
+<!-- Top Nav Bar -->
+<header class="sticky top-0 z-40 flex justify-between items-center h-16 px-margin-desktop bg-surface/80 backdrop-blur-md border-b border-outline-variant/20 shadow-sm">
+<div class="flex items-center gap-sm">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-sm w-64 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search sliders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="bg-primary text-on-primary px-sm py-2 rounded-lg font-label-md flex items-center gap-xs hover:bg-primary/90 transition-all shadow-md">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Quick Add
+                </button>
+<div class="flex items-center gap-sm border-l border-outline-variant/30 pl-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">mail</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors" id="theme-toggle"><span class="material-symbols-outlined">dark_mode</span></button>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a female healthcare administrator in a clean, modern medical office setting, wearing a white blazer and a friendly expression. The lighting is bright and airy with high-key corporate aesthetics and soft emerald green accents in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdrLKEL5-S_Re7D7_ayYsC4ZMCMn9MfLLxrq0FsYcspnmq9baju8c4U6fzIWJTzyS93UJryMU_Xr-oLmkik-GGqcrN_rTAcggenYs5IwxqpVizUZ-HsWaV7z3cDo03gDrc2eZFyfyRi3e1yPbxVq3ZyyAPsVsXGl4cXY4M8ECG5suHBiXSpJeOAccXA8YTpThXmkJ35tsvxNc8Ue3vgMpv1S92iUM8gqXugZOSVWVpeNt8kkNBbtg"/>
+</div>
+</div>
+</div>
+</header>
+<div class="p-lg flex flex-col gap-lg flex-1">
+<!-- Header Section -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Hero Slider Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Design and arrange the primary visual banners for your storefront.</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-high text-on-surface-variant border border-outline-variant/30 px-md py-2 rounded-lg font-label-md flex items-center gap-xs hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">preview</span>
+                        Preview Site
+                    </button>
+<button class="bg-primary text-on-primary px-md py-2 rounded-lg font-label-md flex items-center gap-xs hover:bg-primary/90 transition-all shadow-lg" onclick="document.getElementById('edit-slider-panel').classList.remove('translate-x-full')">
+<span class="material-symbols-outlined text-[18px]">add_photo_alternate</span>
+                        Add New Slider
+                    </button>
+</div>
+</div>
+<!-- Bento Layout Content -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Main Table Area -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] overflow-hidden border border-outline-variant/10">
+<div class="p-md border-b border-outline-variant/10 flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Active Banners</h3>
+<div class="flex items-center gap-xs text-label-sm text-on-surface-variant bg-surface-container rounded-full px-3 py-1">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                                Drag rows to change display order
+                            </div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50 text-label-md text-on-surface-variant uppercase tracking-wider">
+<th class="px-md py-4 font-semibold w-12 text-center">#</th>
+<th class="px-md py-4 font-semibold">Slider Image</th>
+<th class="px-md py-4 font-semibold">Title &amp; Details</th>
+<th class="px-md py-4 font-semibold">Status</th>
+<th class="px-md py-4 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="group hover:bg-primary/5 transition-colors cursor-move">
+<td class="px-md py-4 text-center">
+<span class="material-symbols-outlined text-on-surface-variant/40 group-hover:text-primary transition-colors">drag_indicator</span>
+</td>
+<td class="px-md py-4">
+<div class="w-24 h-14 rounded-lg overflow-hidden border border-outline-variant/20 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A wide-angle cinematic shot of premium skincare products arranged on a polished marble surface with soft tropical shadows. The aesthetic is clean, medical-grade luxury with clinical green and white highlights. High-end packaging with minimalist typography is visible." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkxEUIvZYNdrtKLWyi1d7Lq7xjjSRUrqLbTu-KLa2cJk3aWmwh2DYRqdbDXSGPG6U1m8Sfij48lUplYm0trMUkaovpq5HhF4gVZMEXVFbUqZ1pfbQp-lWisAmKXnuwZyoaLSiH6TR3t77v9Viup-cg1CeT32tzxPN0X0BBrSDNrNos1w4ReUuRIH0hba9DCKYR0_P8kaXgCAA3CLW08h-srgHqs3cV9bZ3oIjMnhzLR7UAFLLTuS8"/>
+</div>
+</td>
+<td class="px-md py-4">
+<div class="flex flex-col">
+<span class="font-label-md text-body-sm text-on-surface font-semibold">Advanced Serum Series</span>
+<span class="text-label-sm text-on-surface-variant">CTA: Shop Collection • Order: 1</span>
+</div>
+</td>
+<td class="px-md py-4">
+<div class="flex items-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</td>
+<td class="px-md py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-lg transition-all"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-lg transition-all"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-primary/5 transition-colors cursor-move">
+<td class="px-md py-4 text-center">
+<span class="material-symbols-outlined text-on-surface-variant/40 group-hover:text-primary transition-colors">drag_indicator</span>
+</td>
+<td class="px-md py-4">
+<div class="w-24 h-14 rounded-lg overflow-hidden border border-outline-variant/20 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A bright, cheerful interior of a modern wellness clinic with warm wood textures and flourishing green indoor plants. Soft morning sunlight streams through large windows, creating an inviting, human-centric atmosphere. The focus is on comfort and state-of-the-art healthcare facilities." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4H9T8ZpnQwhYuCXVy1UrvN3UtTJ1_iOxA3muTvQ7fNHcefoMu8gKUZAkstfkm3axIJgax1GcL9XqbNHDEOWAi3b0r42Xb4knjbMFNZxQGs9dNPkx062Cmj14CLHcP0muQKqx0ybmWPEIfftw-ugH3EdEw6EyospcOPdKW0plF3T1jJMHhuVh-az26JOtUARWvlQ_MvIbPu-GqDpGS6I4IalFG3EjAF3VSjJMIuzQ2cSBkEmeuAfY"/>
+</div>
+</td>
+<td class="px-md py-4">
+<div class="flex flex-col">
+<span class="font-label-md text-body-sm text-on-surface font-semibold">New Patient Onboarding</span>
+<span class="text-label-sm text-on-surface-variant">CTA: Book Appointment • Order: 2</span>
+</div>
+</td>
+<td class="px-md py-4">
+<div class="flex items-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</td>
+<td class="px-md py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-lg transition-all"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-lg transition-all"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-primary/5 transition-colors cursor-move opacity-60">
+<td class="px-md py-4 text-center">
+<span class="material-symbols-outlined text-on-surface-variant/40 group-hover:text-primary transition-colors">drag_indicator</span>
+</td>
+<td class="px-md py-4">
+<div class="w-24 h-14 rounded-lg overflow-hidden border border-outline-variant/20 shadow-sm grayscale">
+<img class="w-full h-full object-cover" data-alt="A professional flat-lay arrangement of medical journals, a stethoscope, and organic botanical ingredients like lavender and aloe vera. The style is modern corporate, very clean, with muted green and gray tones, emphasizing the scientific foundation of EngixCare." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm8GJyDKv76vlwuIHSrhM9YuO6H8yAkztzoh0gI_j7DdKcog_Pq8xmuv92Hq0um4HKWzPw4bF_ItSG6gbh-jAUADjfsUAWXIEgMbuvBRaH8aAKAhdfpkIKatsVQ2bZzrAMi1Ouh-bi8AqpICswDelo5e1fLWBT6_4Q-8-KyleSgEkc8vTRcr64VFxwjzevSP2mOqdyZzL1LJwOR3zAdqG1vofHNKlU5rauRIO4y0g6VCQqvSV2Xyo"/>
+</div>
+</td>
+<td class="px-md py-4">
+<div class="flex flex-col">
+<span class="font-label-md text-body-sm text-on-surface font-semibold">Seasonal Health Guide</span>
+<span class="text-label-sm text-on-surface-variant">CTA: Read Now • Order: 3 (Hidden)</span>
+</div>
+</td>
+<td class="px-md py-4">
+<div class="flex items-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</td>
+<td class="px-md py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-lg transition-all"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-lg transition-all"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Live Preview & Quick Stats -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<!-- Live Preview Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-outline-variant/10 overflow-hidden">
+<div class="p-md border-b border-outline-variant/10 flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">visibility</span>
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Live Site Preview</h3>
+</div>
+<div class="p-md">
+<div class="relative w-full aspect-[16/9] rounded-lg overflow-hidden shadow-inner group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A stunning lifestyle photograph of a person with radiant skin smiling gently against a soft-focus background of a green garden. The lighting is golden hour, warm and inviting, representing health and vitality. The overall aesthetic is breathable, premium healthcare marketing." id="preview-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_HBRx9Mc5_6vYhXZRHPmtaFW2e6IOGdHqBwh7AHMNTjdxVl-HCADGcQTv6_0CjesoBAKnh7BEhINhbI52t2RMV8VcLy4J5gOHkx9ogV3sY0tKf5hKrV9Y3rZhkoqYFvHQRmV-d90C3bDMEOR3CktN0yJ_21MrA7AKLoafosMGgkpOX8U_rxjYoJwxVG6EawcOIruMiqspVNPM2IchkQiOH54VUWoM9r4GR2HUobr4fBfZkN-FRW8"/>
+<div class="absolute inset-0 banner-preview-overlay flex flex-col justify-center px-lg">
+<h4 class="text-white font-headline-md text-headline-md leading-tight max-w-[80%]" id="preview-title">Experience Pure Wellness</h4>
+<p class="text-white/80 text-body-sm mt-2 max-w-[70%]" id="preview-subtitle">Discover our clinical range of dermatological solutions.</p>
+<button class="mt-4 bg-primary text-white font-label-md px-md py-2 rounded-full self-start hover:scale-105 transition-transform" id="preview-cta">Shop Collection</button>
+</div>
+<div class="absolute bottom-4 right-4 flex gap-1">
+<div class="w-2 h-2 rounded-full bg-white"></div>
+<div class="w-2 h-2 rounded-full bg-white/40"></div>
+<div class="w-2 h-2 rounded-full bg-white/40"></div>
+</div>
+</div>
+<div class="mt-md space-y-3">
+<div class="flex justify-between items-center text-label-sm">
+<span class="text-on-surface-variant">Visibility Status</span>
+<span class="text-primary font-bold px-2 py-0.5 bg-primary/10 rounded">LIVE</span>
+</div>
+<div class="flex justify-between items-center text-label-sm">
+<span class="text-on-surface-variant">CTR (Last 7 Days)</span>
+<span class="text-on-surface font-bold">4.2%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Usage Tips -->
+<div class="bg-primary/5 rounded-xl p-md border border-primary/10">
+<h4 class="font-label-md text-primary flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+                            DESIGN TIPS
+                        </h4>
+<ul class="text-body-sm text-on-surface-variant space-y-2">
+<li class="flex gap-2">
+<span class="text-primary font-bold">•</span>
+                                Use high-resolution images (1920x1080px).
+                            </li>
+<li class="flex gap-2">
+<span class="text-primary font-bold">•</span>
+                                Keep titles under 40 characters for readability.
+                            </li>
+<li class="flex gap-2">
+<span class="text-primary font-bold">•</span>
+                                Place key visual elements on the right side.
+                            </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Add/Edit Slide-out Panel (Modal Alternative for High-Density UI) -->
+<div class="fixed inset-y-0 right-0 w-[450px] bg-white shadow-2xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out border-l border-outline-variant/20 flex flex-col" id="edit-slider-panel">
+<div class="p-md border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Add New Slider</h3>
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors" onclick="document.getElementById('edit-slider-panel').classList.add('translate-x-full')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-md space-y-lg custom-scrollbar">
+<!-- Image Upload -->
+<div class="space-y-sm">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase">Banner Image</label>
+<div class="border-2 border-dashed border-outline-variant/40 rounded-xl p-xl flex flex-col items-center justify-center text-center hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary text-[48px] mb-2">add_photo_alternate</span>
+<p class="text-body-sm text-on-surface-variant font-medium">Click to upload or drag &amp; drop</p>
+<p class="text-label-sm text-outline mt-1">Recommended size: 1920 x 1080px (Max 5MB)</p>
+</div>
+</div>
+<!-- Text Inputs -->
+<div class="space-y-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase">Slider Title</label>
+<input class="w-full rounded-lg border-outline-variant/40 focus:border-primary focus:ring-primary/20 text-body-md" id="input-title" onkeyup="updatePreview()" placeholder="Enter headline text" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase">Subtitle / Description</label>
+<textarea class="w-full rounded-lg border-outline-variant/40 focus:border-primary focus:ring-primary/20 text-body-md" id="input-subtitle" onkeyup="updatePreview()" placeholder="Enter brief sub-text" rows="3"></textarea>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase">CTA Text</label>
+<input class="w-full rounded-lg border-outline-variant/40 focus:border-primary focus:ring-primary/20 text-body-md" id="input-cta" onkeyup="updatePreview()" placeholder="Shop Now" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase">CTA Link</label>
+<input class="w-full rounded-lg border-outline-variant/40 focus:border-primary focus:ring-primary/20 text-body-md" placeholder="https://..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Settings -->
+<div class="space-y-md p-md bg-surface-container-low rounded-xl border border-outline-variant/20">
+<div class="flex justify-between items-center">
+<div class="flex flex-col">
+<span class="font-label-md text-body-sm text-on-surface font-semibold">Active Status</span>
+<span class="text-label-sm text-on-surface-variant">Enable this slider on the live site</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<div class="flex justify-between items-center pt-md border-t border-outline-variant/20">
+<div class="flex flex-col">
+<span class="font-label-md text-body-sm text-on-surface font-semibold">Display Order</span>
+<span class="text-label-sm text-on-surface-variant">Position in the carousel sequence</span>
+</div>
+<input class="w-16 rounded-lg border-outline-variant/40 focus:border-primary focus:ring-primary/20 text-center font-bold" type="number" value="4"/>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-outline-variant/10 bg-surface-container-low flex gap-sm">
+<button class="flex-1 bg-primary text-on-primary font-bold py-3 rounded-lg hover:bg-primary/90 transition-all shadow-md">Publish Slider</button>
+<button class="px-md py-3 text-on-surface-variant border border-outline-variant/40 rounded-lg hover:bg-surface-variant transition-all" onclick="document.getElementById('edit-slider-panel').classList.add('translate-x-full')">Cancel</button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-auto py-md px-margin-desktop bg-surface border-t border-outline-variant/10 flex justify-between items-center">
+<div class="flex items-center gap-md">
+<span class="font-label-md text-label-md font-semibold text-primary">EngixCare</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">© 2024 EngixCare. System v2.4.0</span>
+</div>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm" href="#">Support</a>
+</div>
+</footer>
+</main>
+<!-- UI Interaction Scripts -->
+<script>
+        function updatePreview() {
+            const title = document.getElementById('input-title').value;
+            const subtitle = document.getElementById('input-subtitle').value;
+            const cta = document.getElementById('input-cta').value;
+
+            if (title) document.getElementById('preview-title').innerText = title;
+            if (subtitle) document.getElementById('preview-subtitle').innerText = subtitle;
+            if (cta) document.getElementById('preview-cta').innerText = cta;
+        }
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const icon = themeToggle.querySelector('.material-symbols-outlined');
+            icon.textContent = document.documentElement.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+        });
+
+        // Simple row reordering simulation
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            row.addEventListener('dragstart', () => {
+                row.classList.add('opacity-40');
+            });
+            row.addEventListener('dragend', () => {
+                row.classList.remove('opacity-40');
+            });
+        });
+    </script>
+</body></html>
