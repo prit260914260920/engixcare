@@ -103,17 +103,17 @@
                     }
                   }
                 </style>
-                <div style="width:100%; height:100%; overflow:hidden; display:flex; align-items:center; justify-content:center; position:relative;">
+                <div style="width:100%; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:200px;">
                   <img src="{{ $mainImage }}" alt="{{ $product->name }}"
                     class="product-main-img"
-                    style="display:block; width:auto; max-width:100%; height:auto; max-height:100%; object-fit:contain; box-sizing:border-box;" />
+                    style="display:block; width:auto; max-width:100%; height:auto; max-height:480px; object-fit:contain; box-sizing:border-box;" />
                   @if(count($videoUrls) > 0)
                     <video
                       class="product-gallery-video"
                       controls
                       preload="metadata"
                       playsinline
-                      style="display:none; width:100%; height:100%; max-height:100%; background:#000; border-radius:0.5rem; position:absolute; top:0; left:0; object-fit:contain;">
+                      style="display:none; width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain;">
                     </video>
                   @endif
                 </div>

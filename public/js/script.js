@@ -315,13 +315,17 @@
       var details = document.querySelector('.product-detail-intro');
       if (!gallery || !details) return;
       var detailsHeight = details.getBoundingClientRect().height;
-      gallery.style.maxHeight = detailsHeight + 'px';
+      // Only cap height if the details column is actually rendered (height > 100)
+      // Use minHeight so gallery never collapses to 0
+      if (detailsHeight > 100) {
+        gallery.style.maxHeight = detailsHeight + 'px';
+        gallery.style.minHeight = '200px';
+      }
     }
 
-    syncProductGalleryHeight();
-    window.addEventListener('resize', function () {
-      syncProductGalleryHeight();
-    });
+    // Run after full page load so fonts/images are rendered and heights are accurate
+    window.addEventListener('load', syncProductGalleryHeight);
+    window.addEventListener('resize', syncProductGalleryHeight);
 
     // ===== CONTACT FORM =====
     var contactForm = document.getElementById('contactForm');
