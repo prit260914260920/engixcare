@@ -152,11 +152,19 @@
         mediaList = [];
       }
 
-      var galleryImg   = document.querySelector('.product-gallery-main img');
-      var galleryVideo = document.querySelector('.product-gallery-video');
-      var thumbBtns    = document.querySelectorAll('.gallery-thumb');
+      var galleryImg   = galleryRoot.querySelector('.product-gallery-main img');
+      var galleryVideo = galleryRoot.querySelector('.product-gallery-video');
+      var thumbBtns    = galleryRoot.querySelectorAll('.gallery-thumb');
       var autoTimer    = null;
       var currentIndex = 0;
+
+      function updateThumbs(index) {
+        thumbBtns.forEach(function (btn, i) {
+          var isActive = (i === index);
+          btn.classList.toggle('active', isActive);
+          btn.style.borderColor = isActive ? '#b08d57' : '#e0e0e0';
+        });
+      }
 
       function showMediaAt(index) {
         if (!mediaList.length) return;
@@ -164,19 +172,21 @@
         var item = mediaList[index];
 
         if (item.type === 'video') {
-          // Show video, hide image
-          if (galleryImg)   { galleryImg.style.display   = 'none'; }
+          // Show video, hide image — stop auto-slide completely until video ends
+          stopAutoSlide();
+          if (galleryImg) { galleryImg.style.display = 'none'; }
           if (galleryVideo) {
             galleryVideo.style.display = 'block';
             galleryVideo.src = item.url;
             galleryVideo.load();
           }
         } else {
-          // Show image, hide video
+          // Show image, hide & reset video
           if (galleryVideo) {
             galleryVideo.pause();
             galleryVideo.style.display = 'none';
-            galleryVideo.src = '';
+            galleryVideo.removeAttribute('src');
+            galleryVideo.load();
           }
           if (galleryImg) {
             galleryImg.style.display = 'block';
@@ -184,21 +194,26 @@
           }
         }
 
-        // Update thumbnail active state
-        thumbBtns.forEach(function (btn, i) {
-          btn.classList.toggle('active', i === index);
-          btn.style.borderColor = (i === index) ? '#b08d57' : '#e0e0e0';
-        });
+        updateThumbs(index);
       }
 
       function startAutoSlide() {
-        if (mediaList.length <= 1) return;
+        // Do not start auto-slide if current slide is a video
+        if (!mediaList.length || mediaList.length <= 1) return;
+        if (mediaList[currentIndex] && mediaList[currentIndex].type === 'video') return;
         stopAutoSlide();
         autoTimer = setInterval(function () {
+          // Stop if we've landed on a video slide
+          if (mediaList[currentIndex] && mediaList[currentIndex].type === 'video') {
+            stopAutoSlide();
+            return;
+          }
           var next = (currentIndex + 1) % mediaList.length;
-          // Skip auto-advance while a video is playing
-          if (galleryVideo && !galleryVideo.paused && !galleryVideo.ended) return;
           showMediaAt(next);
+          // If the next slide is a video, stop auto-slide — let the video play
+          if (mediaList[next] && mediaList[next].type === 'video') {
+            stopAutoSlide();
+          }
         }, 3200);
       }
 
@@ -206,23 +221,28 @@
         if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
       }
 
-      // Thumbnail click handlers
-      thumbBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
+      // Thumbnail click — use event delegation on the container for reliability
+      var thumbsContainer = galleryRoot.querySelector('.product-gallery-thumbs');
+      if (thumbsContainer) {
+        thumbsContainer.addEventListener('click', function (e) {
+          var btn = e.target.closest('.gallery-thumb');
+          if (!btn) return;
+          var idx = parseInt(btn.getAttribute('data-index'), 10);
           stopAutoSlide();
-          showMediaAt(parseInt(btn.getAttribute('data-index'), 10));
-          startAutoSlide();
+          showMediaAt(idx);
+          // Only restart auto-slide if the selected item is an image
+          if (mediaList[idx] && mediaList[idx].type !== 'video') {
+            startAutoSlide();
+          }
         });
-      });
+      }
 
-      // Resume auto-slide after video ends
+      // After video ends — advance to next slide and resume auto-slide
       if (galleryVideo) {
         galleryVideo.addEventListener('ended', function () {
+          var next = (currentIndex + 1) % mediaList.length;
+          showMediaAt(next);
           startAutoSlide();
-        });
-        // Pause auto-slide while user is watching video
-        galleryVideo.addEventListener('play', function () {
-          stopAutoSlide();
         });
       }
 
