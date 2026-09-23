@@ -158,6 +158,30 @@
       var autoTimer    = null;
       var currentIndex = 0;
 
+      // Track whether user has interacted with the page (click/touch/key)
+      // Browsers allow unmuted autoplay only after a user gesture
+      var userHasInteracted = false;
+      function markInteraction() { userHasInteracted = true; }
+      document.addEventListener('click',     markInteraction, { once: false, passive: true });
+      document.addEventListener('touchstart', markInteraction, { once: false, passive: true });
+      document.addEventListener('keydown',   markInteraction, { once: false, passive: true });
+
+      // Smart play: try unmuted first; if blocked, fall back to muted autoplay
+      function smartPlay(video) {
+        video.muted = false;
+        var p = video.play();
+        if (p !== undefined) {
+          p.catch(function () {
+            // Unmuted blocked — try muted (browser will allow this)
+            video.muted = true;
+            var p2 = video.play();
+            if (p2 !== undefined) {
+              p2.catch(function () { /* fully blocked — user must click play */ });
+            }
+          });
+        }
+      }
+
       // Inject smooth fade transition CSS
       var transStyle = document.createElement('style');
       transStyle.textContent = [
@@ -188,16 +212,20 @@
               galleryImg.style.display = 'none';
               galleryImg.style.opacity = '0';
             }
-            // Set src BEFORE making visible
+            // Set src BEFORE making visible (only change src if different)
             if (galleryVideo) {
-              galleryVideo.src = item.url;
-              galleryVideo.load();
+              if (galleryVideo.getAttribute('src') !== item.url) {
+                galleryVideo.src = item.url;
+                galleryVideo.load();
+              }
               galleryVideo.style.display  = 'block';
               galleryVideo.style.opacity  = '0';
-              // Fade in after browser has rendered it
+              // Fade in then auto-play (unmuted if possible)
               requestAnimationFrame(function () {
                 requestAnimationFrame(function () {
                   galleryVideo.style.opacity = '1';
+                  galleryVideo.currentTime = 0;
+                  smartPlay(galleryVideo);
                 });
               });
             }
@@ -230,10 +258,14 @@
           if (item.type === 'video') {
             if (galleryImg)   { galleryImg.style.display = 'none'; }
             if (galleryVideo) {
-              galleryVideo.src = item.url;
-              galleryVideo.load();
+              if (galleryVideo.getAttribute('src') !== item.url) {
+                galleryVideo.src = item.url;
+                galleryVideo.load();
+              }
               galleryVideo.style.display = 'block';
               galleryVideo.style.opacity = '1';
+              galleryVideo.currentTime = 0;
+              smartPlay(galleryVideo);
             }
           } else {
             if (galleryVideo) { galleryVideo.style.display = 'none'; }
@@ -270,7 +302,7 @@
           }
           var next = (currentIndex + 1) % mediaList.length;
           showMediaAt(next, false);
-          // If the next item is a video, stop auto-slide and let user play it
+          // If the next item is a video, stop auto-slide (video auto-plays via showMediaAt)
           if (mediaList[next] && mediaList[next].type === 'video') {
             stopAutoSlide();
           }
@@ -281,7 +313,15 @@
         if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
       }
 
-      // Thumbnail click — event delegation for reliability
+      // Pre-load all video sources on page load so they're ready instantly
+      if (galleryVideo) {
+        var firstVideoItem = mediaList.find(function (m) { return m.type === 'video'; });
+        if (firstVideoItem) {
+          galleryVideo.src = firstVideoItem.url;
+          galleryVideo.load();
+          galleryVideo.style.display = 'none';
+        }
+      }
       var thumbsContainer = galleryRoot.querySelector('.product-gallery-thumbs');
       if (thumbsContainer) {
         thumbsContainer.addEventListener('click', function (e) {

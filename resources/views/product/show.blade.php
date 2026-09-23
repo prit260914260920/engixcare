@@ -111,7 +111,7 @@
                     <video
                       class="product-gallery-video"
                       controls
-                      preload="metadata"
+                      preload="auto"
                       playsinline
                       style="display:none; width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain;">
                     </video>
