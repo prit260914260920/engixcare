@@ -109,6 +109,7 @@ Route::get('/offers', [PromotionController::class, 'publicOffers'])->name('offer
 Route::middleware('auth')->group(function () {
     Route::get('/my-orders', [CheckoutController::class, 'myOrders'])->name('orders.index');
     Route::get('/my-orders/{order}', [CheckoutController::class, 'orderDetail'])->name('orders.detail');
+    Route::get('/my-orders/{order}/invoice', [CheckoutController::class, 'downloadInvoice'])->name('orders.invoice');
 });
 
 // ── Contact (Public) ──────────────────────────────────────────────────────────

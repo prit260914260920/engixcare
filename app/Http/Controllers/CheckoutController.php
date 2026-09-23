@@ -269,6 +269,18 @@ class CheckoutController extends Controller
     }
 
     /**
+     * Render a print-ready invoice for the given order.
+     */
+    public function downloadInvoice(Order $order)
+    {
+        if ((int) $order->user_id !== (int) Auth::id()) {
+            abort(403);
+        }
+
+        return view('orders.invoice', compact('order'));
+    }
+
+    /**
      * Validate a coupon code and return the discount info as JSON.
      */
     public function validateCoupon(Request $request)

@@ -283,7 +283,7 @@
     font-size: 0.85rem;
   }
 
-  .co-pay-completed {
+  .co-pay-paid {
     padding: 4px 8px;
     background-color: #e8f5e9;
     color: #388e3c;

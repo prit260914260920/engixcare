@@ -124,9 +124,14 @@
                       </span>
                     </td>
                     <td>
-                      <a href="{{ route('orders.detail', $order) }}" class="btn btn-sm btn-outline-engix" data-testid="view-order-{{ $order->id }}">
-                        <i class="fa-solid fa-eye me-1"></i>View
-                      </a>
+                      <div class="d-flex gap-1 flex-wrap">
+                        <a href="{{ route('orders.detail', $order) }}" class="btn btn-sm btn-outline-engix" data-testid="view-order-{{ $order->id }}">
+                          <i class="fa-solid fa-eye me-1"></i>View
+                        </a>
+                        <a href="{{ route('orders.invoice', $order) }}" class="btn btn-sm btn-outline-secondary" data-testid="invoice-order-{{ $order->id }}" title="Download Invoice">
+                          <i class="fa-solid fa-file-invoice-dollar me-1"></i>Invoice
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 @endforeach
@@ -246,7 +251,7 @@
     color: #f57c00 !important;
   }
 
-  .payment-completed {
+  .payment-paid {
     background-color: #e8f5e9 !important;
     color: #388e3c !important;
   }
