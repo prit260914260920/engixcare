@@ -246,10 +246,6 @@
                 <span><i class="fa-solid fa-tag"></i> <span id="co-discount-label">Coupon Discount</span></span>
                 <span id="co-discount">− ₹{{ number_format($discount, 0) }}</span>
               </div>
-              <div class="co-total-row co-gst-row">
-                <span><i class="fa-solid fa-receipt"></i> GST (18%)</span>
-                <span id="co-gst">+ ₹{{ number_format($gst, 0) }}</span>
-              </div>
               <div class="co-total-row co-total-grand">
                 <span>Total</span>
                 <span id="co-grand">₹{{ number_format($total, 0) }}</span>
@@ -310,15 +306,12 @@
     var discountLbl  = document.getElementById('co-discount-label');
     var grandEl      = document.getElementById('co-grand');
     var subtotalEl   = document.getElementById('co-subtotal');
-    var gstEl        = document.getElementById('co-gst');
     var savingsBadge = document.getElementById('co-savings-badge');
 
     var amountAfterDiscount = subtotal - discount;
-    var gst                 = Math.round(amountAfterDiscount * 0.18);
-    var total               = amountAfterDiscount + gst;
+    var total               = amountAfterDiscount;
 
     if (subtotalEl)  subtotalEl.textContent = fmt(subtotal);
-    if (gstEl)       gstEl.textContent      = '+ ' + fmt(gst);
     if (grandEl)     grandEl.textContent    = fmt(total);
 
     if (discount > 0) {

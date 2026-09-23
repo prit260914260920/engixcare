@@ -415,10 +415,6 @@
                         </span>
                         <span class="text-label-sm text-tertiary font-semibold" id="m-discount">—</span>
                     </div>
-                    <div class="flex justify-between hidden" id="m-gst-row">
-                        <span class="text-label-sm text-on-surface-variant">GST (18%)</span>
-                        <span class="text-label-sm text-on-surface" id="m-gst">—</span>
-                    </div>
                     <div class="flex justify-between items-center pt-xs border-t border-outline-variant/20">
                         <span class="text-body-sm font-bold text-on-surface">Total Paid</span>
                         <span class="text-[17px] font-extrabold text-primary" id="m-total">—</span>
@@ -614,14 +610,6 @@
             discRow.classList.remove('hidden');
         } else {
             discRow.classList.add('hidden');
-        }
-
-        const gstRow = document.getElementById('m-gst-row');
-        if (parseFloat(o.gst) > 0) {
-            document.getElementById('m-gst').textContent = '₹' + o.gst;
-            gstRow.classList.remove('hidden');
-        } else {
-            gstRow.classList.add('hidden');
         }
 
         // Notes

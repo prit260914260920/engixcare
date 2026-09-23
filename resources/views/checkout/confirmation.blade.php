@@ -53,12 +53,6 @@
           <span>− ₹{{ number_format($order->discount, 0) }}</span>
         </div>
         @endif
-        @if($order->gst > 0)
-        <div class="co-total-row co-gst-row">
-          <span><i class="fa-solid fa-receipt"></i> GST (18%)</span>
-          <span>+ ₹{{ number_format($order->gst, 0) }}</span>
-        </div>
-        @endif
         <div class="co-total-row co-total-grand">
           <span>Total Paid</span>
           <span>₹{{ number_format($order->total, 0) }}</span>

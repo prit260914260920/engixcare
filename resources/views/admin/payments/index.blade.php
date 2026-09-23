@@ -388,10 +388,6 @@
                         </span>
                         <span class="text-label-sm text-tertiary font-semibold" id="pm-discount">—</span>
                     </div>
-                    <div class="flex justify-between hidden" id="pm-gst-row">
-                        <span class="text-label-sm text-on-surface-variant">GST (18%)</span>
-                        <span class="text-label-sm text-on-surface" id="pm-gst">—</span>
-                    </div>
                     <div class="flex justify-between items-center pt-xs border-t border-outline-variant/20">
                         <span class="text-body-sm font-bold text-on-surface">Total</span>
                         <span class="text-[17px] font-extrabold text-primary" id="pm-total">—</span>
@@ -525,13 +521,6 @@
             discRow.classList.add('hidden');
         }
 
-        const gstRow = document.getElementById('pm-gst-row');
-        if (parseFloat(o.gst) > 0) {
-            document.getElementById('pm-gst').textContent = '₹' + o.gst;
-            gstRow.classList.remove('hidden');
-        } else {
-            gstRow.classList.add('hidden');
-        }
     }
 
     function closePaymentModal() {

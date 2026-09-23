@@ -24,10 +24,10 @@ class CheckoutController extends Controller
             return redirect()->route('home')->with('info', 'Your cart is empty.');
         }
 
-        ['subtotal' => $subtotal, 'discount' => $discount, 'gst' => $gst, 'total' => $total]
+        ['subtotal' => $subtotal, 'discount' => $discount, 'total' => $total]
             = $this->calcTotals($cartItems, request()->query('coupon_code'), $user);
 
-        return view('checkout.show', compact('user', 'cartItems', 'subtotal', 'discount', 'gst', 'total'));
+        return view('checkout.show', compact('user', 'cartItems', 'subtotal', 'discount', 'total'));
     }
 
     /**
@@ -60,7 +60,7 @@ class CheckoutController extends Controller
             return redirect()->route('home')->with('info', 'Your cart is empty.');
         }
 
-        ['subtotal' => $subtotal, 'discount' => $discount, 'gst' => $gst, 'total' => $total]
+        ['subtotal' => $subtotal, 'discount' => $discount, 'total' => $total]
             = $this->calcTotals($cartItems, $data['coupon_code'] ?? null, $user);
 
         // ── COD flow ──────────────────────────────────────────────────────────
@@ -79,7 +79,6 @@ class CheckoutController extends Controller
                 'coupon_code'    => isset($data['coupon_code']) ? strtoupper(trim($data['coupon_code'])) : null,
                 'subtotal'       => $subtotal,
                 'discount'       => $discount,
-                'gst'            => $gst,
                 'total'          => $total,
                 'payment_method' => 'cod',
                 'payment_status' => 'pending',
@@ -109,7 +108,6 @@ class CheckoutController extends Controller
             'coupon_code'    => isset($data['coupon_code']) ? strtoupper(trim($data['coupon_code'])) : null,
             'subtotal'       => $subtotal,
             'discount'       => $discount,
-            'gst'            => $gst,
             'total'          => $total,
             'payment_method' => 'online',
             'payment_status' => 'pending',
@@ -449,9 +447,8 @@ class CheckoutController extends Controller
         }
 
         $amountAfterDiscount = $subtotal - $discount;
-        $gst   = round($amountAfterDiscount * (18 / 100));
-        $total = $amountAfterDiscount + $gst;
+        $total = $amountAfterDiscount;
 
-        return compact('subtotal', 'discount', 'gst', 'total');
+        return compact('subtotal', 'discount', 'total');
     }
 }
