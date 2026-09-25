@@ -166,19 +166,13 @@
       document.addEventListener('touchstart', markInteraction, { once: false, passive: true });
       document.addEventListener('keydown',   markInteraction, { once: false, passive: true });
 
-      // Smart play: try unmuted first; if blocked, fall back to muted autoplay
+      // Auto-play muted (browsers always allow muted autoplay — no buffering/black screen)
       function smartPlay(video) {
-        video.muted = false;
+        video.muted = true;
+        video.currentTime = 0;
         var p = video.play();
         if (p !== undefined) {
-          p.catch(function () {
-            // Unmuted blocked — try muted (browser will allow this)
-            video.muted = true;
-            var p2 = video.play();
-            if (p2 !== undefined) {
-              p2.catch(function () { /* fully blocked — user must click play */ });
-            }
-          });
+          p.catch(function () { /* blocked — silent fail, video is already muted */ });
         }
       }
 

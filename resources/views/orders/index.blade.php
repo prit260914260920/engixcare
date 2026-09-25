@@ -128,8 +128,11 @@
                         <a href="{{ route('orders.detail', $order) }}" class="btn btn-sm btn-outline-engix" data-testid="view-order-{{ $order->id }}">
                           <i class="fa-solid fa-eye me-1"></i>View
                         </a>
-                        <a href="{{ route('orders.invoice', $order) }}" class="btn btn-sm btn-outline-secondary" data-testid="invoice-order-{{ $order->id }}" title="Download Invoice">
+                        <a href="{{ route('orders.invoice', $order) }}" class="btn btn-sm btn-outline-secondary" data-testid="invoice-order-{{ $order->id }}" title="View Invoice">
                           <i class="fa-solid fa-file-invoice-dollar me-1"></i>Invoice
+                        </a>
+                        <a href="{{ route('orders.invoice.pdf', $order) }}" class="btn btn-sm btn-outline-danger" data-testid="invoice-pdf-{{ $order->id }}" title="Download PDF">
+                          <i class="fa-solid fa-file-pdf me-1"></i>PDF
                         </a>
                       </div>
                     </td>

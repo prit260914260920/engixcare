@@ -957,5 +957,10 @@
     syncVisibleLabel(); // init label on page load
     document.getElementById('f-show-stock').addEventListener('change', syncShowStockLabel);
     syncShowStockLabel(); // init label on page load
+
+    // Auto-open edit form after save (redirect returns ?edit=ID)
+    @if(isset($editingProduct) && $editingProduct)
+        openEditForm({{ $editingProduct->id }});
+    @endif
 </script>
 @endsection

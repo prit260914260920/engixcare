@@ -110,9 +110,11 @@
                   @if(count($videoUrls) > 0)
                     <video
                       class="product-gallery-video"
-                      controls
+                      muted
+                      autoplay
                       preload="auto"
                       playsinline
+                      loop
                       style="display:none; width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain;">
                     </video>
                   @endif

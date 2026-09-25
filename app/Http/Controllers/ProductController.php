@@ -195,7 +195,7 @@ class ProductController extends Controller
         $request->validate($this->rules($product->id));
         $product->update($this->prepare($request));
 
-        return redirect()->route('admin.products.index')
+        return redirect()->route('admin.products.index', ['edit' => $product->id])
             ->with('success', 'Product updated successfully.');
     }
 

@@ -225,7 +225,10 @@
       ← Back to Orders
     </a>
     <span class="invoice-id">Invoice {{ $order->order_number }}</span>
-    <button class="btn-print" onclick="window.print()">
+    <a href="{{ route('orders.invoice.pdf', $order) }}" class="btn-print" style="text-decoration:none;">
+      ⬇ Download PDF
+    </a>
+    <button class="btn-print" onclick="window.print()" style="background:#334155;">
       🖨 Print / Save as PDF
     </button>
   </div>

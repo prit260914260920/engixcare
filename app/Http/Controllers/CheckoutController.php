@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\PromotionOffer;
 use App\Models\PromotionSetting;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Razorpay\Api\Api as RazorpayApi;
@@ -278,6 +279,21 @@ class CheckoutController extends Controller
         }
 
         return view('orders.invoice', compact('order'));
+    }
+
+    /**
+     * Stream a PDF invoice download for the given order.
+     */
+    public function downloadInvoicePdf(Order $order)
+    {
+        if ((int) $order->user_id !== (int) Auth::id()) {
+            abort(403);
+        }
+
+        $pdf = Pdf::loadView('orders.invoice-pdf', compact('order'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('Invoice-' . $order->order_number . '.pdf');
     }
 
     /**
