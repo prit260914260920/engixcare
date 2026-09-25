@@ -220,7 +220,7 @@
           if (item.url !== loadedVideoSrc) {
             loadedVideoSrc = item.url;
             galleryVideo.src = item.url;
-            galleryVideo.load();
+            // do NOT call load() — let browser handle it; avoids blocking preload
           }
 
           galleryVideo.muted = true;

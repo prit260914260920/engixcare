@@ -112,7 +112,7 @@
                       class="product-gallery-video"
                       muted
                       autoplay
-                      preload="auto"
+                      preload="metadata"
                       playsinline
                       style="display:none; width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain;">
                     </video>
