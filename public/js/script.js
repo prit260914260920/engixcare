@@ -152,25 +152,24 @@
         mediaList = [];
       }
 
-      var galleryImg      = galleryRoot.querySelector('.product-gallery-main img');
-      var galleryVideo    = galleryRoot.querySelector('.product-gallery-video');
-      var videoWrapper    = galleryRoot.querySelector('.product-video-wrapper');
-      var unmuteBtn       = galleryRoot.querySelector('.video-unmute-btn');
-      var unmuteBtnIcon   = unmuteBtn ? unmuteBtn.querySelector('i') : null;
-      var thumbBtns       = galleryRoot.querySelectorAll('.gallery-thumb');
-      var autoTimer       = null;
-      var currentIndex    = 0;
+      var galleryImg    = galleryRoot.querySelector('.product-gallery-main img');
+      var galleryVideo  = galleryRoot.querySelector('.product-gallery-video');
+      var unmuteBtn     = galleryRoot.querySelector('.video-unmute-btn');
+      var unmuteBtnIcon = unmuteBtn ? unmuteBtn.querySelector('i') : null;
+      var thumbBtns     = galleryRoot.querySelectorAll('.gallery-thumb');
+      var autoTimer     = null;
+      var currentIndex  = 0;
 
       // Inject smooth fade transition CSS
       var transStyle = document.createElement('style');
       transStyle.textContent = [
-        '.product-gallery-main img { transition: opacity 0.35s ease; }',
-        '.product-video-wrapper    { transition: opacity 0.35s ease; }',
-        '.video-unmute-btn:hover   { background: rgba(0,0,0,0.75) !important; }'
+        '.product-gallery-main img  { transition: opacity 0.35s ease; }',
+        '.product-gallery-video     { transition: opacity 0.35s ease; }',
+        '.video-unmute-btn:hover    { background: rgba(0,0,0,0.75) !important; }'
       ].join(' ');
       document.head.appendChild(transStyle);
 
-      // Muted autoplay (always allowed by browsers); user can unmute via button
+      // Muted autoplay — always allowed by browsers
       function smartPlay(video) {
         video.muted = true;
         var p = video.play();
@@ -179,34 +178,30 @@
         }
       }
 
-      // Sync unmute button icon to current mute state
+      // Keep unmute button icon in sync
       function syncUnmuteIcon() {
         if (!unmuteBtnIcon) return;
-        if (galleryVideo && !galleryVideo.muted) {
-          unmuteBtnIcon.className = 'fa-solid fa-volume-high';
-        } else {
-          unmuteBtnIcon.className = 'fa-solid fa-volume-xmark';
-        }
+        unmuteBtnIcon.className = (galleryVideo && !galleryVideo.muted)
+          ? 'fa-solid fa-volume-high'
+          : 'fa-solid fa-volume-xmark';
       }
 
-      // Unmute button click — toggle mute
+      // Show/hide unmute button alongside video
+      function showUnmuteBtn(visible) {
+        if (!unmuteBtn) return;
+        unmuteBtn.style.display = visible ? 'flex' : 'none';
+      }
+
+      // Unmute toggle
       if (unmuteBtn && galleryVideo) {
         unmuteBtn.addEventListener('click', function (e) {
           e.stopPropagation();
           galleryVideo.muted = !galleryVideo.muted;
-          // If unmuting while paused, resume play
           if (!galleryVideo.muted && galleryVideo.paused) {
-            galleryVideo.play().catch(function () {
-              galleryVideo.muted = true; // re-mute if blocked
-            });
+            galleryVideo.play().catch(function () { galleryVideo.muted = true; });
           }
           syncUnmuteIcon();
         });
-      }
-
-      function showVideoWrapper(visible) {
-        if (!videoWrapper) return;
-        videoWrapper.style.display = visible ? 'block' : 'none';
       }
 
       function updateThumbs(index) {
@@ -217,8 +212,6 @@
         });
       }
 
-      // instant = true  → no fade (used on first load)
-      // instant = false → fade out → swap → fade in
       function showMediaAt(index, instant) {
         if (!mediaList.length) return;
         currentIndex = index;
@@ -226,38 +219,40 @@
 
         function applySwitch() {
           if (item.type === 'video') {
-            // Hide image
             if (galleryImg) {
               galleryImg.style.display = 'none';
               galleryImg.style.opacity = '0';
             }
-            if (galleryVideo && videoWrapper) {
-              // Only reload if src actually changed — avoids buffering on revisit
+            if (galleryVideo) {
+              // Only reload if src changed — avoids buffering on revisit
               var newSrc = item.url;
-              var curSrc = galleryVideo.src; // fully resolved URL
-              var isSame = curSrc && (curSrc === newSrc || curSrc.split('?')[0] === newSrc.split('?')[0]);
+              var isSame = galleryVideo.src && (
+                galleryVideo.src === newSrc ||
+                galleryVideo.src.split('?')[0] === newSrc.split('?')[0]
+              );
               if (!isSame) {
                 galleryVideo.src = newSrc;
                 galleryVideo.load();
               }
-              showVideoWrapper(true);
-              videoWrapper.style.opacity = '0';
+              galleryVideo.style.display = 'block';
+              galleryVideo.style.opacity = '0';
               requestAnimationFrame(function () {
                 requestAnimationFrame(function () {
-                  videoWrapper.style.opacity = '1';
+                  galleryVideo.style.opacity = '1';
                   galleryVideo.currentTime = 0;
                   smartPlay(galleryVideo);
                   syncUnmuteIcon();
+                  showUnmuteBtn(true);
                 });
               });
             }
           } else {
-            // Reset & hide video — pause only, keep src so no reload next time
             if (galleryVideo) {
               galleryVideo.pause();
+              galleryVideo.style.opacity = '0';
+              galleryVideo.style.display = 'none';
             }
-            showVideoWrapper(false);
-            // Show image
+            showUnmuteBtn(false);
             if (galleryImg) {
               galleryImg.src = item.url;
               galleryImg.style.display = 'block';
@@ -274,23 +269,27 @@
 
         if (instant) {
           if (item.type === 'video') {
-            if (galleryImg) { galleryImg.style.display = 'none'; }
-            if (galleryVideo && videoWrapper) {
+            if (galleryImg) { galleryImg.style.display = 'none'; galleryImg.style.opacity = '0'; }
+            if (galleryVideo) {
               var newSrc = item.url;
-              var curSrc = galleryVideo.src;
-              var isSame = curSrc && (curSrc === newSrc || curSrc.split('?')[0] === newSrc.split('?')[0]);
+              var isSame = galleryVideo.src && (
+                galleryVideo.src === newSrc ||
+                galleryVideo.src.split('?')[0] === newSrc.split('?')[0]
+              );
               if (!isSame) {
                 galleryVideo.src = newSrc;
                 galleryVideo.load();
               }
-              showVideoWrapper(true);
-              videoWrapper.style.opacity = '1';
+              galleryVideo.style.display = 'block';
+              galleryVideo.style.opacity = '1';
               galleryVideo.currentTime = 0;
               smartPlay(galleryVideo);
               syncUnmuteIcon();
+              showUnmuteBtn(true);
             }
           } else {
-            showVideoWrapper(false);
+            if (galleryVideo) { galleryVideo.style.display = 'none'; galleryVideo.style.opacity = '0'; }
+            showUnmuteBtn(false);
             if (galleryImg) {
               galleryImg.src = item.url;
               galleryImg.style.display = 'block';
@@ -299,10 +298,9 @@
           }
           updateThumbs(index);
         } else {
-          // Fade out the currently visible element, then swap
-          var fadeTarget = (videoWrapper && videoWrapper.style.display !== 'none')
-            ? videoWrapper
-            : galleryImg;
+          // Fade out visible element then swap
+          var fadeTarget = (galleryVideo && galleryVideo.style.display !== 'none')
+            ? galleryVideo : galleryImg;
           if (fadeTarget) {
             fadeTarget.style.opacity = '0';
             setTimeout(applySwitch, 300);
@@ -318,14 +316,11 @@
         stopAutoSlide();
         autoTimer = setInterval(function () {
           if (mediaList[currentIndex] && mediaList[currentIndex].type === 'video') {
-            stopAutoSlide();
-            return;
+            stopAutoSlide(); return;
           }
           var next = (currentIndex + 1) % mediaList.length;
           showMediaAt(next, false);
-          if (mediaList[next] && mediaList[next].type === 'video') {
-            stopAutoSlide();
-          }
+          if (mediaList[next] && mediaList[next].type === 'video') stopAutoSlide();
         }, 3200);
       }
 
@@ -350,18 +345,16 @@
           var idx = parseInt(btn.getAttribute('data-index'), 10);
           stopAutoSlide();
           showMediaAt(idx, false);
-          if (mediaList[idx] && mediaList[idx].type !== 'video') {
-            startAutoSlide();
-          }
+          if (mediaList[idx] && mediaList[idx].type !== 'video') startAutoSlide();
         });
       }
 
-      // After video ends — go to next slide; if only video exists, replay without reload
+      // After video ends — next slide or replay without reload
       if (galleryVideo) {
         galleryVideo.addEventListener('ended', function () {
           var next = (currentIndex + 1) % mediaList.length;
           if (next === currentIndex) {
-            // Only one item (the video itself) — replay without reload
+            // Only one media item — replay in place
             galleryVideo.currentTime = 0;
             smartPlay(galleryVideo);
           } else {

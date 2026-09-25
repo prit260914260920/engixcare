@@ -103,25 +103,23 @@
                     }
                   }
                 </style>
-                <div style="width:100%; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:200px;">
+                <div style="width:100%; overflow:hidden; display:flex; align-items:center; justify-content:center; min-height:200px; position:relative;">
                   <img src="{{ $mainImage }}" alt="{{ $product->name }}"
                     class="product-main-img"
                     style="display:block; width:auto; max-width:100%; height:auto; max-height:480px; object-fit:contain; box-sizing:border-box;" />
                   @if(count($videoUrls) > 0)
-                    <div class="product-video-wrapper" style="display:none; position:relative; width:100%;">
-                      <video
-                        class="product-gallery-video"
-                        muted
-                        autoplay
-                        preload="auto"
-                        playsinline
-                        style="width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain; display:block;">
-                      </video>
-                      <button class="video-unmute-btn" title="Sound on/off"
-                        style="position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.55); border:none; border-radius:50%; width:38px; height:38px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; transition:background .2s;">
-                        <i class="fa-solid fa-volume-xmark" style="color:#fff; font-size:16px;"></i>
-                      </button>
-                    </div>
+                    <video
+                      class="product-gallery-video"
+                      muted
+                      autoplay
+                      preload="auto"
+                      playsinline
+                      style="display:none; width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain;">
+                    </video>
+                    <button class="video-unmute-btn" title="Sound on/off"
+                      style="display:none; position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.55); border:none; border-radius:50%; width:38px; height:38px; align-items:center; justify-content:center; cursor:pointer; z-index:10; transition:background .2s;">
+                      <i class="fa-solid fa-volume-xmark" style="color:#fff; font-size:16px;"></i>
+                    </button>
                   @endif
                 </div>
               </div>
