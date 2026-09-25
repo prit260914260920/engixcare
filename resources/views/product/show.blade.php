@@ -115,7 +115,6 @@
                         autoplay
                         preload="auto"
                         playsinline
-                        loop
                         style="width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain; display:block;">
                       </video>
                       <button class="video-unmute-btn" title="Sound on/off"
