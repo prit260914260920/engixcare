@@ -108,15 +108,21 @@
                     class="product-main-img"
                     style="display:block; width:auto; max-width:100%; height:auto; max-height:480px; object-fit:contain; box-sizing:border-box;" />
                   @if(count($videoUrls) > 0)
-                    <video
-                      class="product-gallery-video"
-                      muted
-                      autoplay
-                      preload="auto"
-                      playsinline
-                      loop
-                      style="display:none; width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain;">
-                    </video>
+                    <div class="product-video-wrapper" style="display:none; position:relative; width:100%;">
+                      <video
+                        class="product-gallery-video"
+                        muted
+                        autoplay
+                        preload="auto"
+                        playsinline
+                        loop
+                        style="width:100%; max-height:480px; background:#000; border-radius:0.5rem; object-fit:contain; display:block;">
+                      </video>
+                      <button class="video-unmute-btn" title="Sound on/off"
+                        style="position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.55); border:none; border-radius:50%; width:38px; height:38px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; transition:background .2s;">
+                        <i class="fa-solid fa-volume-xmark" style="color:#fff; font-size:16px;"></i>
+                      </button>
+                    </div>
                   @endif
                 </div>
               </div>
