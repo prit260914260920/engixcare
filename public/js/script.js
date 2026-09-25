@@ -173,7 +173,6 @@
       // Muted autoplay (always allowed by browsers); user can unmute via button
       function smartPlay(video) {
         video.muted = true;
-        video.currentTime = 0;
         var p = video.play();
         if (p !== undefined) {
           p.catch(function () { /* silent fail */ });
@@ -233,8 +232,12 @@
               galleryImg.style.opacity = '0';
             }
             if (galleryVideo && videoWrapper) {
-              if (galleryVideo.getAttribute('src') !== item.url) {
-                galleryVideo.src = item.url;
+              // Only reload if src actually changed — avoids buffering on revisit
+              var newSrc = item.url;
+              var curSrc = galleryVideo.src; // fully resolved URL
+              var isSame = curSrc && (curSrc === newSrc || curSrc.split('?')[0] === newSrc.split('?')[0]);
+              if (!isSame) {
+                galleryVideo.src = newSrc;
                 galleryVideo.load();
               }
               showVideoWrapper(true);
@@ -242,17 +245,16 @@
               requestAnimationFrame(function () {
                 requestAnimationFrame(function () {
                   videoWrapper.style.opacity = '1';
+                  galleryVideo.currentTime = 0;
                   smartPlay(galleryVideo);
                   syncUnmuteIcon();
                 });
               });
             }
           } else {
-            // Reset & hide video
+            // Reset & hide video — pause only, keep src so no reload next time
             if (galleryVideo) {
               galleryVideo.pause();
-              galleryVideo.removeAttribute('src');
-              galleryVideo.load();
             }
             showVideoWrapper(false);
             // Show image
@@ -274,12 +276,16 @@
           if (item.type === 'video') {
             if (galleryImg) { galleryImg.style.display = 'none'; }
             if (galleryVideo && videoWrapper) {
-              if (galleryVideo.getAttribute('src') !== item.url) {
-                galleryVideo.src = item.url;
+              var newSrc = item.url;
+              var curSrc = galleryVideo.src;
+              var isSame = curSrc && (curSrc === newSrc || curSrc.split('?')[0] === newSrc.split('?')[0]);
+              if (!isSame) {
+                galleryVideo.src = newSrc;
                 galleryVideo.load();
               }
               showVideoWrapper(true);
               videoWrapper.style.opacity = '1';
+              galleryVideo.currentTime = 0;
               smartPlay(galleryVideo);
               syncUnmuteIcon();
             }
@@ -350,12 +356,18 @@
         });
       }
 
-      // After video ends — go to next slide and resume auto-slide
+      // After video ends — go to next slide; if only video exists, replay without reload
       if (galleryVideo) {
         galleryVideo.addEventListener('ended', function () {
           var next = (currentIndex + 1) % mediaList.length;
-          showMediaAt(next, false);
-          startAutoSlide();
+          if (next === currentIndex) {
+            // Only one item (the video itself) — replay without reload
+            galleryVideo.currentTime = 0;
+            smartPlay(galleryVideo);
+          } else {
+            showMediaAt(next, false);
+            startAutoSlide();
+          }
         });
       }
 
