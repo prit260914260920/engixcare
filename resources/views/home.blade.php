@@ -105,20 +105,20 @@
   <!-- ============ COUNTERS ============ -->
   <section class="counters" data-testid="counters-section">
     <div class="container">
-      <div class="row g-4 text-center">
-        <div class="col-6 col-md-3" data-aos="zoom-in">
+      <div class="row g-4 text-center justify-content-center">
+        <div class="col-6 col-md-4" data-aos="zoom-in">
           <div class="counter-box">
             <div class="counter-num" data-count="{{ $statHappyCustomers }}" data-testid="counter-customers">0</div>
             <p>Happy Customers</p>
           </div>
         </div>
-        <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="100">
           <div class="counter-box">
             <div class="counter-num" data-count="{{ $statPremiumProducts }}" data-testid="counter-products">0</div>
             <p>Premium Products</p>
           </div>
         </div>
-        <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+        <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="200">
           <div class="counter-box">
             <div class="counter-num" data-count="{{ $statSatisfactionRate }}" data-testid="counter-satisfaction">0</div><span class="pct">%</span>
             <p>Satisfaction Rate</p>
