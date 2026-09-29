@@ -40,4 +40,9 @@ return [
         'key_secret' => env('RAZORPAY_KEY_SECRET'),
     ],
 
+    'shiprocket' => [
+        'token'            => env('SHIPROCKET_TOKEN'),
+        'pickup_location'  => env('SHIPROCKET_PICKUP_LOCATION', 'Shop No 3,Surjit colony, patel shopping center, Vidhyanagar School Road,india colony,Bapunagar, Ahmedabad, Gujarat, India, 380024 Warehouse SPOC Details : hardikbhai | 8849087388'),
+    ],
+
 ];

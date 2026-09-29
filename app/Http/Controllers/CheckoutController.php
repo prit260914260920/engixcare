@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\PromotionOffer;
 use App\Models\PromotionSetting;
+use App\Services\ShiprocketService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +90,13 @@ class CheckoutController extends Controller
 
             $user->cart_data = [];
             $user->save();
+
+            // ── Push order to Shiprocket ──────────────────────────────────────
+            $shiprocket = new ShiprocketService();
+            $srOrderId  = $shiprocket->createOrder($order);
+            if ($srOrderId) {
+                $order->update(['shiprocket_order_id' => $srOrderId]);
+            }
 
             return redirect()->route('checkout.confirmation', $order->id);
         }
@@ -206,6 +214,14 @@ class CheckoutController extends Controller
         $user = Auth::user();
         $user->cart_data = [];
         $user->save();
+
+        // ── Push order to Shiprocket ──────────────────────────────────────────
+        $order->refresh(); // ensure latest data
+        $shiprocket = new ShiprocketService();
+        $srOrderId  = $shiprocket->createOrder($order);
+        if ($srOrderId) {
+            $order->update(['shiprocket_order_id' => $srOrderId]);
+        }
 
         return response()->json([
             'success'        => true,

@@ -30,6 +30,7 @@ class Order extends Model
         'razorpay_order_id',
         'razorpay_payment_id',
         'razorpay_signature',
+        'shiprocket_order_id',
     ];
 
     protected function casts(): array
