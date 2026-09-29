@@ -124,12 +124,7 @@
             <p>Satisfaction Rate</p>
           </div>
         </div>
-        <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
-          <div class="counter-box">
-            <div class="counter-num" data-count="15" data-testid="counter-years">0</div><span class="pct">+</span>
-            <p>Years of Research</p>
-          </div>
-        </div>
+
       </div>
     </div>
   </section>
@@ -1003,7 +998,7 @@
           <div class="contact-info-cards mt-3">
             <div class="ci-card"><i class="fa-solid fa-location-dot"></i><div><h6>Address</h6><p>Shop No-3, Surjit Colony, Bapunagar, Ahmedabad, Gujarat – 380024</p></div></div>
             <div class="ci-card"><i class="fa-solid fa-envelope"></i><div><h6>Customer Care Email</h6><p><a href="mailto:vhkinternational2026@gmail.com" style="color:inherit;text-decoration:none;">vhkinternational2026@gmail.com</a></p></div></div>
-            <div class="ci-card"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i><div><h6>WhatsApp</h6><p><a href="https://wa.me/919327865063?text=Hi%20VHK%20International%2C%20I%20have%20a%20question%20about%20engix%20CARE" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Chat with us on WhatsApp</a></p></div></div>
+            <div class="ci-card"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i><div><h6>WhatsApp</h6><p><a href="https://wa.me/919327865063?text=Hello%20%F0%9F%91%8B%20Welcome%20to%20EngixCare!%0A%0AThank%20you%20for%20reaching%20out%20to%20us.%20%E2%9C%A8%0A%0AWe%E2%80%99re%20here%20to%20help%20you%20choose%20the%20right%20product%20for%20your%20everyday%20Skin%20%E2%80%A2%20Health%20%E2%80%A2%20Wellness%20needs.%0A%0APlease%20tell%20us%20what%20you%E2%80%99re%20looking%20for%2C%20and%20our%20team%20will%20assist%20you%20shortly.%20%F0%9F%A4%9D%0A%0A%E2%80%94%20Team%20EngixCare" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Chat with us on WhatsApp</a></p></div></div>
           </div>
         </div>
       </div>
@@ -1294,7 +1289,7 @@
   </div>
 
   <!-- WhatsApp Floating Widget -->
-  <a href="https://wa.me/919327865063?text=Hi%20VHK%20International%2C%20I%20have%20a%20question%20about%20engix%20CARE" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="Chat on WhatsApp" data-testid="whatsapp-fab">
+  <a href="https://wa.me/919327865063?text=Hello%20%F0%9F%91%8B%20Welcome%20to%20EngixCare!%0A%0AThank%20you%20for%20reaching%20out%20to%20us.%20%E2%9C%A8%0A%0AWe%E2%80%99re%20here%20to%20help%20you%20choose%20the%20right%20product%20for%20your%20everyday%20Skin%20%E2%80%A2%20Health%20%E2%80%A2%20Wellness%20needs.%0A%0APlease%20tell%20us%20what%20you%E2%80%99re%20looking%20for%2C%20and%20our%20team%20will%20assist%20you%20shortly.%20%F0%9F%A4%9D%0A%0A%E2%80%94%20Team%20EngixCare" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="Chat on WhatsApp" data-testid="whatsapp-fab">
     <i class="fa-brands fa-whatsapp"></i>
     <span class="wa-tip">Chat with us</span>
   </a>
