@@ -47,8 +47,26 @@
     </script>
     {{-- data-user-cart attribute used by JS to detect auth state and load persisted cart --}}
     @auth
+      @php
+        $userCartRaw = auth()->user()->cart_data ?: [];
+        // Repair product images using actual storage URLs so the cart drawer shows correct images
+        $productIdsInCart = array_filter(array_column($userCartRaw, 'product_id'));
+        if (!empty($productIdsInCart)) {
+            $cartProducts = \App\Models\Product::whereIn('id', $productIdsInCart)->get()->keyBy('id');
+            $userCartRaw = array_map(function ($item) use ($cartProducts) {
+                $pid = $item['product_id'] ?? null;
+                if ($pid && isset($cartProducts[$pid])) {
+                    $imgs = $cartProducts[$pid]->image ?? [];
+                    if (!empty($imgs[0])) {
+                        $item['img'] = \Illuminate\Support\Facades\Storage::disk('public')->url($imgs[0]);
+                    }
+                }
+                return $item;
+            }, $userCartRaw);
+        }
+      @endphp
       <div id="userCartData"
-           data-user-cart="{{ json_encode(auth()->user()->cart_data ?: []) }}"
+           data-user-cart="{{ json_encode($userCartRaw) }}"
            style="display:none"></div>
     @endauth
     @yield('content')
