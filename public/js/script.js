@@ -925,6 +925,18 @@
           var savedCart = JSON.parse(cartData.getAttribute('data-user-cart'));
           if (Array.isArray(savedCart) && savedCart.length > 0) {
             cart = savedCart;
+            // Repair missing/stale images using data-img from product cards on the page
+            document.querySelectorAll('.add-cart-btn[data-img]').forEach(function(btn) {
+              var btnName = btn.getAttribute('data-name');
+              var btnImg  = btn.getAttribute('data-img');
+              if (btnName && btnImg) {
+                cart.forEach(function(item) {
+                  if (item.name === btnName && btnImg) {
+                    item.img = btnImg;
+                  }
+                });
+              }
+            });
             renderCart();
           }
         } catch (e) {
@@ -1171,9 +1183,10 @@
         var name = this.getAttribute('data-name') || 'Product';
         var price = parseInt(this.getAttribute('data-price'), 10) || priceOf(name);
         var productId = this.getAttribute('data-product-id') || null;
+        var img = this.getAttribute('data-img') || imgOf(name);
         var existing = cart.find(function (it) { return it.name === name; });
         if (existing) existing.qty++;
-        else cart.push({ name: name, price: price, qty: 1, img: imgOf(name), product_id: productId });
+        else cart.push({ name: name, price: price, qty: 1, img: img, product_id: productId });
         flyToCart(this);
         renderCart();
         saveCartToDatabase();

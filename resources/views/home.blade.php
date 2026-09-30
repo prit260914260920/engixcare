@@ -385,6 +385,7 @@
                   data-name="{{ $product->name }}"
                   data-price="{{ intval($product->discounted_price ?? $product->price) }}"
                   data-product-id="{{ $product->id }}"
+                  data-img="{{ $imgUrl }}"
                   data-testid="add-cart-{{ $product->id }}">
                   <i class="fa-solid fa-cart-plus me-1"></i>Add to Cart
                 </button>

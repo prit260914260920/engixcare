@@ -224,7 +224,7 @@
               </div>
 
               <div class="d-flex flex-column flex-sm-row gap-3">
-                <button class="btn btn-primary-engix add-cart-btn" data-name="{{ $product->name }}" data-price="{{ intval($product->discounted_price ?? $product->price) }}" data-product-id="{{ $product->id }}"><i class="fa-solid fa-cart-plus me-1"></i>Add to Cart</button>
+                <button class="btn btn-primary-engix add-cart-btn" data-name="{{ $product->name }}" data-price="{{ intval($product->discounted_price ?? $product->price) }}" data-product-id="{{ $product->id }}" data-img="{{ $mainImage }}"><i class="fa-solid fa-cart-plus me-1"></i>Add to Cart</button>
                 <a href="{{ url('/') }}#products" class="btn btn-outline-engix">Browse Other Products</a>
               </div>
             </div>
