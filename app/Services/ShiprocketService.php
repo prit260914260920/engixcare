@@ -158,7 +158,7 @@ class ShiprocketService
             'billing_state'          => $order->state,
             'billing_country'        => 'India',
             'billing_email'          => $order->email,
-            'billing_phone'          => (int) $order->phone,
+            'billing_phone'          => preg_replace('/\D/', '', $order->phone ?? ''),
             'shipping_is_billing'    => true,
             'order_items'            => $orderItems,
             'payment_method'         => $paymentMethod,
