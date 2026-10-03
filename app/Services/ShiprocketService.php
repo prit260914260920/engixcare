@@ -33,8 +33,8 @@ class ShiprocketService
 
     public function __construct()
     {
-        $this->token          = config('services.shiprocket.token', '');
-        $this->pickupLocation = config('services.shiprocket.pickup_location', '');
+        $this->token          = (string) config('services.shiprocket.token', '');
+        $this->pickupLocation = (string) config('services.shiprocket.pickup_location', '');
     }
 
     /**
@@ -199,6 +199,50 @@ class ShiprocketService
             Log::error('Shiprocket: exception while creating order.', [
                 'order_id' => $order->id,
                 'error'    => $e->getMessage(),
+            ]);
+        }
+
+        return null;
+    }
+
+    /**
+     * Fetch live order details from Shiprocket.
+     *
+     * GET /v1/external/orders/show/{shiprocket_order_id}
+     *
+     * Returns the raw `data` object on success, or null on failure.
+     *
+     * @param  string $shiprocketOrderId
+     * @return array|null
+     */
+    public function fetchOrderStatus(string $shiprocketOrderId): ?array
+    {
+        if (empty($this->token)) {
+            Log::warning('Shiprocket: token not configured, skipping status fetch.', [
+                'shiprocket_order_id' => $shiprocketOrderId,
+            ]);
+            return null;
+        }
+
+        try {
+            $response = Http::withToken($this->token)
+                ->timeout(30)
+                ->get("{$this->baseUrl}/orders/show/{$shiprocketOrderId}");
+
+            if ($response->successful()) {
+                return $response->json('data');
+            }
+
+            Log::warning('Shiprocket: fetchOrderStatus non-2xx response.', [
+                'shiprocket_order_id' => $shiprocketOrderId,
+                'status'              => $response->status(),
+                'body'                => $response->body(),
+            ]);
+
+        } catch (\Throwable $e) {
+            Log::error('Shiprocket: exception while fetching order status.', [
+                'shiprocket_order_id' => $shiprocketOrderId,
+                'error'               => $e->getMessage(),
             ]);
         }
 

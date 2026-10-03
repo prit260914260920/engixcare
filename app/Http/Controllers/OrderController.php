@@ -133,7 +133,7 @@ class OrderController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $data = $request->validate([
-            'status' => 'required|in:placed,processing,shipped,delivered,cancelled',
+            'status' => 'required|in:' . implode(',', Order::STATUSES),
         ]);
 
         $order->update(['status' => $data['status']]);
