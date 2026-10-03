@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 class ShiprocketService
 {
     private string $baseUrl = 'https://apiv2.shiprocket.in/v1/external';
-    private string $token;
     private string $pickupLocation;
 
     // ── Box definitions ───────────────────────────────────────────────────────
@@ -33,9 +32,100 @@ class ShiprocketService
 
     public function __construct()
     {
-        $this->token          = (string) config('services.shiprocket.token', '');
         $this->pickupLocation = (string) config('services.shiprocket.pickup_location', '');
     }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Authentication helpers
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /**
+     * Login to Shiprocket and return a fresh bearer token.
+     * Returns null if login fails.
+     *
+     * POST /v1/external/auth/login
+     * Body: { email, password }
+     * Response: { token: "..." }
+     */
+    private function authenticate(): ?string
+    {
+        $email    = (string) config('services.shiprocket.email', '');
+        $password = (string) config('services.shiprocket.password', '');
+
+        if (empty($email) || empty($password)) {
+            Log::error('Shiprocket: email or password not configured in services.shiprocket.');
+            return null;
+        }
+
+        try {
+            $response = Http::timeout(30)
+                ->post("{$this->baseUrl}/auth/login", [
+                    'email'    => $email,
+                    'password' => $password,
+                ]);
+
+            if ($response->successful()) {
+                $token = $response->json('token');
+
+                if (!empty($token)) {
+                    Log::info('Shiprocket: authentication successful.');
+                    return (string) $token;
+                }
+
+                Log::error('Shiprocket: login response did not contain a token.', [
+                    'body' => $response->body(),
+                ]);
+                return null;
+            }
+
+            Log::error('Shiprocket: authentication failed.', [
+                'status' => $response->status(),
+                'body'   => $response->body(),
+            ]);
+
+        } catch (\Throwable $e) {
+            Log::error('Shiprocket: exception during authentication.', [
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return null;
+    }
+
+    /**
+     * Logout from Shiprocket to invalidate the token.
+     *
+     * POST /v1/external/auth/logout
+     * Header: Authorization: Bearer {token}
+     * Response: "Token is invalidated. User is logout successfully"
+     */
+    private function logout(string $token): void
+    {
+        try {
+            $response = Http::withToken($token)
+                ->timeout(30)
+                ->post("{$this->baseUrl}/auth/logout");
+
+            if ($response->successful()) {
+                Log::info('Shiprocket: logout successful — token invalidated.');
+            } else {
+                Log::warning('Shiprocket: logout returned non-2xx response.', [
+                    'status' => $response->status(),
+                    'body'   => $response->body(),
+                ]);
+            }
+
+        } catch (\Throwable $e) {
+            // Non-critical — just log it, don't bubble up
+            Log::warning('Shiprocket: exception during logout.', [
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Box dimension calculation
+    // ─────────────────────────────────────────────────────────────────────────
 
     /**
      * Calculate box dimensions for the given total qty.
@@ -104,77 +194,86 @@ class ShiprocketService
         ];
     }
 
+    // ─────────────────────────────────────────────────────────────────────────
+    // Public API methods
+    // ─────────────────────────────────────────────────────────────────────────
+
     /**
      * Push a confirmed order to Shiprocket.
+     * Authenticates → creates order → logs out.
      * Returns the Shiprocket order_id on success, or null on failure.
      */
     public function createOrder(Order $order): ?string
     {
-        if (empty($this->token)) {
-            Log::warning('Shiprocket: token not configured, skipping order push.', [
+        // ── Step 1: Get a fresh token ─────────────────────────────────────────
+        $token = $this->authenticate();
+
+        if ($token === null) {
+            Log::warning('Shiprocket: skipping order push — could not obtain token.', [
                 'order_id' => $order->id,
             ]);
             return null;
         }
 
-        // ── Build order_items array from the stored cart items ────────────────
-        $orderItems = [];
-        foreach ($order->items as $item) {
-            $orderItems[] = [
-                'name'          => $item['name'] ?? 'Product',
-                'sku'           => $item['sku']  ?? ('SKU-' . ($item['product_id'] ?? '0')),
-                'units'         => (int) ($item['qty']   ?? 1),
-                'selling_price' => (float) ($item['price'] ?? 0),
-                'discount'      => '',
-                'tax'           => '',
-                'hsn'           => '',
-            ];
-        }
-
-        // ── Split full name into first + last ─────────────────────────────────
-        $nameParts = explode(' ', trim($order->name), 2);
-        $firstName = $nameParts[0];
-        $lastName  = $nameParts[1] ?? '';
-
-        // ── Map payment method ────────────────────────────────────────────────
-        $paymentMethod = strtolower($order->payment_method) === 'cod' ? 'COD' : 'Prepaid';
-
-        // ── Calculate box dimensions based on total qty ───────────────────────
-        $totalQty   = array_sum(array_column($order->items, 'qty'));
-        $dimensions = $this->calcBoxDimensions((int) $totalQty);
-
-        // ── Build the payload ─────────────────────────────────────────────────
-        $payload = [
-            'order_id'               => (string) $order->id,
-            'order_date'             => $order->created_at->format('Y-m-d H:i'),
-            'pickup_location'        => $this->pickupLocation,
-            'comment'                => $order->notes ?? '',
-            'billing_customer_name'  => $firstName,
-            'billing_last_name'      => $lastName,
-            'billing_address'        => $order->address_line1,
-            'billing_address_2'      => $order->address_line2 ?? '',
-            'billing_city'           => $order->city,
-            'billing_pincode'        => (int) $order->pincode,
-            'billing_state'          => $order->state,
-            'billing_country'        => 'India',
-            'billing_email'          => $order->email,
-            'billing_phone'          => preg_replace('/\D/', '', $order->phone ?? ''),
-            'shipping_is_billing'    => true,
-            'order_items'            => $orderItems,
-            'payment_method'         => $paymentMethod,
-            'shipping_charges'       => 0,
-            'giftwrap_charges'       => 0,
-            'transaction_charges'    => 0,
-            'total_discount'         => (float) ($order->discount ?? 0),
-            'sub_total'              => (float) $order->total,
-            'length'                 => $dimensions['length'],
-            'breadth'                => $dimensions['breadth'],
-            'height'                 => $dimensions['height'],
-            'weight'                 => $dimensions['weight'],
-        ];
-
         try {
-            $response = Http::withToken($this->token)
+            // ── Build order_items array from the stored cart items ────────────
+            $orderItems = [];
+            foreach ($order->items as $item) {
+                $orderItems[] = [
+                    'name'          => $item['name'] ?? 'Product',
+                    'sku'           => $item['sku']  ?? ('SKU-' . ($item['product_id'] ?? '0')),
+                    'units'         => (int) ($item['qty']   ?? 1),
+                    'selling_price' => (float) ($item['price'] ?? 0),
+                    'discount'      => '',
+                    'tax'           => '',
+                    'hsn'           => '',
+                ];
+            }
+
+            // ── Split full name into first + last ─────────────────────────────
+            $nameParts = explode(' ', trim($order->name), 2);
+            $firstName = $nameParts[0];
+            $lastName  = $nameParts[1] ?? '';
+
+            // ── Map payment method ────────────────────────────────────────────
+            $paymentMethod = strtolower($order->payment_method) === 'cod' ? 'COD' : 'Prepaid';
+
+            // ── Calculate box dimensions based on total qty ───────────────────
+            $totalQty   = array_sum(array_column($order->items, 'qty'));
+            $dimensions = $this->calcBoxDimensions((int) $totalQty);
+
+            // ── Build the payload ─────────────────────────────────────────────
+            $payload = [
+                'order_id'               => (string) $order->id,
+                'order_date'             => $order->created_at->format('Y-m-d H:i'),
+                'pickup_location'        => $this->pickupLocation,
+                'comment'                => $order->notes ?? '',
+                'billing_customer_name'  => $firstName,
+                'billing_last_name'      => $lastName,
+                'billing_address'        => $order->address_line1,
+                'billing_address_2'      => $order->address_line2 ?? '',
+                'billing_city'           => $order->city,
+                'billing_pincode'        => (int) $order->pincode,
+                'billing_state'          => $order->state,
+                'billing_country'        => 'India',
+                'billing_email'          => $order->email,
+                'billing_phone'          => preg_replace('/\D/', '', $order->phone ?? ''),
+                'shipping_is_billing'    => true,
+                'order_items'            => $orderItems,
+                'payment_method'         => $paymentMethod,
+                'shipping_charges'       => 0,
+                'giftwrap_charges'       => 0,
+                'transaction_charges'    => 0,
+                'total_discount'         => (float) ($order->discount ?? 0),
+                'sub_total'              => (float) $order->total,
+                'length'                 => $dimensions['length'],
+                'breadth'                => $dimensions['breadth'],
+                'height'                 => $dimensions['height'],
+                'weight'                 => $dimensions['weight'],
+            ];
+
+            // ── Step 2: Create the order ──────────────────────────────────────
+            $response = Http::withToken($token)
                 ->timeout(30)
                 ->post("{$this->baseUrl}/orders/create/adhoc", $payload);
 
@@ -200,6 +299,9 @@ class ShiprocketService
                 'order_id' => $order->id,
                 'error'    => $e->getMessage(),
             ]);
+        } finally {
+            // ── Step 3: Always logout to invalidate the token ─────────────────
+            $this->logout($token);
         }
 
         return null;
@@ -207,6 +309,7 @@ class ShiprocketService
 
     /**
      * Fetch live order details from Shiprocket.
+     * Authenticates → fetches status → logs out.
      *
      * GET /v1/external/orders/show/{shiprocket_order_id}
      *
@@ -217,15 +320,19 @@ class ShiprocketService
      */
     public function fetchOrderStatus(string $shiprocketOrderId): ?array
     {
-        if (empty($this->token)) {
-            Log::warning('Shiprocket: token not configured, skipping status fetch.', [
+        // ── Step 1: Get a fresh token ─────────────────────────────────────────
+        $token = $this->authenticate();
+
+        if ($token === null) {
+            Log::warning('Shiprocket: skipping status fetch — could not obtain token.', [
                 'shiprocket_order_id' => $shiprocketOrderId,
             ]);
             return null;
         }
 
         try {
-            $response = Http::withToken($this->token)
+            // ── Step 2: Fetch order status ────────────────────────────────────
+            $response = Http::withToken($token)
                 ->timeout(30)
                 ->get("{$this->baseUrl}/orders/show/{$shiprocketOrderId}");
 
@@ -244,6 +351,9 @@ class ShiprocketService
                 'shiprocket_order_id' => $shiprocketOrderId,
                 'error'               => $e->getMessage(),
             ]);
+        } finally {
+            // ── Step 3: Always logout to invalidate the token ─────────────────
+            $this->logout($token);
         }
 
         return null;
