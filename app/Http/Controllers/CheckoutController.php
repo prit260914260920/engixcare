@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderConfirmationMail;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\PromotionOffer;
@@ -10,6 +11,8 @@ use App\Services\ShiprocketService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Razorpay\Api\Api as RazorpayApi;
 use Razorpay\Api\Errors\SignatureVerificationError;
@@ -130,6 +133,13 @@ class CheckoutController extends Controller
             $srOrderId  = $shiprocket->createOrder($order);
             if ($srOrderId) {
                 $order->update(['shiprocket_order_id' => $srOrderId]);
+            }
+
+            // ── Send order confirmation email with invoice PDF ────────────────
+            try {
+                Mail::to($order->email)->send(new OrderConfirmationMail($order));
+            } catch (\Exception $e) {
+                Log::error('Order confirmation email failed for order ' . $order->order_number . ': ' . $e->getMessage());
             }
 
             return redirect()->route('checkout.confirmation', $order->id);
@@ -255,6 +265,13 @@ class CheckoutController extends Controller
         $srOrderId  = $shiprocket->createOrder($order);
         if ($srOrderId) {
             $order->update(['shiprocket_order_id' => $srOrderId]);
+        }
+
+        // ── Send order confirmation email with invoice PDF ────────────────────
+        try {
+            Mail::to($order->email)->send(new OrderConfirmationMail($order));
+        } catch (\Exception $e) {
+            Log::error('Order confirmation email failed for order ' . $order->order_number . ': ' . $e->getMessage());
         }
 
         return response()->json([
