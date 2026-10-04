@@ -225,9 +225,27 @@
     color: #1976d2 !important;
   }
 
-  .status-processing {
+  .status-pending {
     background-color: #fff3e0 !important;
+    color: #e65100 !important;
+  }
+
+  .status-processing {
+    background-color: #fff8e1 !important;
     color: #f57c00 !important;
+  }
+
+  .status-order_received,
+  .status-order_picked {
+    background-color: #e8eaf6 !important;
+    color: #3949ab !important;
+  }
+
+  .status-in_transit,
+  .status-out_for_delivery,
+  .status-reached {
+    background-color: #e0f2f1 !important;
+    color: #00695c !important;
   }
 
   .status-shipped {
