@@ -276,7 +276,10 @@
       @if($order->discount > 0)
         <tr class="discount">
           <td class="label">
-            Coupon Discount@if($order->coupon_code) ({{ $order->coupon_code }})@endif
+            Coupon Discount
+            @if($order->coupon_code)
+              ({{ $order->coupon_code }})
+            @endif
           </td>
           <td class="value">&#8722; &#8377;{{ number_format($order->discount, 0) }}</td>
         </tr>

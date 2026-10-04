@@ -80,6 +80,22 @@ class CheckoutController extends Controller
             return redirect()->route('home')->with('info', 'Your cart is empty.');
         }
 
+        // ── Repair product images from DB before saving to order ─────────────
+        $productIds = array_filter(array_column($cartItems, 'product_id'));
+        if (!empty($productIds)) {
+            $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+            $cartItems = array_map(function ($item) use ($products) {
+                $id = $item['product_id'] ?? null;
+                if ($id && isset($products[$id])) {
+                    $images = $products[$id]->image ?? [];
+                    if (!empty($images[0])) {
+                        $item['img'] = Storage::disk('public')->url($images[0]);
+                    }
+                }
+                return $item;
+            }, $cartItems);
+        }
+
         ['subtotal' => $subtotal, 'discount' => $discount, 'total' => $total]
             = $this->calcTotals($cartItems, $data['coupon_code'] ?? null, $user);
 
@@ -298,6 +314,24 @@ class CheckoutController extends Controller
     {
         if ((int) $order->user_id !== (int) Auth::id()) {
             abort(403);
+        }
+
+        // Repair product images in case they were saved without proper URLs
+        $items = $order->items ?? [];
+        $productIds = array_filter(array_column($items, 'product_id'));
+        if (!empty($productIds)) {
+            $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+            $items = array_map(function ($item) use ($products) {
+                $id = $item['product_id'] ?? null;
+                if ($id && isset($products[$id])) {
+                    $images = $products[$id]->image ?? [];
+                    if (!empty($images[0])) {
+                        $item['img'] = Storage::disk('public')->url($images[0]);
+                    }
+                }
+                return $item;
+            }, $items);
+            $order->items = $items;
         }
 
         return view('orders.detail', compact('order'));
