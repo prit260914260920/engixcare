@@ -44,6 +44,13 @@
             <span class="font-label-md text-label-md">Articles / Blog</span>
         </a>
 
+        {{-- Festive / Promotional Banners --}}
+        <a class="{{ $isActive('admin/festive-banners') ? $navActive : $navInactive }}" href="{{ route('admin.festive_banners.index') }}">
+            <span class="material-symbols-outlined {{ $isActive('admin/festive-banners') ? '' : 'group-hover:text-primary' }}"
+                  @if($isActive('admin/festive-banners')) style="font-variation-settings:'FILL' 1" @endif>celebration</span>
+            <span class="font-label-md text-label-md">Festive Banners</span>
+        </a>
+
         {{-- Announcement Bar — top strip banner manager --}}
         <a class="{{ $isActive('admin/promotions') && str_contains(request()->getRequestUri(), '#announcement') ? $navActive : $navInactive }}"
            href="{{ route('admin.promotions.index') }}#announcement-bar-section">

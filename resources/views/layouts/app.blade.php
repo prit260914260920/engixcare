@@ -125,6 +125,7 @@
                         ? bar.getBoundingClientRect().height
                         : 0;
                 document.documentElement.style.setProperty('--announcement-bar-h', h + 'px');
+
             }
 
             /* Restore dismissed state before first paint */
@@ -136,6 +137,7 @@
             setNavOffset();
 
             /* Re-measure after fonts/images may have reflowed */
+            document.addEventListener('DOMContentLoaded', setNavOffset);
             window.addEventListener('load', setNavOffset);
             window.addEventListener('resize', setNavOffset);
 
@@ -150,6 +152,25 @@
         })();
     </script>
     @endif
+    <script>
+        (function () {
+            function setMainNavbarHeight() {
+                var navbar = document.getElementById('mainNav');
+                if (navbar) {
+                    document.documentElement.style.setProperty('--main-navbar-h', navbar.getBoundingClientRect().height + 'px');
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var navbar = document.getElementById('mainNav');
+                if (navbar && 'ResizeObserver' in window) {
+                    new ResizeObserver(setMainNavbarHeight).observe(navbar);
+                }
+                setMainNavbarHeight();
+            });
+            window.addEventListener('resize', setMainNavbarHeight);
+        })();
+    </script>
     @php
       $appUser = [
         'authenticated' => auth()->check(),

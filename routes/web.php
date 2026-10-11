@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\FestiveBannerController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\ProductController;
@@ -32,6 +33,9 @@ Route::get('/', function () {
     $hero = \App\Models\HeroSection::current();
     $promotionSettings = \App\Models\PromotionSetting::current();
     $promotionOffers = \App\Models\PromotionOffer::active()->get();
+
+    // Active festive banners (date-limited, sorted)
+    $festiveBanners = \App\Models\FestiveBanner::visible()->get();
 
     // First-order offer for the special offer banner (most recent active first_order offer)
     $firstOrderOffer = \App\Models\PromotionOffer::active()
@@ -67,6 +71,7 @@ Route::get('/', function () {
     return view('home', compact(
         'products', 'ingredientsByProduct', 'hero',
         'promotionSettings', 'promotionOffers', 'firstOrderOffer',
+        'festiveBanners',
         'reviews', 'totalReviews', 'avgRating',
         'statHappyCustomers', 'statPremiumProducts', 'statSatisfactionRate',
     ));
@@ -185,6 +190,16 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('/coupons',           [PromotionController::class, 'storeOffer'])->name('admin.coupons.store');
     Route::put('/coupons/{offer}',    [PromotionController::class, 'updateOffer'])->name('admin.coupons.update');
     Route::delete('/coupons/{offer}', [PromotionController::class, 'deleteOffer'])->name('admin.coupons.delete');
+
+    // ── Festive Banners ───────────────────────────────────────────────────────
+    Route::get('/festive-banners',                              [FestiveBannerController::class, 'index'])->name('admin.festive_banners.index');
+    Route::get('/festive-banners/create',                       [FestiveBannerController::class, 'create'])->name('admin.festive_banners.create');
+    Route::post('/festive-banners',                             [FestiveBannerController::class, 'store'])->name('admin.festive_banners.store');
+    Route::get('/festive-banners/{festiveBanner}/edit',         [FestiveBannerController::class, 'edit'])->name('admin.festive_banners.edit');
+    Route::put('/festive-banners/{festiveBanner}',              [FestiveBannerController::class, 'update'])->name('admin.festive_banners.update');
+    Route::delete('/festive-banners/{festiveBanner}',           [FestiveBannerController::class, 'destroy'])->name('admin.festive_banners.destroy');
+    Route::patch('/festive-banners/{festiveBanner}/toggle',     [FestiveBannerController::class, 'toggleActive'])->name('admin.festive_banners.toggle');
+    Route::post('/festive-banners/upload-image',                [FestiveBannerController::class, 'uploadImage'])->name('admin.festive_banners.upload-image');
 });
 
 Route::get('/run-link', function () {

@@ -56,6 +56,88 @@
     </div>
   </nav>
 
+  <!-- ============ FESTIVE BANNERS ============ -->
+  @if($festiveBanners->isNotEmpty())
+  <section class="festive-banners-section" data-testid="festive-banners-section">
+    @foreach($festiveBanners as $fb)
+
+    @if($fb->isImageOnly() && $fb->fullImageUrl())
+    {{-- ── Image-only banner ── --}}
+    @if($fb->full_image_url)
+      <a href="{{ $fb->full_image_url }}" class="block festive-banner-image-only" data-testid="festive-banner-{{ $fb->id }}">
+        <img src="{{ $fb->fullImageUrl() }}" alt="{{ $fb->name }}" class="w-full block" />
+      </a>
+    @else
+      <div class="festive-banner-image-only" data-testid="festive-banner-{{ $fb->id }}">
+        <img src="{{ $fb->fullImageUrl() }}" alt="{{ $fb->name }}" class="w-full block" />
+      </div>
+    @endif
+
+    @else
+    {{-- ── Custom banner (existing builder layout) ── --}}
+    <div class="festive-banner"
+         data-testid="festive-banner-{{ $fb->id }}"
+         style="{{ $fb->gradientStyle() }}{{ $fb->bgImageUrl() ? 'background-image:url('.$fb->bgImageUrl().');background-size:cover;background-position:center;' : '' }}">
+
+      {{-- Decorative overlay circles --}}
+      <div class="fb-deco fb-deco-1"></div>
+      <div class="fb-deco fb-deco-2"></div>
+
+      <div class="festive-banner-inner container">
+
+        {{-- Left: text content --}}
+        <div class="fb-text" style="color:{{ $fb->text_color }}">
+          @if($fb->tag_line)
+            <h2 class="fb-tagline">{{ $fb->tag_line }}</h2>
+          @endif
+          @if($fb->title)
+            <p class="fb-title">{{ $fb->title }}</p>
+          @endif
+          @if($fb->offer_label || $fb->discount_text)
+            <div class="fb-offer-row">
+              @if($fb->offer_label)
+                <span class="fb-offer-label">{{ $fb->offer_label }}</span>
+              @endif
+              @if($fb->discount_text)
+                <span class="fb-discount-pill"
+                      style="background:{{ $fb->discount_bg_color }};color:{{ $fb->discount_text_color }};">
+                  {{ $fb->discount_text }}
+                </span>
+              @endif
+            </div>
+          @endif
+          @if($fb->sub_text)
+            <p class="fb-subtext">{{ $fb->sub_text }}</p>
+          @endif
+          @if($fb->fine_print)
+            <p class="fb-fineprint">{{ $fb->fine_print }}</p>
+          @endif
+        </div>
+
+        {{-- Right: images + CTA --}}
+        <div class="fb-right">
+          @if($fb->accentImageUrl())
+            <img src="{{ $fb->accentImageUrl() }}" alt="" class="fb-accent-img" aria-hidden="true" />
+          @endif
+          @if($fb->productImageUrl())
+            <img src="{{ $fb->productImageUrl() }}" alt="{{ $fb->name }}" class="fb-product-img" />
+          @endif
+          <a href="{{ $fb->cta_url }}"
+             class="fb-cta-btn"
+             style="background:{{ $fb->discount_bg_color }};color:{{ $fb->discount_text_color }};"
+             data-testid="festive-banner-cta-{{ $fb->id }}">
+            {{ $fb->cta_label }}
+          </a>
+        </div>
+
+      </div>
+    </div>
+    @endif
+
+    @endforeach
+  </section>
+  @endif
+
   <!-- ============ HERO ============ -->
   <section class="hero" id="home" data-testid="hero-section">
     <div class="hero-bg-shape"></div>
