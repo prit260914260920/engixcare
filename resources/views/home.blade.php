@@ -58,9 +58,11 @@
 
   <!-- ============ FESTIVE BANNERS ============ -->
   @if($festiveBanners->isNotEmpty())
-  <section class="festive-banners-section" data-testid="festive-banners-section">
+  <section class="festive-banners-section" data-testid="festive-banners-section" aria-label="Festive banners">
+    <div class="festive-banner-track">
     @foreach($festiveBanners as $fb)
 
+    <div class="festive-banner-slide" data-banner-slide aria-hidden="{{ $loop->first ? 'false' : 'true' }}">
     @if($fb->isImageOnly() && $fb->fullImageUrl())
     {{-- ── Image-only banner ── --}}
     @if($fb->full_image_url)
@@ -134,8 +136,88 @@
     </div>
     @endif
 
+    </div>
     @endforeach
+    </div>
+    @if($festiveBanners->count() > 1)
+    <button type="button" class="festive-banner-control festive-banner-prev" aria-label="Previous banner">
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="festive-banner-control festive-banner-next" aria-label="Next banner">
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+    </button>
+    <div class="festive-banner-dots" aria-label="Choose a banner">
+      @foreach($festiveBanners as $banner)
+      <button type="button" class="festive-banner-dot{{ $loop->first ? ' active' : '' }}"
+              aria-label="Show banner {{ $loop->iteration }}"
+              aria-current="{{ $loop->first ? 'true' : 'false' }}"
+              data-banner-index="{{ $loop->index }}"></button>
+      @endforeach
+    </div>
+    @endif
   </section>
+  @if($festiveBanners->count() > 1)
+  <script>
+    (function () {
+      var section = document.querySelector('[data-testid="festive-banners-section"]');
+      if (!section) return;
+
+      var track = section.querySelector('.festive-banner-track');
+      var slides = Array.from(section.querySelectorAll('[data-banner-slide]'));
+      var dots = Array.from(section.querySelectorAll('.festive-banner-dot'));
+      var current = 0;
+      var timer;
+
+      function showBanner(index) {
+        current = (index + slides.length) % slides.length;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        slides.forEach(function (slide, slideIndex) {
+          var isActive = slideIndex === current;
+          slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+          slide.inert = !isActive;
+        });
+        dots.forEach(function (dot, dotIndex) {
+          var isActive = dotIndex === current;
+          dot.classList.toggle('active', isActive);
+          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+      }
+
+      function startAutoplay() {
+        window.clearInterval(timer);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          timer = window.setInterval(function () {
+            showBanner(current + 1);
+          }, 5000);
+        }
+      }
+
+      section.querySelector('.festive-banner-prev').addEventListener('click', function () {
+        showBanner(current - 1);
+        startAutoplay();
+      });
+      section.querySelector('.festive-banner-next').addEventListener('click', function () {
+        showBanner(current + 1);
+        startAutoplay();
+      });
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+          showBanner(Number(dot.dataset.bannerIndex));
+          startAutoplay();
+        });
+      });
+      section.addEventListener('mouseenter', function () { window.clearInterval(timer); });
+      section.addEventListener('mouseleave', startAutoplay);
+      section.addEventListener('focusin', function () { window.clearInterval(timer); });
+      section.addEventListener('focusout', function (event) {
+        if (!section.contains(event.relatedTarget)) startAutoplay();
+      });
+
+      showBanner(0);
+      startAutoplay();
+    })();
+  </script>
+  @endif
   @endif
 
   <!-- ============ HERO ============ -->

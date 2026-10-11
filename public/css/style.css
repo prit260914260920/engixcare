@@ -3887,8 +3887,76 @@ h1, h2, h3, h4, h5, h6, .brand-text {
    =================================================================== */
 
 .festive-banners-section {
+  position: relative;
   width: 100%;
   margin-top: var(--main-navbar-h, 0px);
+  overflow: hidden;
+}
+
+.festive-banner-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.6s ease;
+}
+
+.festive-banner-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.festive-banner-control {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.55);
+  color: #fff;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background 0.2s ease;
+}
+
+.festive-banner-control:hover {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.festive-banner-prev { left: 16px; }
+.festive-banner-next { right: 16px; }
+
+.festive-banner-dots {
+  position: absolute;
+  z-index: 5;
+  bottom: 14px;
+  left: 50%;
+  display: flex;
+  gap: 8px;
+  transform: translateX(-50%);
+}
+
+.festive-banner-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.35);
+  cursor: pointer;
+}
+
+.festive-banner-dot.active {
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .festive-banner-track {
+    transition: none;
+  }
 }
 
 .festive-banner {
@@ -4058,6 +4126,15 @@ h1, h2, h3, h4, h5, h6, .brand-text {
 
 /* ── Responsive ── */
 @media (max-width: 767px) {
+  .festive-banner-control {
+    width: 34px;
+    height: 34px;
+  }
+
+  .festive-banner-prev { left: 8px; }
+  .festive-banner-next { right: 8px; }
+  .festive-banner-dots { bottom: 8px; }
+
   .festive-banner-inner {
     flex-direction: column;
     text-align: center;
