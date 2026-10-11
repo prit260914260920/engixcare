@@ -4130,9 +4130,16 @@ h1, h2, h3, h4, h5, h6, .brand-text {
 
 /* ── Responsive ── */
 @media (max-width: 767px) {
+  .festive-banners-section,
   .festive-banner-track,
   .festive-banner-slide {
+    width: 100%;
     min-width: 0;
+    max-width: 100%;
+  }
+
+  .festive-banner-image-only {
+    width: 100%;
     max-width: 100%;
   }
 
@@ -4140,6 +4147,18 @@ h1, h2, h3, h4, h5, h6, .brand-text {
     width: 100%;
     height: auto;
     object-fit: contain;
+  }
+
+  .hero,
+  .counters {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero > .container,
+  .counters > .container {
+    width: 100%;
+    max-width: 100%;
   }
 
   .festive-banner {
