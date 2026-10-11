@@ -50,8 +50,14 @@ class PromotionController extends Controller
             'spin_to_win_description'    => 'nullable|string',
             'spin_to_win_code'           => 'nullable|string|max:100',
             'spin_to_win_percentage'     => 'nullable|integer|min:0|max:100',
-            'show_engix_club'            => 'boolean',
-            'show_offer_cards'           => 'boolean',
+            'show_engix_club'              => 'boolean',
+            'show_offer_cards'             => 'boolean',
+            'announcement_bar_enabled'     => 'boolean',
+            'announcement_bar_text'        => 'nullable|string|max:500',
+            'announcement_bar_bg_color'    => 'nullable|string|max:20',
+            'announcement_bar_text_color'  => 'nullable|string|max:20',
+            'announcement_bar_link'        => 'nullable|url|max:500',
+            'announcement_bar_dismissible' => 'boolean',
         ]);
 
         if ($validator->fails()) {
@@ -83,8 +89,14 @@ class PromotionController extends Controller
             ]),
             [
                 // checkboxes are absent from the request when unchecked
-                'show_engix_club'  => $request->boolean('show_engix_club'),
-                'show_offer_cards' => $request->boolean('show_offer_cards'),
+                'show_engix_club'              => $request->boolean('show_engix_club'),
+                'show_offer_cards'             => $request->boolean('show_offer_cards'),
+                'announcement_bar_enabled'     => $request->boolean('announcement_bar_enabled'),
+                'announcement_bar_text'        => $request->input('announcement_bar_text'),
+                'announcement_bar_bg_color'    => $request->input('announcement_bar_bg_color', '#1a1a1a'),
+                'announcement_bar_text_color'  => $request->input('announcement_bar_text_color', '#ffffff'),
+                'announcement_bar_link'        => $request->input('announcement_bar_link') ?: null,
+                'announcement_bar_dismissible' => $request->boolean('announcement_bar_dismissible'),
             ]
         ));
 

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Commands\\MakeAdminUser' => $baseDir . '/app/Console/Commands/MakeAdminUser.php',
+    'App\\Console\\Commands\\SyncShiprocketOrderStatus' => $baseDir . '/app/Console/Commands/SyncShiprocketOrderStatus.php',
     'App\\Http\\Controllers\\AuthController' => $baseDir . '/app/Http/Controllers/AuthController.php',
     'App\\Http\\Controllers\\CartController' => $baseDir . '/app/Http/Controllers/CartController.php',
     'App\\Http\\Controllers\\CheckoutController' => $baseDir . '/app/Http/Controllers/CheckoutController.php',
@@ -20,6 +21,7 @@ return array(
     'App\\Http\\Controllers\\PromotionController' => $baseDir . '/app/Http/Controllers/PromotionController.php',
     'App\\Http\\Controllers\\ReviewController' => $baseDir . '/app/Http/Controllers/ReviewController.php',
     'App\\Http\\Middleware\\AdminAuthenticate' => $baseDir . '/app/Http/Middleware/AdminAuthenticate.php',
+    'App\\Mail\\OrderConfirmationMail' => $baseDir . '/app/Mail/OrderConfirmationMail.php',
     'App\\Models\\Cart' => $baseDir . '/app/Models/Cart.php',
     'App\\Models\\ContactMessage' => $baseDir . '/app/Models/ContactMessage.php',
     'App\\Models\\HeroSection' => $baseDir . '/app/Models/HeroSection.php',
@@ -32,6 +34,7 @@ return array(
     'App\\Models\\SubIngredient' => $baseDir . '/app/Models/SubIngredient.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
+    'App\\Services\\ShiprocketService' => $baseDir . '/app/Services/ShiprocketService.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Barryvdh\\DomPDF\\Facade\\Pdf' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade/Pdf.php',
     'Barryvdh\\DomPDF\\PDF' => $vendorDir . '/barryvdh/laravel-dompdf/src/PDF.php',

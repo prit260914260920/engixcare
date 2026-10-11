@@ -589,6 +589,7 @@ class ComposerStaticInit36793882908b6cbdd344b5a4840231db
 
     public static $classMap = array (
         'App\\Console\\Commands\\MakeAdminUser' => __DIR__ . '/../..' . '/app/Console/Commands/MakeAdminUser.php',
+        'App\\Console\\Commands\\SyncShiprocketOrderStatus' => __DIR__ . '/../..' . '/app/Console/Commands/SyncShiprocketOrderStatus.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\CartController' => __DIR__ . '/../..' . '/app/Http/Controllers/CartController.php',
         'App\\Http\\Controllers\\CheckoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/CheckoutController.php',
@@ -602,6 +603,7 @@ class ComposerStaticInit36793882908b6cbdd344b5a4840231db
         'App\\Http\\Controllers\\PromotionController' => __DIR__ . '/../..' . '/app/Http/Controllers/PromotionController.php',
         'App\\Http\\Controllers\\ReviewController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReviewController.php',
         'App\\Http\\Middleware\\AdminAuthenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminAuthenticate.php',
+        'App\\Mail\\OrderConfirmationMail' => __DIR__ . '/../..' . '/app/Mail/OrderConfirmationMail.php',
         'App\\Models\\Cart' => __DIR__ . '/../..' . '/app/Models/Cart.php',
         'App\\Models\\ContactMessage' => __DIR__ . '/../..' . '/app/Models/ContactMessage.php',
         'App\\Models\\HeroSection' => __DIR__ . '/../..' . '/app/Models/HeroSection.php',
@@ -614,6 +616,7 @@ class ComposerStaticInit36793882908b6cbdd344b5a4840231db
         'App\\Models\\SubIngredient' => __DIR__ . '/../..' . '/app/Models/SubIngredient.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
+        'App\\Services\\ShiprocketService' => __DIR__ . '/../..' . '/app/Services/ShiprocketService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Barryvdh\\DomPDF\\Facade\\Pdf' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade/Pdf.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',

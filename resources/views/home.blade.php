@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('show_announcement_bar', true)
 @section('content')
 <!-- Loading Screen -->
   <div id="preloader" data-testid="preloader">

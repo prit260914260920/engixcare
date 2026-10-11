@@ -33,6 +33,123 @@
   <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 </head>
 <body>
+    {{-- ===== ANNOUNCEMENT BAR ===== --}}
+    @php
+        $announcementSettings = \App\Models\PromotionSetting::current();
+    @endphp
+    @if($announcementSettings->announcement_bar_enabled && $announcementSettings->announcement_bar_text && View::hasSection('show_announcement_bar'))
+    <div id="announcement-bar"
+         style="background-color:{{ $announcementSettings->announcement_bar_bg_color }};color:{{ $announcementSettings->announcement_bar_text_color }};"
+         role="banner"
+         aria-label="Announcement">
+        <div class="announcement-bar-inner">
+            @if($announcementSettings->announcement_bar_link)
+                <a href="{{ $announcementSettings->announcement_bar_link }}"
+                   class="announcement-bar-text announcement-bar-link"
+                   style="color:{{ $announcementSettings->announcement_bar_text_color }};">
+                    {{ $announcementSettings->announcement_bar_text }}
+                </a>
+            @else
+                <span class="announcement-bar-text">{{ $announcementSettings->announcement_bar_text }}</span>
+            @endif
+        </div>
+        @if($announcementSettings->announcement_bar_dismissible)
+        <button class="announcement-bar-close"
+                id="announcementBarClose"
+                aria-label="Dismiss announcement"
+                style="color:{{ $announcementSettings->announcement_bar_text_color }};">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        @endif
+    </div>
+    <style>
+        /* ── Announcement Bar ─────────────────────────────────────── */
+        #announcement-bar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 8px 48px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13.5px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            line-height: 1.4;
+            text-align: center;
+            z-index: 1200;   /* above navbar (Bootstrap fixed-top = 1030) */
+        }
+        #announcement-bar.hidden {
+            display: none !important;
+        }
+        .announcement-bar-inner { flex: 1; text-align: center; }
+        .announcement-bar-text  { font-size: 13.5px; }
+        .announcement-bar-link  {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .announcement-bar-link:hover { opacity: 0.85; }
+        .announcement-bar-close {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 4px 6px;
+            opacity: 0.75;
+            font-size: 14px;
+            line-height: 1;
+            transition: opacity 0.15s;
+        }
+        .announcement-bar-close:hover { opacity: 1; }
+
+        /* ── Push Bootstrap fixed-top navbar below the bar ───────── */
+        .navbar.fixed-top,
+        nav.fixed-top {
+            top: var(--announcement-bar-h, 0px);
+            transition: top 0.2s ease;
+        }
+    </style>
+    <script>
+        (function () {
+            var bar     = document.getElementById('announcement-bar');
+            var closeBtn= document.getElementById('announcementBarClose');
+
+            /* Helper — measure bar height and write CSS variable on <html> */
+            function setNavOffset() {
+                var h = (bar && !bar.classList.contains('hidden'))
+                        ? bar.getBoundingClientRect().height
+                        : 0;
+                document.documentElement.style.setProperty('--announcement-bar-h', h + 'px');
+            }
+
+            /* Restore dismissed state before first paint */
+            if (sessionStorage.getItem('announcementBarDismissed') === '1') {
+                if (bar) bar.classList.add('hidden');
+            }
+
+            /* Set offset as early as possible */
+            setNavOffset();
+
+            /* Re-measure after fonts/images may have reflowed */
+            window.addEventListener('load', setNavOffset);
+            window.addEventListener('resize', setNavOffset);
+
+            /* Dismiss handler */
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    bar.classList.add('hidden');
+                    sessionStorage.setItem('announcementBarDismissed', '1');
+                    setNavOffset(); /* collapse the gap immediately */
+                });
+            }
+        })();
+    </script>
+    @endif
     @php
       $appUser = [
         'authenticated' => auth()->check(),

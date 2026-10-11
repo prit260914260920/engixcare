@@ -31,6 +31,13 @@ class PromotionSetting extends Model
         'spin_to_win_percentage',
         'show_engix_club',
         'show_offer_cards',
+        // Announcement Bar
+        'announcement_bar_enabled',
+        'announcement_bar_text',
+        'announcement_bar_bg_color',
+        'announcement_bar_text_color',
+        'announcement_bar_link',
+        'announcement_bar_dismissible',
     ];
 
     protected $casts = [
@@ -42,6 +49,8 @@ class PromotionSetting extends Model
         'spin_to_win_percentage'     => 'integer',
         'show_engix_club'            => 'boolean',
         'show_offer_cards'           => 'boolean',
+        'announcement_bar_enabled'   => 'boolean',
+        'announcement_bar_dismissible' => 'boolean',
     ];
 
     public static function current(): self
@@ -65,6 +74,13 @@ class PromotionSetting extends Model
             'spin_to_win_percentage'   => 20,
             'show_engix_club'          => true,
             'show_offer_cards'         => true,
+            // Announcement Bar defaults
+            'announcement_bar_enabled'     => false,
+            'announcement_bar_text'        => '🎉 Special Offer! Get 15% OFF on orders above ₹500. Use code: ENGIX15',
+            'announcement_bar_bg_color'    => '#1a1a1a',
+            'announcement_bar_text_color'  => '#ffffff',
+            'announcement_bar_link'        => null,
+            'announcement_bar_dismissible' => true,
         ]);
     }
 }

@@ -44,8 +44,16 @@
             <span class="font-label-md text-label-md">Articles / Blog</span>
         </a>
 
+        {{-- Announcement Bar — top strip banner manager --}}
+        <a class="{{ $isActive('admin/promotions') && str_contains(request()->getRequestUri(), '#announcement') ? $navActive : $navInactive }}"
+           href="{{ route('admin.promotions.index') }}#announcement-bar-section">
+            <span class="material-symbols-outlined {{ $isActive('admin/promotions') ? 'text-primary' : 'group-hover:text-primary' }}">campaign</span>
+            <span class="font-label-md text-label-md">Announcement Bar</span>
+        </a>
+
         <a class="{{ $isActive('admin/promotions') ? $navActive : $navInactive }}" href="{{ route('admin.promotions.index') }}">
-            <span class="material-symbols-outlined group-hover:text-primary">campaign</span>
+            <span class="material-symbols-outlined {{ $isActive('admin/promotions') ? '' : 'group-hover:text-primary' }}"
+                  @if($isActive('admin/promotions')) style="font-variation-settings:'FILL' 1" @endif>local_offer</span>
             <span class="font-label-md text-label-md">Offers &amp; Promotions</span>
         </a>
 
