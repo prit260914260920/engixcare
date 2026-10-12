@@ -4213,6 +4213,19 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   }
 }
 
+@media (max-width: 991.98px) {
+  #announcement-bar {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .festive-banners-section {
+    margin-top: calc(var(--announcement-bar-h, 0px) + var(--main-navbar-h, 0px));
+  }
+}
+
 @media (max-width: 767.98px) {
   .festive-banners-section + .hero {
     padding-top: 32px;
@@ -4272,8 +4285,19 @@ h1, h2, h3, h4, h5, h6, .brand-text {
     max-width: 100%;
   }
 
-  .row.g-5 {
-    --bs-gutter-x: 1.5rem;
+  .hero .row {
+    margin-right: 0;
+    margin-left: 0;
+    --bs-gutter-x: 0;
+  }
+
+  .hero .row > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .hero .row > [data-aos="fade-right"] {
+    text-align: center;
   }
 
   .lab-track {
@@ -4300,12 +4324,13 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   }
 
   .hero-pill {
+    display: flex;
     max-width: 100%;
-    justify-content: center;
+    width: fit-content;
+    margin-right: auto;
+    margin-left: auto;
     white-space: normal;
-  }
-
-  .hero .row > [class*="col-"]:first-child {
+    justify-content: center;
     text-align: center;
   }
 
@@ -4340,11 +4365,6 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   .minerals-strip,
   .trust-row {
     justify-content: center;
-  }
-
-  .trust-item {
-    justify-content: center;
-    text-align: left;
   }
 
   .hero-image-wrap {
