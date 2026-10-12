@@ -4301,7 +4301,12 @@ h1, h2, h3, h4, h5, h6, .brand-text {
 
   .hero-pill {
     max-width: 100%;
+    justify-content: center;
     white-space: normal;
+  }
+
+  .hero .row > [class*="col-"]:first-child {
+    text-align: center;
   }
 
   .hero-title {
@@ -4311,11 +4316,14 @@ h1, h2, h3, h4, h5, h6, .brand-text {
 
   .hero-sub {
     max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .hero-cta {
     flex-direction: column;
     align-items: stretch;
+    justify-content: center;
   }
 
   .hero-cta .btn {
@@ -4327,6 +4335,16 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   .mineral-item {
     flex: 1 1 90px;
     min-width: 0;
+  }
+
+  .minerals-strip,
+  .trust-row {
+    justify-content: center;
+  }
+
+  .trust-item {
+    justify-content: center;
+    text-align: left;
   }
 
   .hero-image-wrap {
