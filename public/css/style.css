@@ -25,7 +25,10 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
@@ -2787,11 +2790,16 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   z-index: 950;
   box-shadow: -20px 0 60px rgba(15, 23, 42, 0.2);
   transform: translateX(100%);
-  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  visibility: hidden;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.45s;
   display: flex;
   flex-direction: column;
 }
-.cart-drawer.show { transform: translateX(0); }
+.cart-drawer.show {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s;
+}
 .cart-head {
   padding: 22px 24px;
   border-bottom: 1px solid var(--line);
@@ -4202,5 +4210,157 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   .fb-deco-1 {
     width: 180px;
     height: 180px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .festive-banners-section + .hero {
+    padding-top: 32px;
+  }
+
+  body [data-aos="fade-left"].aos-init:not(.aos-animate),
+  body [data-aos="fade-right"].aos-init:not(.aos-animate) {
+    transform: translateY(20px) !important;
+  }
+
+  .navbar-engix > .container {
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .navbar-engix .navbar-brand {
+    min-width: 0;
+    max-width: calc(100% - 56px);
+  }
+
+  .navbar-engix .navbar-logo {
+    height: auto;
+    max-height: 44px;
+    max-width: 100%;
+  }
+
+  .navbar-engix .navbar-toggler {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .navbar-engix .navbar-collapse {
+    flex-basis: 100%;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .navbar-engix .navbar-nav,
+  .navbar-engix .nav-cta {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .navbar-engix .nav-link {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  .hero,
+  .hero > .container,
+  .hero .row,
+  .hero [class*="col-"] {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .row.g-5 {
+    --bs-gutter-x: 1.5rem;
+  }
+
+  .lab-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lab-step {
+    min-width: 0;
+    padding: 20px 12px;
+  }
+
+  .ci-card > div {
+    min-width: 0;
+  }
+
+  .ci-card p {
+    overflow-wrap: anywhere;
+  }
+
+  .hero > .container {
+    width: 100%;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .hero-pill {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 2.7rem);
+    overflow-wrap: anywhere;
+  }
+
+  .hero-sub {
+    max-width: 100%;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .mineral-item {
+    flex: 1 1 90px;
+    min-width: 0;
+  }
+
+  .hero-image-wrap {
+    width: 100%;
+    max-width: 480px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0;
+  }
+
+  .hero-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 359.98px) {
+  .lab-track {
+    grid-template-columns: 1fr;
+  }
+
+  .hero > .container {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .hero-title {
+    font-size: 1.9rem;
+  }
+
+  .hero-cta {
+    gap: 12px !important;
   }
 }
