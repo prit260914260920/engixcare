@@ -486,6 +486,79 @@
       </div>
     </section>
   </main>
+  <footer class="footer" data-testid="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <a href="{{ url('/') }}#home" class="footer-brand"><img src="{{ asset('asset/logo.png') }}" alt="engix CARE" style="height:40px;width:auto;object-fit:contain;margin-right:10px;" /><span>engix<span class="brand-accent">CARE</span></span></a>
+          <p class="footer-desc">Premium effervescent health supplements crafted for real Indian lifestyles. Doctor formulated, WHO-GMP &amp; HACCP certified manufacturing, FSSAI approved.</p>
+          <div class="social">
+            <a href="#" aria-label="Facebook" data-testid="social-fb"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram" data-testid="social-ig"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="X" data-testid="social-x"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" aria-label="YouTube" data-testid="social-yt"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" aria-label="LinkedIn" data-testid="social-li"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6 class="footer-title">Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="{{ url('/') }}#home">Home</a></li>
+            <li><a href="{{ url('/') }}#products">Products</a></li>
+            <li><a href="{{ url('/') }}#benefits">Benefits</a></li>
+            <li><a href="{{ url('/') }}#ingredients">Ingredients</a></li>
+            <li><a href="{{ url('/') }}#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6 class="footer-title">Policies</h6>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Refund Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="{{ url('/') }}#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h6 class="footer-title">Brand &amp; Manufacturer Info</h6>
+          <div style="font-size:0.82rem;color:#94a3b8;line-height:1.65;margin-bottom:16px;">
+            <p style="margin:0 0 8px;"><strong style="color:#cbd5e1;">Marketed by:</strong><br />
+            VHK International<br />
+            Shop No-3, Surjit Colony, Bapunagar,<br />
+            Ahmedabad, Gujarat – 380024</p>
+            <p style="margin:0 0 8px;"><strong style="color:#cbd5e1;">Manufactured by:</strong><br />
+            Growequal LTD. <span style="font-size:0.75rem;opacity:0.8;">(WHO-GMP &amp; HACCP Certified)</span><br />
+            D-15, Sahjanand Business Park, S.P. Ring Road,<br />
+            Nikol, Ahmedabad, Gujarat – 382350, India</p>
+            <p style="margin:0;"><strong style="color:#cbd5e1;">Customer Care:</strong><br />
+            <a href="mailto:carewithengix@gmail.com" style="color:#22C55E;text-decoration:none;">carewithengix@gmail.com</a></p>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider" />
+      <div class="row g-3 mb-4 justify-content-lg-end">
+        <div class="col-lg-6 d-flex align-items-center justify-content-lg-end">
+          <div style="text-align:right;">
+            <p style="font-size:0.75rem;color:#64748b;margin:0 0 4px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">Certified &amp; Trusted</p>
+            <div style="display:flex;gap:14px;align-items:center;justify-content:flex-end;flex-wrap:wrap;">
+              <span style="background:rgba(255,255,255,0.08);border-radius:8px;padding:6px 12px;font-size:0.75rem;color:#cbd5e1;font-weight:600;">WHO-GMP</span>
+              <span style="background:rgba(255,255,255,0.08);border-radius:8px;padding:6px 12px;font-size:0.75rem;color:#cbd5e1;font-weight:600;">HACCP</span>
+              <span style="background:rgba(255,255,255,0.08);border-radius:8px;padding:6px 12px;font-size:0.75rem;color:#cbd5e1;font-weight:600;">FSSAI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider" style="margin-top:0;" />
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Engix Care. All rights reserved.</p>
+        <p>Made with <i class="fa-solid fa-heart" style="color:#22C55E"></i> for a healthier tomorrow.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="back-to-top" aria-label="Back to top" data-testid="back-to-top"><i class="fa-solid fa-arrow-up"></i></button>
+
   <script>
     (function () {
       var tabList = document.querySelector('.product-section-nav[role="tablist"]');
