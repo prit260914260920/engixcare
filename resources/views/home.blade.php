@@ -507,6 +507,7 @@
   @endif
 
   <!-- ============ FROM LAB TO YOU ============ -->
+  @if($promotionSettings->show_lab_journey)
   <section class="section lab-journey" data-testid="lab-section">
     <div class="container">
       <div class="section-head text-center" data-aos="fade-up">
@@ -543,6 +544,7 @@
         </div>
       </div>
 
+      @if($promotionSettings->show_formulated_by)
       <div class="doc-strip" data-aos="fade-up">
         <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80" alt="Dr. Aarav Sharma" />
         <div class="doc-info">
@@ -551,8 +553,10 @@
           <p>"Every Engix Care formula follows clinically validated doses — no fillers, no shortcuts. Just science-backed effervescent nutrition your body actually absorbs."</p>
         </div>
       </div>
+      @endif
     </div>
   </section>
+  @endif
 
   <!-- ============ FEATURES ============ -->
   <section class="section features" id="benefits" data-testid="features-section">

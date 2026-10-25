@@ -9,7 +9,7 @@
     <div class="p-margin-desktop space-y-gutter">
         <div class="flex flex-col gap-xs">
             <h2 class="font-headline-lg text-headline-lg text-on-surface">Promotion Settings</h2>
-            <p class="font-body-md text-body-md text-on-surface-variant">Manage the offer banner, floating coupon, welcome modal, scroll popup and spin to win widget from here.</p>
+            <p class="font-body-md text-body-md text-on-surface-variant">Manage promotional offers, homepage section visibility and widgets from here.</p>
         </div>
 
         @if (session('success'))
@@ -279,6 +279,36 @@
                             <input type="checkbox" name="show_offer_cards" value="1"
                                    {{ old('show_offer_cards', $settings->show_offer_cards) ? 'checked' : '' }}
                                    class="sr-only peer" id="toggle_offer_cards" />
+                            <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:bg-primary transition-colors duration-200"></div>
+                            <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform duration-200"></div>
+                        </div>
+                    </label>
+
+                    {{-- Lab journey section toggle --}}
+                    <label class="flex items-center justify-between gap-md cursor-pointer select-none rounded-lg border border-outline-variant/30 px-md py-sm hover:bg-surface-container-low/40 transition-colors">
+                        <div>
+                            <span class="font-semibold text-on-surface text-sm">From Lab to You Section</span>
+                            <p class="text-xs text-on-surface-variant mt-0.5">Show or hide the FSSAI-certified facilities heading and four quality steps.</p>
+                        </div>
+                        <div class="relative flex-shrink-0">
+                            <input type="checkbox" name="show_lab_journey" value="1"
+                                   {{ old('show_lab_journey', $settings->show_lab_journey) ? 'checked' : '' }}
+                                   class="sr-only peer" id="toggle_lab_journey" />
+                            <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:bg-primary transition-colors duration-200"></div>
+                            <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform duration-200"></div>
+                        </div>
+                    </label>
+
+                    {{-- Formulated by card toggle --}}
+                    <label class="flex items-center justify-between gap-md cursor-pointer select-none rounded-lg border border-outline-variant/30 px-md py-sm hover:bg-surface-container-low/40 transition-colors">
+                        <div>
+                            <span class="font-semibold text-on-surface text-sm">Formulated by Card</span>
+                            <p class="text-xs text-on-surface-variant mt-0.5">Show or hide the doctor profile and formulation statement below the quality steps.</p>
+                        </div>
+                        <div class="relative flex-shrink-0">
+                            <input type="checkbox" name="show_formulated_by" value="1"
+                                   {{ old('show_formulated_by', $settings->show_formulated_by) ? 'checked' : '' }}
+                                   class="sr-only peer" id="toggle_formulated_by" />
                             <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:bg-primary transition-colors duration-200"></div>
                             <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform duration-200"></div>
                         </div>

@@ -33,6 +33,8 @@ class PromotionSetting extends Model
         'show_engix_club',
         'show_offer_cards',
         'show_wellness_quiz',
+        'show_lab_journey',
+        'show_formulated_by',
         // Announcement Bar
         'announcement_bar_enabled',
         'announcement_bar_text',
@@ -53,6 +55,8 @@ class PromotionSetting extends Model
         'show_engix_club'            => 'boolean',
         'show_offer_cards'           => 'boolean',
         'show_wellness_quiz'         => 'boolean',
+        'show_lab_journey'           => 'boolean',
+        'show_formulated_by'         => 'boolean',
         'announcement_bar_enabled'   => 'boolean',
         'announcement_bar_dismissible' => 'boolean',
     ];
@@ -80,6 +84,8 @@ class PromotionSetting extends Model
             'show_engix_club'          => true,
             'show_offer_cards'         => true,
             'show_wellness_quiz'       => true,
+            'show_lab_journey'         => true,
+            'show_formulated_by'       => true,
             // Announcement Bar defaults
             'announcement_bar_enabled'     => false,
             'announcement_bar_text'        => '🎉 Special Offer! Get 15% OFF on orders above ₹500. Use code: ENGIX15',
