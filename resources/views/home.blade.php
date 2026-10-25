@@ -1095,7 +1095,7 @@
             Shop No-3, Surjit Colony, Bapunagar,<br />
             Ahmedabad, Gujarat – 380024</p>
             <p style="margin:0 0 8px;"><strong style="color:#cbd5e1;">Manufactured by:</strong><br />
-            Growequal <span style="font-size:0.75rem;opacity:0.8;">(WHO-GMP &amp; HACCP Certified)</span><br />
+            Growequal LTD. <span style="font-size:0.75rem;opacity:0.8;">(WHO-GMP &amp; HACCP Certified)</span><br />
             D-15, Sahjanand Business Park, S.P. Ring Road,<br />
             Nikol, Ahmedabad, Gujarat – 382350, India</p>
             <p style="margin:0;"><strong style="color:#cbd5e1;">Customer Care:</strong><br />

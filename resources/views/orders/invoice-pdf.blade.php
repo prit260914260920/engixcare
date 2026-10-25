@@ -314,7 +314,7 @@
   <div class="footer">
     <div class="footer-inner">
       <div class="footer-left">
-        Manufactured by Growequal (WHO-GMP &amp; HACCP Certified) &nbsp;·&nbsp; D-15, Sahjanand Business Park, S.P. Ring Road, Nikol, Ahmedabad – 382350
+        Manufactured by Growequal LTD. (WHO-GMP &amp; HACCP Certified) &nbsp;·&nbsp; D-15, Sahjanand Business Park, S.P. Ring Road, Nikol, Ahmedabad – 382350
       </div>
       <div class="footer-right">engixCARE &copy; {{ date('Y') }}</div>
     </div>

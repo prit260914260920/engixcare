@@ -367,7 +367,7 @@
 
       {{-- ── Footer ── --}}
       <div class="inv-footer">
-        <span>Manufactured by Growequal (WHO-GMP &amp; HACCP Certified) · Nikol, Ahmedabad – 382350</span>
+        <span>Manufactured by Growequal LTD. (WHO-GMP &amp; HACCP Certified) · Nikol, Ahmedabad – 382350</span>
         <span class="thank">engixCARE © {{ date('Y') }}</span>
       </div>
 
