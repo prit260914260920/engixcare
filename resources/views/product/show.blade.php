@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title', $product->name . ' | Engix Care')
+@section('meta_title', $product->name . ' | Engix Care')
+@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($product->description ?: ($product->subtitle ?: $product->name)), 155))
+
 @section('content')
   <!-- User Cart Data (for persistence) -->
   @auth
@@ -154,7 +158,7 @@
                 <span class="cat-tag mb-2 d-inline-block">{{ $product->category }}</span>
               @endif
 
-              <div class="d-flex align-items-center gap-3 mb-3">
+              <a href="#reviews" class="product-rating-link d-inline-flex align-items-center gap-3 mb-3 text-decoration-none">
                 <div class="rating">
                   @for($star = 1; $star <= 5; $star++)
                     <i class="fa-{{ $star <= round($product->rating ?? 0) ? 'solid' : 'regular' }} fa-star"></i>
@@ -163,9 +167,9 @@
                 @if($product->review_count)
                   <small class="text-muted">{{ number_format($product->rating, 1) }} · {{ number_format($product->review_count) }} reviews</small>
                 @else
-                  <small class="text-muted">{{ number_format($product->rating, 1) }} rating</small>
+                  <small class="text-muted">Be the first to review</small>
                 @endif
-              </div>
+              </a>
 
               <h1 class="product-detail-title">{{ $product->name }}</h1>
               @if($product->subtitle)
@@ -190,11 +194,8 @@
                 @endif
               </div>
 
-              @if($product->description)
-                <p class="mb-4">{{ $product->description }}</p>
-              @endif
-
               @if(!empty($product->bullet_points))
+                <h2 class="product-highlights-title">Product highlights</h2>
                 <ul class="benefit-list mb-4">
                   @foreach($product->bullet_points as $bullet)
                     <li>{{ $bullet }}</li>
@@ -231,35 +232,49 @@
           </div>
         </div>
 
+        <nav class="product-section-nav" aria-label="Product information">
+          <a href="#overview">Product details</a>
+          <a href="#ingredients">Ingredients</a>
+          <a href="#reviews">Reviews ({{ number_format($product->review_count) }})</a>
+          @if($relatedProducts->isNotEmpty())
+            <a href="#related-products">You may also like</a>
+          @endif
+        </nav>
+
         <div class="row g-4 mt-5">
-          <div class="col-lg-7">
-            <div class="section-head mb-4" data-aos="fade-up">
+          <div class="col-lg-7" id="overview">
+            <div class="section-head mb-4">
               <span class="eyebrow">Product Details</span>
-              <h2 class="section-title">About this formula</h2>
+              <h2 class="section-title">Everything you need to know</h2>
             </div>
-            <div class="card p-4 border border-outline-variant/30 bg-white shadow-sm">
+            @if($product->description)
+              <p class="product-overview-copy">{{ $product->description }}</p>
+            @endif
+            <div class="product-facts-card">
               <div class="row gy-3">
-                <div class="col-sm-6">
-                  <strong>SKU</strong>
-                  <p class="text-muted mb-0">{{ $product->sku }}</p>
-                </div>
-                <div class="col-sm-6">
-                  <strong>Status</strong>
-                  <p class="text-muted mb-0">{{ $product->status }}</p>
-                </div>
-                <div class="col-sm-6">
-                  <strong>Category</strong>
-                  <p class="text-muted mb-0">{{ $product->category }}</p>
-                </div>
-                <div class="col-sm-6">
-                  <strong>Stock</strong>
-                  <p class="text-muted mb-0">{{ $product->stock }}</p>
-                </div>
+                @if($product->category)
+                  <div class="col-sm-6">
+                    <span>Category</span>
+                    <strong>{{ $product->category }}</strong>
+                  </div>
+                @endif
+                @if($product->unit_value && $product->unit_label)
+                  <div class="col-sm-6">
+                    <span>Pack size</span>
+                    <strong>{{ $product->unit_value }}{{ $product->unit_label }}</strong>
+                  </div>
+                @endif
+                @if($product->sku)
+                  <div class="col-sm-6">
+                    <span>Product code</span>
+                    <strong>{{ $product->sku }}</strong>
+                  </div>
+                @endif
               </div>
             </div>
 
-            <div class="mt-5">
-              <div class="section-head mb-4" data-aos="fade-up">
+            <div class="mt-5" id="ingredients">
+              <div class="section-head mb-4">
                 <span class="eyebrow">Ingredient profile</span>
                 <h2 class="section-title">Core ingredients</h2>
               </div>
@@ -293,10 +308,22 @@
             </div>
           </div>
 
-          <div class="col-lg-5">
-            <div class="section-head mb-4" data-aos="fade-up">
+          <div class="col-lg-5" id="reviews">
+            <div class="section-head mb-4">
               <span class="eyebrow">What customers say</span>
               <h2 class="section-title">Reviews</h2>
+            </div>
+
+            <div class="product-review-summary">
+              <div class="product-review-score">{{ number_format($product->rating, 1) }}</div>
+              <div>
+                <div class="rating">
+                  @for($star = 1; $star <= 5; $star++)
+                    <i class="fa-{{ $star <= round($product->rating) ? 'solid' : 'regular' }} fa-star"></i>
+                  @endfor
+                </div>
+                <span>{{ number_format($product->review_count) }} customer {{ $product->review_count === 1 ? 'review' : 'reviews' }}</span>
+              </div>
             </div>
 
             <div class="review-cards-list">
@@ -388,6 +415,48 @@
             </div>
           </div>
         </div>
+
+        @if($relatedProducts->isNotEmpty())
+          <section class="related-products-section" id="related-products">
+            <div class="section-head mb-4">
+              <span class="eyebrow">Explore more</span>
+              <h2 class="section-title">You may also like</h2>
+            </div>
+            <div class="row g-4">
+              @foreach($relatedProducts as $relatedProduct)
+                @php
+                  $relatedImages = $relatedProduct->image ?? [];
+                  $relatedImage = is_array($relatedImages) && count($relatedImages)
+                    ? Storage::disk('public')->url($relatedImages[0])
+                    : asset('asset/210A0234.png');
+                  $relatedPrice = $relatedProduct->discounted_price ?? $relatedProduct->price;
+                @endphp
+                <div class="col-sm-6 col-lg-3">
+                  <article class="related-product-card">
+                    <a href="{{ route('products.show', $relatedProduct) }}" class="related-product-image">
+                      <img src="{{ $relatedImage }}" alt="{{ $relatedProduct->name }}" loading="lazy" />
+                    </a>
+                    <div class="related-product-body">
+                      @if($relatedProduct->category)
+                        <span class="cat-tag">{{ $relatedProduct->category }}</span>
+                      @endif
+                      <h3>{{ $relatedProduct->name }}</h3>
+                      @if($relatedProduct->subtitle)
+                        <p>{{ $relatedProduct->subtitle }}</p>
+                      @endif
+                      <div class="related-product-footer">
+                        <strong>₹{{ number_format($relatedPrice, 2) }}</strong>
+                        <a href="{{ route('products.show', $relatedProduct) }}" aria-label="View {{ $relatedProduct->name }}">
+                          <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              @endforeach
+            </div>
+          </section>
+        @endif
       </div>
     </section>
   </main>

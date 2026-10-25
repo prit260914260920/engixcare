@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-  <meta name="description" content="Engix Care - Premium Vitamins & Nutritional Supplements for Energy, Immunity and Overall Wellness. Doctor recommended, GMP certified, 100% authentic." />
+  <meta name="description" content="{{ $__env->yieldContent('meta_description', 'Engix Care - Premium Vitamins & Nutritional Supplements for Energy, Immunity and Overall Wellness. Doctor recommended, GMP certified, 100% authentic.') }}" />
   <meta name="keywords" content="Engix Care, vitamins, supplements, multivitamin, healthcare, immunity, omega 3, vitamin d3, wellness" />
   <meta name="author" content="Engix Care" />
-  <meta property="og:title" content="Engix Care – Premium Vitamins & Supplements" />
-  <meta property="og:description" content="Your Daily Health Starts With Engix Care. Doctor recommended supplements for immunity, energy & wellness." />
+  <meta property="og:title" content="{{ $__env->yieldContent('meta_title', 'Engix Care – Premium Vitamins & Supplements') }}" />
+  <meta property="og:description" content="{{ $__env->yieldContent('meta_description', 'Your Daily Health Starts With Engix Care. Doctor recommended supplements for immunity, energy & wellness.') }}" />
   <meta property="og:type" content="website" />
-  <title>Engix Care | Premium Vitamins & Nutritional Supplements</title>
+  <title>{{ $__env->yieldContent('title', 'Engix Care | Premium Vitamins & Nutritional Supplements') }}</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230A84FF'/%3E%3Cpath d='M20 32h24M32 20v24' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E" />

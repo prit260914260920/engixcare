@@ -228,12 +228,23 @@ class ProductController extends Controller
             },
         ]);
 
-        if ($product->reviews->isNotEmpty()) {
-            $product->review_count = $product->reviews->count();
-            $product->rating       = round($product->reviews->avg('stars'), 1);
-        }
+        $reviewSummary = $product->reviews()
+            ->visible()
+            ->selectRaw('COUNT(*) as total, AVG(stars) as average')
+            ->first();
 
-        return view('product.show', compact('product'));
+        $product->review_count = (int) ($reviewSummary->total ?? 0);
+        $product->rating = round((float) ($reviewSummary->average ?? 0), 1);
+
+        $relatedProducts = Product::where('status', 'Active')
+            ->where('is_visible', true)
+            ->whereKeyNot($product->getKey())
+            ->orderByDesc('featured')
+            ->orderByDesc('id')
+            ->take(4)
+            ->get();
+
+        return view('product.show', compact('product', 'relatedProducts'));
     }
 
     public function submitReview(Request $request, Product $product)
