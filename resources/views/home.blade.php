@@ -564,7 +564,7 @@
       <div class="section-head text-center" data-aos="fade-up">
         <span class="eyebrow">Why Engix Care</span>
         <h2 class="section-title">Health Benefits You Can <span class="text-gradient">Feel</span></h2>
-        <p class="section-sub">Every capsule crafted for your daily wellness — pure, potent, and precise.</p>
+        <p class="section-sub">Every tablet crafted for your daily wellness — pure, potent, and precise.</p>
       </div>
 
       <div class="row g-4 mt-2">
@@ -572,7 +572,7 @@
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100"><div class="feature-card"><div class="icon-wrap blue"><i class="fa-solid fa-capsules"></i></div><h5>Rich in Vitamins</h5><p>Full spectrum vitamins & essential minerals in every dose.</p></div></div>
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200"><div class="feature-card"><div class="icon-wrap green"><i class="fa-solid fa-seedling"></i></div><h5>Natural Ingredients</h5><p>Plant based & bioavailable actives — no shortcuts.</p></div></div>
         <div class="col-md-6 col-lg-4" data-aos="fade-up"><div class="feature-card"><div class="icon-wrap blue"><i class="fa-solid fa-flask-vial"></i></div><h5>No Harmful Chemicals</h5><p>Free from parabens, GMOs and artificial fillers.</p></div></div>
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100"><div class="feature-card"><div class="icon-wrap green"><i class="fa-solid fa-stethoscope"></i></div><h5>Doctor Recommended</h5><p>Formulated with guidance from certified nutritionists.</p></div></div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100"><div class="feature-card"><div class="icon-wrap green"><i class="fa-solid fa-hourglass-half"></i></div><h5>Coming Soon</h5><p>Your New Skincare Essential</p></div></div>
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200"><div class="feature-card"><div class="icon-wrap blue"><i class="fa-solid fa-truck-fast"></i></div><h5>Fast Delivery</h5><p>Doorstep delivery across India in 2–4 business days.</p></div></div>
       </div>
     </div>
