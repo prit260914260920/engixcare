@@ -269,6 +269,153 @@
   </section>
   @endif
 
+  <!-- ============ PRODUCTS ============ -->
+  <section class="section products bg-soft" id="products" data-testid="products-section">
+    <div class="container">
+      <div class="section-head text-center" data-aos="fade-up">
+        <span class="eyebrow">Our Complete Range</span>
+        <h2 class="section-title">Science-Backed. <span class="text-gradient">Results-Proven.</span></h2>
+        <p class="section-sub">Effervescent formulas doctor-formulated for real Indian lifestyles.</p>
+      </div>
+
+      <div class="row g-4 mt-2">
+        @forelse($products as $i => $product)
+          @php
+            $delay     = ($i % 3) * 80;
+            $images    = $product->image ?? [];
+            $imgUrl    = count($images)
+                ? \Illuminate\Support\Facades\Storage::disk('public')->url($images[0])
+                : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80';
+
+            // Badge CSS class based on badge_color
+            $badgeClass = match($product->badge_color) {
+                'green'  => 'new',
+                'blue'   => 'hot',
+                'red'    => 'sale',
+                'purple' => 'premium',
+                default  => 'sale',
+            };
+
+            // Stock bar width (max 100%, capped at 200 for visual scale)
+            $stockPct = $product->stock > 0 ? min(100, round(($product->stock / 200) * 100)) : 0;
+          @endphp
+
+          <div class="col-sm-6 col-lg-4" data-aos="fade-up" {{ $delay ? 'data-aos-delay="'.$delay.'"' : '' }}>
+            <div class="product-card" id="product-{{ $product->id }}" data-testid="product-card-{{ $product->id }}">
+
+              {{-- Badge --}}
+              @if($product->badge_label)
+                <div class="product-badge {{ $badgeClass }}">{{ $product->badge_label }}</div>
+              @endif
+
+              {{-- Image --}}
+              <div class="product-img">
+                <div class="product-quick">
+                  <a class="pq-btn" href="{{ route('products.show', $product) }}" title="Quick view"><i class="fa-regular fa-eye"></i></a>
+                  <button class="pq-btn" title="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                </div>
+                <img src="{{ $imgUrl }}" alt="{{ $product->name }}" />
+              </div>
+
+              {{-- Body --}}
+              <div class="product-body">
+                @if($product->category)
+                  <span class="cat-tag">{{ $product->category }}</span>
+                @endif
+
+                {{-- Star rating --}}
+                @if($product->rating > 0)
+                  <div class="rating">
+                    @for($s = 1; $s <= 5; $s++)
+                      <i class="fa-{{ $s <= round($product->rating) ? 'solid' : 'regular' }} fa-star"></i>
+                    @endfor
+                    @if($product->review_count)
+                      <small>({{ number_format($product->review_count) }})</small>
+                    @endif
+                  </div>
+                @endif
+
+                <h5>{{ $product->name }}</h5>
+
+                @if($product->subtitle)
+                  <p class="prod-desc">{{ $product->subtitle }}</p>
+                @endif
+
+                {{-- Bullet points --}}
+                @if(!empty($product->bullet_points))
+                  <ul class="benefit-list">
+                    @foreach($product->bullet_points as $bullet)
+                      <li>{{ $bullet }}</li>
+                    @endforeach
+                  </ul>
+                @endif
+
+                {{-- Warning / note --}}
+                @if($product->warning_text)
+                  <div class="prod-note">
+                    <i class="fa-solid fa-circle-info"></i> {{ $product->warning_text }}
+                  </div>
+                @endif
+
+                {{-- Stock bar --}}
+                @if($product->show_stock)
+                <div class="stock-bar">
+                  <div class="stock-fill" style="width:{{ $stockPct }}%"></div>
+                </div>
+                <p class="stock-text">
+                  <i class="fa-solid fa-fire"></i>
+                  @if($product->stock_label)
+                    {!! $product->stock_label !!}
+                  @elseif($product->stock > 0)
+                    <b>{{ $product->stock }} left</b> in stock
+                  @else
+                    <b>Out of stock</b>
+                  @endif
+                </p>
+                @endif
+
+                {{-- Price display --}}
+                <div class="price-row my-3 d-flex align-items-baseline gap-2">
+                  @if($product->discounted_price)
+                    <span class="price fw-bold">₹{{ number_format($product->discounted_price, 0) }}</span>
+                    @if($product->original_price && $product->original_price > $product->discounted_price)
+                      <s class="text-muted" style="font-size:0.88rem;">₹{{ number_format($product->original_price, 0) }}</s>
+                      @php
+                        $discount = round((($product->original_price - $product->discounted_price) / $product->original_price) * 100);
+                      @endphp
+                      <span class="badge bg-success" style="font-size:0.72rem;">{{ $discount }}% off</span>
+                    @endif
+                  @else
+                    <span class="price fw-bold">₹{{ number_format($product->price, 0) }}</span>
+                  @endif
+                </div>
+
+                <button class="btn btn-primary-engix w-100 add-cart-btn"
+                  data-name="{{ $product->name }}"
+                  data-price="{{ intval($product->discounted_price ?? $product->price) }}"
+                  data-product-id="{{ $product->id }}"
+                  data-img="{{ $imgUrl }}"
+                  data-testid="add-cart-{{ $product->id }}">
+                  <i class="fa-solid fa-cart-plus me-1"></i>Add to Cart
+                </button>
+                <a href="{{ route('products.show', $product) }}" class="btn btn-outline-engix w-100 text-center mt-2"
+                  data-testid="view-detail-{{ $product->id }}">
+                  <i class="fa-solid fa-eye me-1"></i>View Details
+                </a>
+              </div>
+
+            </div>
+          </div>
+        @empty
+          <div class="col-12 text-center py-5 text-muted">
+            <i class="fa-solid fa-box-open fa-2x mb-3"></i>
+            <p>No products available right now. Check back soon!</p>
+          </div>
+        @endforelse
+      </div>
+    </div>
+  </section>
+
   <!-- ============ COUNTERS ============ -->
   <section class="counters" data-testid="counters-section">
     <div class="container">
@@ -423,153 +570,6 @@
         <div class="col-md-6 col-lg-4" data-aos="fade-up"><div class="feature-card"><div class="icon-wrap blue"><i class="fa-solid fa-flask-vial"></i></div><h5>No Harmful Chemicals</h5><p>Free from parabens, GMOs and artificial fillers.</p></div></div>
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100"><div class="feature-card"><div class="icon-wrap green"><i class="fa-solid fa-stethoscope"></i></div><h5>Doctor Recommended</h5><p>Formulated with guidance from certified nutritionists.</p></div></div>
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200"><div class="feature-card"><div class="icon-wrap blue"><i class="fa-solid fa-truck-fast"></i></div><h5>Fast Delivery</h5><p>Doorstep delivery across India in 2–4 business days.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PRODUCTS ============ -->
-  <section class="section products bg-soft" id="products" data-testid="products-section">
-    <div class="container">
-      <div class="section-head text-center" data-aos="fade-up">
-        <span class="eyebrow">Our Complete Range</span>
-        <h2 class="section-title">Science-Backed. <span class="text-gradient">Results-Proven.</span></h2>
-        <p class="section-sub">Effervescent formulas doctor-formulated for real Indian lifestyles.</p>
-      </div>
-
-      <div class="row g-4 mt-2">
-        @forelse($products as $i => $product)
-          @php
-            $delay     = ($i % 3) * 80;
-            $images    = $product->image ?? [];
-            $imgUrl    = count($images)
-                ? \Illuminate\Support\Facades\Storage::disk('public')->url($images[0])
-                : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80';
-
-            // Badge CSS class based on badge_color
-            $badgeClass = match($product->badge_color) {
-                'green'  => 'new',
-                'blue'   => 'hot',
-                'red'    => 'sale',
-                'purple' => 'premium',
-                default  => 'sale',
-            };
-
-            // Stock bar width (max 100%, capped at 200 for visual scale)
-            $stockPct = $product->stock > 0 ? min(100, round(($product->stock / 200) * 100)) : 0;
-          @endphp
-
-          <div class="col-sm-6 col-lg-4" data-aos="fade-up" {{ $delay ? 'data-aos-delay="'.$delay.'"' : '' }}>
-            <div class="product-card" id="product-{{ $product->id }}" data-testid="product-card-{{ $product->id }}">
-
-              {{-- Badge --}}
-              @if($product->badge_label)
-                <div class="product-badge {{ $badgeClass }}">{{ $product->badge_label }}</div>
-              @endif
-
-              {{-- Image --}}
-              <div class="product-img">
-                <div class="product-quick">
-                  <a class="pq-btn" href="{{ route('products.show', $product) }}" title="Quick view"><i class="fa-regular fa-eye"></i></a>
-                  <button class="pq-btn" title="Wishlist"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <img src="{{ $imgUrl }}" alt="{{ $product->name }}" />
-              </div>
-
-              {{-- Body --}}
-              <div class="product-body">
-                @if($product->category)
-                  <span class="cat-tag">{{ $product->category }}</span>
-                @endif
-
-                {{-- Star rating --}}
-                @if($product->rating > 0)
-                  <div class="rating">
-                    @for($s = 1; $s <= 5; $s++)
-                      <i class="fa-{{ $s <= round($product->rating) ? 'solid' : 'regular' }} fa-star"></i>
-                    @endfor
-                    @if($product->review_count)
-                      <small>({{ number_format($product->review_count) }})</small>
-                    @endif
-                  </div>
-                @endif
-
-                <h5>{{ $product->name }}</h5>
-
-                @if($product->subtitle)
-                  <p class="prod-desc">{{ $product->subtitle }}</p>
-                @endif
-
-                {{-- Bullet points --}}
-                @if(!empty($product->bullet_points))
-                  <ul class="benefit-list">
-                    @foreach($product->bullet_points as $bullet)
-                      <li>{{ $bullet }}</li>
-                    @endforeach
-                  </ul>
-                @endif
-
-                {{-- Warning / note --}}
-                @if($product->warning_text)
-                  <div class="prod-note">
-                    <i class="fa-solid fa-circle-info"></i> {{ $product->warning_text }}
-                  </div>
-                @endif
-
-                {{-- Stock bar --}}
-                @if($product->show_stock)
-                <div class="stock-bar">
-                  <div class="stock-fill" style="width:{{ $stockPct }}%"></div>
-                </div>
-                <p class="stock-text">
-                  <i class="fa-solid fa-fire"></i>
-                  @if($product->stock_label)
-                    {!! $product->stock_label !!}
-                  @elseif($product->stock > 0)
-                    <b>{{ $product->stock }} left</b> in stock
-                  @else
-                    <b>Out of stock</b>
-                  @endif
-                </p>
-                @endif
-
-                {{-- Price display --}}
-                <div class="price-row my-3 d-flex align-items-baseline gap-2">
-                  @if($product->discounted_price)
-                    <span class="price fw-bold">₹{{ number_format($product->discounted_price, 0) }}</span>
-                    @if($product->original_price && $product->original_price > $product->discounted_price)
-                      <s class="text-muted" style="font-size:0.88rem;">₹{{ number_format($product->original_price, 0) }}</s>
-                      @php
-                        $discount = round((($product->original_price - $product->discounted_price) / $product->original_price) * 100);
-                      @endphp
-                      <span class="badge bg-success" style="font-size:0.72rem;">{{ $discount }}% off</span>
-                    @endif
-                  @else
-                    <span class="price fw-bold">₹{{ number_format($product->price, 0) }}</span>
-                  @endif
-                </div>
-
-                <button class="btn btn-primary-engix w-100 add-cart-btn"
-                  data-name="{{ $product->name }}"
-                  data-price="{{ intval($product->discounted_price ?? $product->price) }}"
-                  data-product-id="{{ $product->id }}"
-                  data-img="{{ $imgUrl }}"
-                  data-testid="add-cart-{{ $product->id }}">
-                  <i class="fa-solid fa-cart-plus me-1"></i>Add to Cart
-                </button>
-                <a href="{{ route('products.show', $product) }}" class="btn btn-outline-engix w-100 text-center mt-2"
-                  data-testid="view-detail-{{ $product->id }}">
-                  <i class="fa-solid fa-eye me-1"></i>View Details
-                </a>
-              </div>
-
-            </div>
-          </div>
-        @empty
-          <div class="col-12 text-center py-5 text-muted">
-            <i class="fa-solid fa-box-open fa-2x mb-3"></i>
-            <p>No products available right now. Check back soon!</p>
-          </div>
-        @endforelse
       </div>
     </div>
   </section>
