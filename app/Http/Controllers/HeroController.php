@@ -32,6 +32,7 @@ class HeroController extends Controller
             'badge_rating'        => 'nullable|string|max:100',
             'badge_lab'           => 'nullable|string|max:100',
             'image_path'          => 'nullable|string',
+            'is_enabled'          => 'nullable|boolean',
             // Minerals & trust badges come in as flat indexed arrays from the form
             'minerals'            => 'nullable|array',
             'minerals.*.label'    => 'required|string|max:100',
@@ -61,6 +62,7 @@ class HeroController extends Controller
             'minerals'            => $request->input('minerals', []),
             'trust_badges'        => $request->input('trust_badges', []),
             'image_path'          => $request->input('image_path') ?: $hero->image_path,
+            'is_enabled'          => $request->boolean('is_enabled'),
         ]);
 
         return back()->with('success', 'Hero section updated successfully.');

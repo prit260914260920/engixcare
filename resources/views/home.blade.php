@@ -221,6 +221,7 @@
   @endif
 
   <!-- ============ HERO ============ -->
+  @if($hero)
   <section class="hero" id="home" data-testid="hero-section">
     <div class="hero-bg-shape"></div>
     <div class="container">
@@ -266,6 +267,7 @@
       </div>
     </div>
   </section>
+  @endif
 
   <!-- ============ COUNTERS ============ -->
   <section class="counters" data-testid="counters-section">

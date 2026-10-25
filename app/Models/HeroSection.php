@@ -21,11 +21,13 @@ class HeroSection extends Model
         'badge_rating',
         'badge_lab',
         'image_path',
+        'is_enabled',
     ];
 
     protected $casts = [
         'minerals'    => 'array',
         'trust_badges' => 'array',
+        'is_enabled'  => 'boolean',
     ];
 
     /**
@@ -57,6 +59,7 @@ class HeroSection extends Model
             'badge_rating'          => '4.9/5 · 12k+ Reviews',
             'badge_lab'             => 'Lab Tested',
             'image_path'            => null,
+            'is_enabled'            => true,
         ]);
     }
 

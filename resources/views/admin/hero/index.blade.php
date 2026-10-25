@@ -48,6 +48,27 @@
             @csrf
             @method('PUT')
 
+            {{-- ── Section 0: Visibility ─────────────────────────────────────── --}}
+            <div class="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md shadow-sm">
+                <div class="flex flex-col gap-sm md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <p class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Visibility</p>
+                        <p class="mt-1 text-body-sm text-on-surface-variant">Enable or disable the homepage hero banner.</p>
+                    </div>
+
+                    <label class="flex items-center gap-xs cursor-pointer select-none" for="hero-is-enabled">
+                        <span class="text-label-sm font-label-sm text-on-surface-variant">Enable</span>
+                        <div class="relative">
+                            <input type="checkbox" name="is_enabled" value="1"
+                                {{ old('is_enabled', $hero->is_enabled ?? true) ? 'checked' : '' }}
+                                class="sr-only peer" id="hero-is-enabled" />
+                            <div class="h-6 w-11 rounded-full bg-outline-variant peer-checked:bg-primary transition-colors"></div>
+                            <div class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
             {{-- ── Section 1: Text Content ─────────────────────────────────── --}}
             <div class="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-md shadow-sm space-y-md">
                 <p class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Text Content</p>

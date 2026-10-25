@@ -31,6 +31,10 @@ Route::get('/', function () {
         ->keyBy('product_id');
 
     $hero = \App\Models\HeroSection::current();
+    if ($hero && ! $hero->is_enabled) {
+        $hero = null;
+    }
+
     $promotionSettings = \App\Models\PromotionSetting::current();
     $promotionOffers = \App\Models\PromotionOffer::active()->get();
 
