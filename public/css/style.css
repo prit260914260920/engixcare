@@ -4205,7 +4205,7 @@ h1, h2, h3, h4, h5, h6, .brand-text {
 .festive-banners-section {
   position: relative;
   width: 100%;
-  margin-top: var(--main-navbar-h, 0px);
+  margin-top: calc(var(--announcement-bar-h, 0px) + var(--main-navbar-h, 0px));
   overflow: hidden;
 }
 
@@ -4522,13 +4522,6 @@ h1, h2, h3, h4, h5, h6, .brand-text {
 }
 
 @media (max-width: 991.98px) {
-  #announcement-bar {
-    position: fixed !important;
-    top: 0;
-    right: 0;
-    left: 0;
-  }
-
   .festive-banners-section {
     margin-top: calc(var(--announcement-bar-h, 0px) + var(--main-navbar-h, 0px));
   }

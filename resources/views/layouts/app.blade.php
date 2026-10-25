@@ -65,8 +65,10 @@
     <style>
         /* ── Announcement Bar ─────────────────────────────────────── */
         #announcement-bar {
-            position: sticky;
+            position: fixed;
             top: 0;
+            right: 0;
+            left: 0;
             width: 100%;
             display: flex;
             align-items: center;
