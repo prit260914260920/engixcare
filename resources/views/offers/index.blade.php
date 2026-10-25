@@ -170,9 +170,6 @@
         <div class="social">
           <a href="#" aria-label="Facebook" data-testid="social-fb"><i class="fa-brands fa-facebook-f"></i></a>
           <a href="#" aria-label="Instagram" data-testid="social-ig"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="X" data-testid="social-x"><i class="fa-brands fa-x-twitter"></i></a>
-          <a href="#" aria-label="YouTube" data-testid="social-yt"><i class="fa-brands fa-youtube"></i></a>
-          <a href="#" aria-label="LinkedIn" data-testid="social-li"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
       <div class="col-6 col-lg-2">
