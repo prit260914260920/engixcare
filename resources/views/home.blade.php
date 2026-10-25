@@ -33,7 +33,6 @@
           <li class="nav-item"><a class="nav-link" href="#products" data-testid="nav-products">Products</a></li>
           <li class="nav-item"><a class="nav-link" href="#benefits" data-testid="nav-benefits">Benefits</a></li>
           <li class="nav-item"><a class="nav-link" href="#ingredients" data-testid="nav-ingredients">Ingredients</a></li>
-          <li class="nav-item"><a class="nav-link" href="#testimonials" data-testid="nav-testimonials">Testimonials</a></li>
           <li class="nav-item"><a class="nav-link" href="#faq" data-testid="nav-faq">FAQ</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact" data-testid="nav-contact">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('offers.index') }}" data-testid="nav-offers"><i class="fa-solid fa-tag me-1"></i>Offers</a></li>
