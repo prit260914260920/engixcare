@@ -645,7 +645,7 @@
             @if($ing->name)
               <div class="text-center mb-3" data-aos="fade-up">
                 <span class="badge rounded-pill bg-primary-subtle text-primary px-3 py-2 fs-6 fw-semibold">
-                  {{ $ing->name }}{{ $ing->amount ? ' · ' . $ing->amount : '' }}
+                  {{ $ing->name }}{{ $ing->amount !== null && $ing->amount !== '' ? ' · ' . $ing->amount : '' }}
                 </span>
                 @if($ing->description)
                   <p class="text-muted mt-2 mb-0" style="font-size:.9rem;">{{ $ing->description }}</p>
@@ -661,7 +661,7 @@
                   <div class="ing-card ing-card--no-img">
                     <h5>
                       {{ $sub->name }}
-                      @if($sub->amount)
+                      @if($sub->amount !== null && $sub->amount !== '')
                         <small class="ing-amount">{{ $sub->amount }}{{ $sub->unit }}</small>
                       @endif
                     </h5>
@@ -679,7 +679,7 @@
             </div>
 
             {{-- Nutritional highlights strip (sub-ingredients with amounts) --}}
-            @php $highlighted = $ing->subIngredients->filter(fn($s) => $s->amount); @endphp
+            @php $highlighted = $ing->subIngredients->filter(fn($s) => $s->amount !== null && $s->amount !== ''); @endphp
             @if($highlighted->isNotEmpty())
               <div class="ing-nutrition-strip" data-aos="fade-up">
                 <span class="ins-label">{{ $p->name }} · Nutritional Highlights</span>
@@ -1104,16 +1104,7 @@
         </div>
       </div>
       <hr class="footer-divider" />
-      <div class="row g-3 mb-4">
-        <div class="col-lg-6">
-          <h6 class="footer-title">Join Our Newsletter</h6>
-          <p class="text-muted-2">Get 10% OFF your first order + wellness tips in your inbox.</p>
-          <form id="newsletterForm" class="newsletter" data-testid="newsletter-form">
-            <input type="email" placeholder="Enter your email" required data-testid="newsletter-input" />
-            <button type="submit" data-testid="newsletter-submit"><i class="fa-solid fa-paper-plane"></i></button>
-          </form>
-          <p id="newsletterMsg" class="newsletter-msg" data-testid="newsletter-msg"></p>
-        </div>
+      <div class="row g-3 mb-4 justify-content-lg-end">
         <div class="col-lg-6 d-flex align-items-center justify-content-lg-end">
           <div style="text-align:right;">
             <p style="font-size:0.75rem;color:#64748b;margin:0 0 4px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">Certified &amp; Trusted</p>
