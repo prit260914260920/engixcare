@@ -232,25 +232,6 @@
           </div>
         </div>
 
-        <section class="product-trust-strip" aria-label="Product and shopping information">
-          <div class="product-trust-item">
-            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
-            <span>Thoughtfully<br />Formulated</span>
-          </div>
-          <div class="product-trust-item">
-            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-flask"></i></span>
-            <span>Ingredient<br />Details</span>
-          </div>
-          <div class="product-trust-item">
-            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-truck-fast"></i></span>
-            <span>Fast<br />Delivery</span>
-          </div>
-          <div class="product-trust-item">
-            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
-            <span>Secure<br />Payments</span>
-          </div>
-        </section>
-
         <nav class="product-section-nav" role="tablist" aria-label="Product information">
           <button type="button" id="tab-details" class="product-tab {{ session('success') || $errors->any() ? '' : 'is-active' }}" role="tab" aria-selected="{{ session('success') || $errors->any() ? 'false' : 'true' }}" aria-controls="panel-details" tabindex="{{ session('success') || $errors->any() ? '-1' : '0' }}">
             Product details
@@ -441,6 +422,25 @@
           </section>
 
         </div>
+
+        <section class="product-trust-strip" aria-label="Product and shopping information">
+          <div class="product-trust-item">
+            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+            <span>Thoughtfully<br />Formulated</span>
+          </div>
+          <div class="product-trust-item">
+            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-flask"></i></span>
+            <span>Ingredient<br />Details</span>
+          </div>
+          <div class="product-trust-item">
+            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-truck-fast"></i></span>
+            <span>Fast<br />Delivery</span>
+          </div>
+          <div class="product-trust-item">
+            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+            <span>Secure<br />Payments</span>
+          </div>
+        </section>
 
         @if($relatedProducts->isNotEmpty())
           <section class="related-products-section" id="related-products">
