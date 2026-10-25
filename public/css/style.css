@@ -2025,6 +2025,7 @@ h1, h2, h3, h4, h5, h6, .brand-text {
 }
 .product-section-nav {
   display: flex;
+  align-items: center;
   gap: 10px;
   overflow-x: auto;
   margin-top: 48px;
@@ -2033,20 +2034,44 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   border-bottom: 1px solid var(--line);
   scrollbar-width: thin;
 }
-.product-section-nav a {
+.product-section-nav .product-tab {
   flex: 0 0 auto;
   padding: 9px 16px;
+  border: 0;
   border-radius: 999px;
   background: var(--soft);
   color: var(--ink-2);
   font-size: 0.9rem;
   font-weight: 600;
-  text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
   transition: var(--trans);
 }
-.product-section-nav a:hover {
+.product-section-nav .product-tab:hover,
+.product-section-nav .product-tab.is-active {
   background: var(--blue);
   color: #fff;
+}
+.product-section-nav .product-tab:focus-visible {
+  outline: 3px solid rgba(10, 132, 255, 0.35);
+  outline-offset: 3px;
+}
+.product-tab-panel[hidden] {
+  display: none !important;
+}
+.product-tab-panel.is-active {
+  display: block;
+}
+.product-tab-panels {
+  min-height: 260px;
+  padding-top: 38px;
+}
+.product-tab-panel > .col-lg-10 {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.product-review-panel {
+  max-width: 850px;
 }
 #overview,
 #ingredients,
@@ -2194,7 +2219,7 @@ h1, h2, h3, h4, h5, h6, .brand-text {
     height: 68px;
     font-size: 1.75rem;
   }
-  .product-section-nav a {
+  .product-section-nav .product-tab {
     padding: 8px 12px;
     font-size: 0.82rem;
   }

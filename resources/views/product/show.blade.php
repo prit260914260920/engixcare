@@ -251,17 +251,27 @@
           </div>
         </section>
 
-        <nav class="product-section-nav" aria-label="Product information">
-          <a href="#overview">Product details</a>
-          <a href="#ingredients">Ingredients</a>
-          <a href="#reviews">Reviews ({{ number_format($product->review_count) }})</a>
+        <nav class="product-section-nav" role="tablist" aria-label="Product information">
+          <button type="button" id="tab-details" class="product-tab {{ session('success') || $errors->any() ? '' : 'is-active' }}" role="tab" aria-selected="{{ session('success') || $errors->any() ? 'false' : 'true' }}" aria-controls="panel-details" tabindex="{{ session('success') || $errors->any() ? '-1' : '0' }}">
+            Product details
+          </button>
+          <button type="button" id="tab-ingredients" class="product-tab" role="tab" aria-selected="false" aria-controls="panel-ingredients" tabindex="-1">
+            Ingredients
+          </button>
+          <button type="button" id="tab-reviews" class="product-tab {{ session('success') || $errors->any() ? 'is-active' : '' }}" role="tab" aria-selected="{{ session('success') || $errors->any() ? 'true' : 'false' }}" aria-controls="panel-reviews" tabindex="{{ session('success') || $errors->any() ? '0' : '-1' }}">
+            Reviews ({{ number_format($product->review_count) }})
+          </button>
           @if($relatedProducts->isNotEmpty())
-            <a href="#related-products">You may also like</a>
+            <button type="button" id="tab-related" class="product-tab" role="tab" aria-selected="false" aria-controls="panel-related" tabindex="-1">
+              You may also like
+            </button>
           @endif
         </nav>
 
-        <div class="row g-4 mt-5">
-          <div class="col-lg-7" id="overview">
+        <div class="product-tab-panels">
+          <section class="product-tab-panel {{ session('success') || $errors->any() ? '' : 'is-active' }}" id="panel-details" role="tabpanel" aria-labelledby="tab-details" tabindex="0" @if(session('success') || $errors->any()) hidden @endif>
+            <div class="row g-4">
+              <div class="col-lg-10" id="overview">
             <div class="section-head mb-4">
               <span class="eyebrow">Product Details</span>
               <h2 class="section-title">Everything you need to know</h2>
@@ -286,7 +296,12 @@
               </div>
             </div>
 
-            <div class="mt-5" id="ingredients">
+              </div>
+            </div>
+          </section>
+
+          <section class="product-tab-panel" id="panel-ingredients" role="tabpanel" aria-labelledby="tab-ingredients" tabindex="0" hidden>
+            <div class="col-lg-10" id="ingredients">
               <div class="section-head mb-4">
                 <span class="eyebrow">Ingredient profile</span>
                 <h2 class="section-title">Core ingredients</h2>
@@ -319,9 +334,10 @@
                 </div>
               @endif
             </div>
-          </div>
+          </section>
 
-          <div class="col-lg-5" id="reviews">
+          <section class="product-tab-panel {{ session('success') || $errors->any() ? 'is-active' : '' }}" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" tabindex="0" @unless(session('success') || $errors->any()) hidden @endunless>
+            <div class="product-review-panel" id="reviews">
             <div class="section-head mb-4">
               <span class="eyebrow">What customers say</span>
               <h2 class="section-title">Reviews</h2>
@@ -426,11 +442,12 @@
             <div class="mt-4 text-center">
               <a href="{{ url('/') }}#testimonials" class="btn btn-white-engix">Read more reviews</a>
             </div>
-          </div>
-        </div>
+            </div>
+          </section>
 
         @if($relatedProducts->isNotEmpty())
-          <section class="related-products-section" id="related-products">
+          <section class="product-tab-panel related-products-section" id="panel-related" role="tabpanel" aria-labelledby="tab-related" tabindex="0" hidden>
+            <div id="related-products">
             <div class="section-head mb-4">
               <span class="eyebrow">Explore more</span>
               <h2 class="section-title">You may also like</h2>
@@ -468,9 +485,63 @@
                 </div>
               @endforeach
             </div>
+            </div>
           </section>
         @endif
+        </div>
       </div>
     </section>
   </main>
+  <script>
+    (function () {
+      var tabList = document.querySelector('.product-section-nav[role="tablist"]');
+      if (!tabList) return;
+
+      var tabs = Array.from(tabList.querySelectorAll('[role="tab"]'));
+      var panels = tabs.map(function (tab) {
+        return document.getElementById(tab.getAttribute('aria-controls'));
+      });
+
+      function activateTab(tab, moveFocus) {
+        tabs.forEach(function (item, index) {
+          var selected = item === tab;
+          item.classList.toggle('is-active', selected);
+          item.setAttribute('aria-selected', selected ? 'true' : 'false');
+          item.setAttribute('tabindex', selected ? '0' : '-1');
+          panels[index].hidden = !selected;
+          panels[index].classList.toggle('is-active', selected);
+        });
+
+        if (moveFocus) tab.focus();
+      }
+
+      tabs.forEach(function (tab, index) {
+        tab.addEventListener('click', function () {
+          activateTab(tab, false);
+        });
+
+        tab.addEventListener('keydown', function (event) {
+          var nextIndex = index;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+          else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+          else if (event.key === 'Home') nextIndex = 0;
+          else if (event.key === 'End') nextIndex = tabs.length - 1;
+          else return;
+
+          event.preventDefault();
+          activateTab(tabs[nextIndex], true);
+        });
+      });
+
+      var reviewLink = document.querySelector('.product-rating-link');
+      var reviewTab = document.getElementById('tab-reviews');
+      if (reviewLink && reviewTab) {
+        reviewLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          activateTab(reviewTab, false);
+          tabList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+    })();
+  </script>
 @endsection
