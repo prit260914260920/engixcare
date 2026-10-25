@@ -278,7 +278,7 @@
               <strong>VHK International</strong><br>
               Shop No-3, Surjit Colony, Bapunagar,<br>
               Ahmedabad, Gujarat – 380024<br>
-              ✉️ <a href="mailto:vhkinternational2026@gmail.com">vhkinternational2026@gmail.com</a>
+              ✉️ <a href="mailto:carewithengix@gmail.com">carewithengix@gmail.com</a>
             </p>
             <div style="margin-top:14px;">
               <h6>Payment</h6>
@@ -360,7 +360,7 @@
 
         <div class="inv-thankyou">
           Thank you for choosing <strong>engixCARE</strong>! 💚 For support, reach us at
-          <a href="mailto:vhkinternational2026@gmail.com">vhkinternational2026@gmail.com</a>
+          <a href="mailto:carewithengix@gmail.com">carewithengix@gmail.com</a>
         </div>
 
       </div>{{-- /inv-body --}}

@@ -61,8 +61,7 @@ class PromotionSettingsTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('Get 40% OFF On Your First Order');
-        $response->assertSee('ENGIX40');
+        $response->assertDontSee('data-testid="offer-section"', false);
         $response->assertSee('WELCOME20');
         $response->assertSee('FLASH30');
         $response->assertSee('First Order Offer');

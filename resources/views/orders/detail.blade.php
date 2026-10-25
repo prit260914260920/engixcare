@@ -233,7 +233,7 @@
           D-15, Sahjanand Business Park, S.P. Ring Road,<br />
           Nikol, Ahmedabad, Gujarat – 382350, India</p>
           <p style="margin:0;"><strong style="color:#cbd5e1;">Customer Care:</strong><br />
-          <a href="mailto:vhkinternational2026@gmail.com" style="color:#22C55E;text-decoration:none;">vhkinternational2026@gmail.com</a></p>
+          <a href="mailto:carewithengix@gmail.com" style="color:#22C55E;text-decoration:none;">carewithengix@gmail.com</a></p>
         </div>
       </div>
     </div>

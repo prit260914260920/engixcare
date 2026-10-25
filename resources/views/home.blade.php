@@ -879,60 +879,13 @@
     </div>
   </section> --}}
 
-  <!-- ============ TRUST STRIP + MONEY-BACK ============ -->
+  <!-- ============ TRUST STRIP ============ -->
   <section class="trust-strip" data-testid="trust-strip">
     <div class="container">
       <div class="trust-grid">
         <div class="ts-item"><i class="fa-solid fa-shield-check"></i><h6>100% Authentic</h6><p>Verified sourcing</p></div>
         <div class="ts-item"><i class="fa-solid fa-award"></i><h6>GMP Certified</h6><p>WHO standards</p></div>
         <div class="ts-item"><i class="fa-solid fa-vial-circle-check"></i><h6>Lab Tested</h6><p>3rd-party assured</p></div>
-        <div class="ts-item"><i class="fa-solid fa-leaf"></i><h6>Non-GMO</h6><p>Clean & pure</p></div>
-        <div class="ts-item"><i class="fa-solid fa-truck-fast"></i><h6>Free Shipping</h6><p>On orders ₹499+</p></div>
-      </div>
-
-      <div class="guarantee-card" data-aos="fade-up">
-        <div class="guarantee-icon"><i class="fa-solid fa-medal"></i></div>
-        <div class="guarantee-text">
-          <h4>30-Day Money-Back Guarantee</h4>
-          <p>Not feeling the difference? Get a full refund — no questions asked. Your wellness, our promise.</p>
-        </div>
-        <div class="guarantee-pay">
-          <span>Secure Checkout</span>
-          <div class="pay-icons">
-            <i class="fa-brands fa-cc-visa" title="Visa"></i>
-            <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
-            <i class="fa-brands fa-cc-amex" title="Amex"></i>
-            <i class="fa-brands fa-google-pay" title="Google Pay"></i>
-            <i class="fa-brands fa-apple-pay" title="Apple Pay"></i>
-            <i class="fa-solid fa-lock" title="SSL Secure"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ COMPARISON TABLE ============ -->
-  <section class="section comparison bg-soft" data-testid="comparison-section">
-    <div class="container">
-      <div class="section-head text-center" data-aos="fade-up">
-        <span class="eyebrow">Head to Head</span>
-        <h2 class="section-title">Engix Care vs <span class="text-gradient">Ordinary Brands</span></h2>
-        <p class="section-sub">See why 120,000+ Indians make the switch.</p>
-      </div>
-
-      <div class="compare-wrap" data-aos="fade-up">
-        <div class="compare-row compare-head">
-          <div class="compare-cell">Feature</div>
-          <div class="compare-cell winner"><i class="fa-solid fa-heart-pulse"></i> Engix Care</div>
-          <div class="compare-cell dim">Other Brands</div>
-        </div>
-        <div class="compare-row"><div class="compare-cell">Clinically Studied Doses</div><div class="compare-cell winner"><i class="fa-solid fa-circle-check"></i></div><div class="compare-cell dim"><i class="fa-solid fa-circle-xmark"></i></div></div>
-        <div class="compare-row"><div class="compare-cell">3rd-Party Lab Tested</div><div class="compare-cell winner"><i class="fa-solid fa-circle-check"></i></div><div class="compare-cell dim"><i class="fa-solid fa-circle-xmark"></i></div></div>
-        <div class="compare-row"><div class="compare-cell">No Artificial Fillers</div><div class="compare-cell winner"><i class="fa-solid fa-circle-check"></i></div><div class="compare-cell dim"><i class="fa-solid fa-circle-xmark"></i></div></div>
-        <div class="compare-row"><div class="compare-cell">30-Day Money-Back</div><div class="compare-cell winner"><i class="fa-solid fa-circle-check"></i></div><div class="compare-cell dim"><i class="fa-solid fa-circle-xmark"></i></div></div>
-        <div class="compare-row"><div class="compare-cell">Doctor-Formulated</div><div class="compare-cell winner"><i class="fa-solid fa-circle-check"></i></div><div class="compare-cell dim"><i class="fa-solid fa-triangle-exclamation"></i></div></div>
-        <div class="compare-row"><div class="compare-cell">Free Shipping ₹499+</div><div class="compare-cell winner"><i class="fa-solid fa-circle-check"></i></div><div class="compare-cell dim"><i class="fa-solid fa-circle-xmark"></i></div></div>
-        <div class="compare-row"><div class="compare-cell">Loyalty Cashback</div><div class="compare-cell winner"><i class="fa-solid fa-circle-check"></i> 10%</div><div class="compare-cell dim">0%</div></div>
       </div>
     </div>
   </section>
@@ -970,62 +923,6 @@
       </div>
     </div>
   </section> --}}
-
-  <!-- ============ SPECIAL OFFER + COUNTDOWN ============ -->
-  @php
-    // Use first_order PromotionOffer if available, else fall back to PromotionSetting
-    $bannerHeading   = $firstOrderOffer?->title       ?? $promotionSettings->special_offer_heading;
-    $bannerCode      = $firstOrderOffer?->coupon_code ?? $promotionSettings->special_offer_coupon_code;
-    $bannerPct       = $firstOrderOffer?->percentage  ?? $promotionSettings->special_offer_percentage;
-    $bannerDiscText  = $firstOrderOffer?->discount_text ?? $promotionSettings->special_offer_discount;
-    $bannerDesc      = $firstOrderOffer?->description  ?? null;
-    $showBanner      = !empty($bannerCode);
-  @endphp
-
-  @if($showBanner)
-  <section class="special-offer" data-testid="offer-section">
-    <div class="container">
-      <div class="offer-box" data-aos="zoom-in">
-        <div class="offer-left">
-          <span class="offer-tag"><span class="live-dot"></span> Limited Time Offer</span>
-          @if($bannerPct > 0)
-            <div class="offer-pct-badge">{{ $bannerPct }}% OFF</div>
-          @endif
-          <h2>{{ $bannerHeading }}</h2>
-          <p>Use coupon code <span class="coupon" data-testid="coupon-code" id="soSpecialCode">{{ strtoupper($bannerCode) }}</span>
-            <button class="offer-copy-btn" onclick="copyCode('soSpecialCode', this)" title="Copy code"><i class="fa-regular fa-copy"></i></button>
-            at checkout
-          </p>
-          @if($bannerDiscText)
-            <p class="offer-disc-text"><i class="fa-solid fa-tag me-1"></i>{{ $bannerDiscText }}</p>
-          @elseif($bannerPct > 0)
-            <p class="offer-disc-text"><i class="fa-solid fa-tag me-1"></i>{{ $bannerPct }}% OFF</p>
-          @endif
-          @if($bannerDesc)
-            <p class="offer-banner-desc">{{ $bannerDesc }}</p>
-          @endif
-          <div class="countdown" data-testid="countdown">
-            <div class="cd-cell"><span id="cd-days">00</span><small>Days</small></div>
-            <div class="cd-cell"><span id="cd-hours">00</span><small>Hours</small></div>
-            <div class="cd-cell"><span id="cd-mins">00</span><small>Mins</small></div>
-            <div class="cd-cell"><span id="cd-secs">00</span><small>Secs</small></div>
-          </div>
-        </div>
-        <div class="offer-right">
-          <a href="#products" class="btn btn-white-engix btn-lg" data-testid="offer-shop-now"><i class="fa-solid fa-bag-shopping me-2"></i>Shop Now</a>
-          @if(!empty($bannerCode))
-            <button class="btn btn-outline-light btn-lg mt-2 banner-apply-btn"
-              data-coupon="{{ $bannerCode }}"
-              data-offer-title="{{ $bannerHeading }}"
-              data-testid="offer-apply-btn">
-              <i class="fa-solid fa-bolt me-2"></i>Apply
-            </button>
-          @endif
-        </div>
-      </div>
-    </div>
-  </section>
-  @endif
 
   @if($promotionOffers->isNotEmpty() && $promotionSettings->show_offer_cards)
   <section class="section" data-testid="promotion-offers-section">
@@ -1091,26 +988,6 @@
   </section>
   @endif
 
-  <!-- ============ GALLERY ============ -->
-  <section class="section gallery" data-testid="gallery-section">
-    <div class="container">
-      <div class="section-head text-center" data-aos="fade-up">
-        <span class="eyebrow">Wellness Lifestyle</span>
-        <h2 class="section-title">Live Your <span class="text-gradient">Best Life</span></h2>
-      </div>
-      <div class="row g-3 mt-3">
-        <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in"><div class="gallery-img"><img src="{{ asset('asset/DSC09004.png') }}" alt="engix CARE Boost Energy" /></div></div>
-        <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="80"><div class="gallery-img"><img src="{{ asset('asset/210A0226.png') }}" alt="engix CARE Boost Energy tablets" /></div></div>
-        <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="160"><div class="gallery-img"><img src="{{ asset('asset/DSC09006.png') }}" alt="engix CARE Vitamin B12" /></div></div>
-        <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="240"><div class="gallery-img"><img src="{{ asset('asset/210A0258.png') }}" alt="engix CARE Vitamin B12 tablets" /></div></div>
-        <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in"><div class="gallery-img"><img src="{{ asset('asset/DSC09008.png') }}" alt="engix CARE product range" /></div></div>
-        <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="80"><div class="gallery-img"><img src="{{ asset('asset/210A0230.png') }}" alt="engix CARE Boost Energy – side view" /></div></div>
-        <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="160"><div class="gallery-img"><img src="{{ asset('asset/DSC09010.png') }}" alt="engix CARE product collection" /></div></div>
-        <div class="col-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="240"><div class="gallery-img"><img src="{{ asset('asset/210A0260.png') }}" alt="engix CARE Vitamin B12 – pack shot" /></div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ FAQ ============ -->
   <section class="section faq bg-soft" id="faq" data-testid="faq-section">
     <div class="container">
@@ -1133,10 +1010,6 @@
             <div class="accordion-item">
               <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" data-testid="faq-q3">How long does delivery take?</button></h2>
               <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Standard delivery takes 2–4 business days across India with free shipping on orders above ₹499.</div></div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" data-testid="faq-q4">Can I return products?</button></h2>
-              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Yes, we offer a 7-day easy return policy on unopened products. Contact our support team to initiate a return.</div></div>
             </div>
           </div>
         </div>
@@ -1171,7 +1044,7 @@
           </div>
           <div class="contact-info-cards mt-3">
             <div class="ci-card"><i class="fa-solid fa-location-dot"></i><div><h6>Address</h6><p>Shop No-3, Surjit Colony, Bapunagar, Ahmedabad, Gujarat – 380024</p></div></div>
-            <div class="ci-card"><i class="fa-solid fa-envelope"></i><div><h6>Customer Care Email</h6><p><a href="mailto:vhkinternational2026@gmail.com" style="color:inherit;text-decoration:none;">vhkinternational2026@gmail.com</a></p></div></div>
+            <div class="ci-card"><i class="fa-solid fa-envelope"></i><div><h6>Customer Care Email</h6><p><a href="mailto:carewithengix@gmail.com" style="color:inherit;text-decoration:none;">carewithengix@gmail.com</a></p></div></div>
             <div class="ci-card"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i><div><h6>WhatsApp</h6><p><a href="https://wa.me/919327865063?text=Hello%20%F0%9F%91%8B%20Welcome%20to%20EngixCare!%0A%0AThank%20you%20for%20reaching%20out%20to%20us.%20%E2%9C%A8%0A%0AWe%E2%80%99re%20here%20to%20help%20you%20choose%20the%20right%20product%20for%20your%20everyday%20Skin%20%E2%80%A2%20Health%20%E2%80%A2%20Wellness%20needs.%0A%0APlease%20tell%20us%20what%20you%E2%80%99re%20looking%20for%2C%20and%20our%20team%20will%20assist%20you%20shortly.%20%F0%9F%A4%9D%0A%0A%E2%80%94%20Team%20EngixCare" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Chat with us on WhatsApp</a></p></div></div>
           </div>
         </div>
@@ -1226,7 +1099,7 @@
             D-15, Sahjanand Business Park, S.P. Ring Road,<br />
             Nikol, Ahmedabad, Gujarat – 382350, India</p>
             <p style="margin:0;"><strong style="color:#cbd5e1;">Customer Care:</strong><br />
-            <a href="mailto:vhkinternational2026@gmail.com" style="color:#22C55E;text-decoration:none;">vhkinternational2026@gmail.com</a></p>
+            <a href="mailto:carewithengix@gmail.com" style="color:#22C55E;text-decoration:none;">carewithengix@gmail.com</a></p>
           </div>
         </div>
       </div>
