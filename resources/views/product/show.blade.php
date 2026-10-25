@@ -261,17 +261,12 @@
           <button type="button" id="tab-reviews" class="product-tab {{ session('success') || $errors->any() ? 'is-active' : '' }}" role="tab" aria-selected="{{ session('success') || $errors->any() ? 'true' : 'false' }}" aria-controls="panel-reviews" tabindex="{{ session('success') || $errors->any() ? '0' : '-1' }}">
             Reviews ({{ number_format($product->review_count) }})
           </button>
-          @if($relatedProducts->isNotEmpty())
-            <button type="button" id="tab-related" class="product-tab" role="tab" aria-selected="false" aria-controls="panel-related" tabindex="-1">
-              You may also like
-            </button>
-          @endif
         </nav>
 
         <div class="product-tab-panels">
           <section class="product-tab-panel {{ session('success') || $errors->any() ? '' : 'is-active' }}" id="panel-details" role="tabpanel" aria-labelledby="tab-details" tabindex="0" @if(session('success') || $errors->any()) hidden @endif>
             <div class="row g-4">
-              <div class="col-lg-10" id="overview">
+              <div class="col-12" id="overview">
             <div class="section-head mb-4">
               <span class="eyebrow">Product Details</span>
               <h2 class="section-title">Everything you need to know</h2>
@@ -301,7 +296,7 @@
           </section>
 
           <section class="product-tab-panel" id="panel-ingredients" role="tabpanel" aria-labelledby="tab-ingredients" tabindex="0" hidden>
-            <div class="col-lg-10" id="ingredients">
+            <div class="col-12" id="ingredients">
               <div class="section-head mb-4">
                 <span class="eyebrow">Ingredient profile</span>
                 <h2 class="section-title">Core ingredients</h2>
@@ -445,9 +440,10 @@
             </div>
           </section>
 
+        </div>
+
         @if($relatedProducts->isNotEmpty())
-          <section class="product-tab-panel related-products-section" id="panel-related" role="tabpanel" aria-labelledby="tab-related" tabindex="0" hidden>
-            <div id="related-products">
+          <section class="related-products-section" id="related-products">
             <div class="section-head mb-4">
               <span class="eyebrow">Explore more</span>
               <h2 class="section-title">You may also like</h2>
@@ -485,10 +481,8 @@
                 </div>
               @endforeach
             </div>
-            </div>
           </section>
         @endif
-        </div>
       </div>
     </section>
   </main>
