@@ -278,7 +278,7 @@
         <p class="section-sub">Effervescent formulas doctor-formulated for real Indian lifestyles.</p>
       </div>
 
-      <div class="row g-4 mt-2">
+      <div class="row g-3 mt-2">
         @forelse($products as $i => $product)
           @php
             $delay     = ($i % 4) * 80;

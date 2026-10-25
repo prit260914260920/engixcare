@@ -407,10 +407,14 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   display: flex; align-items: center; justify-content: center;
 }
 .product-img img {
-  width: 100%; height: 100%; object-fit: fill;
+  width: 100%; height: 100%; object-fit: contain;
   transition: transform 0.6s ease;
 }
 .product-body { padding: 22px; }
+.products > .container {
+  width: calc(100% - 24px);
+  max-width: 1200px;
+}
 .rating i { color: #f59e0b; font-size: 0.85rem; }
 .rating.small i { font-size: 0.75rem; }
 .product-body h5 { margin: 10px 0 12px; font-size: 1.1rem; }
