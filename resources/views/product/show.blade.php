@@ -232,6 +232,25 @@
           </div>
         </div>
 
+        <section class="product-trust-strip" aria-label="Product and shopping information">
+          <div class="product-trust-item">
+            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+            <span>Thoughtfully<br />Formulated</span>
+          </div>
+          <div class="product-trust-item">
+            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-flask"></i></span>
+            <span>Ingredient<br />Details</span>
+          </div>
+          <div class="product-trust-item">
+            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-truck-fast"></i></span>
+            <span>Fast<br />Delivery</span>
+          </div>
+          <div class="product-trust-item">
+            <span class="product-trust-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+            <span>Secure<br />Payments</span>
+          </div>
+        </section>
+
         <nav class="product-section-nav" aria-label="Product information">
           <a href="#overview">Product details</a>
           <a href="#ingredients">Ingredients</a>
@@ -262,12 +281,6 @@
                   <div class="col-sm-6">
                     <span>Pack size</span>
                     <strong>{{ $product->unit_value }}{{ $product->unit_label }}</strong>
-                  </div>
-                @endif
-                @if($product->sku)
-                  <div class="col-sm-6">
-                    <span>Product code</span>
-                    <strong>{{ $product->sku }}</strong>
                   </div>
                 @endif
               </div>
