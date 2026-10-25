@@ -281,7 +281,7 @@
       <div class="row g-4 mt-2">
         @forelse($products as $i => $product)
           @php
-            $delay     = ($i % 3) * 80;
+            $delay     = ($i % 4) * 80;
             $images    = $product->image ?? [];
             $imgUrl    = count($images)
                 ? \Illuminate\Support\Facades\Storage::disk('public')->url($images[0])
@@ -300,7 +300,7 @@
             $stockPct = $product->stock > 0 ? min(100, round(($product->stock / 200) * 100)) : 0;
           @endphp
 
-          <div class="col-sm-6 col-lg-4" data-aos="fade-up" {{ $delay ? 'data-aos-delay="'.$delay.'"' : '' }}>
+          <div class="col-sm-6 col-lg-3" data-aos="fade-up" {{ $delay ? 'data-aos-delay="'.$delay.'"' : '' }}>
             <div class="product-card" id="product-{{ $product->id }}" data-testid="product-card-{{ $product->id }}">
 
               {{-- Badge --}}
