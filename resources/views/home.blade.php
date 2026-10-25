@@ -583,7 +583,7 @@
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-6" data-aos="fade-right">
-          <img src="{{ asset('asset/DSC09011.png') }}" alt="engix CARE products" class="why-image" />
+          <img src="{{ asset('asset/engix-wellness-in-motion.png') }}" alt="Engix Care Wellness in Motion collection" class="why-image" />
         </div>
         <div class="col-lg-6" data-aos="fade-left">
           <span class="eyebrow">Why Choose Us</span>
