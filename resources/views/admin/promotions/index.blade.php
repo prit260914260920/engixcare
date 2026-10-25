@@ -158,7 +158,20 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
                 <div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/10 space-y-sm">
-                    <h3 class="font-headline-sm text-headline-sm text-on-surface">Welcome Modal</h3>
+                    <div class="flex items-center justify-between gap-md">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface">Welcome Modal</h3>
+                        <label class="flex items-center gap-xs cursor-pointer select-none flex-shrink-0" for="toggle_welcome_modal">
+                            <span class="text-sm font-medium text-on-surface-variant">Enable</span>
+                            <div class="relative">
+                                <input type="checkbox" name="welcome_modal_enabled" value="1"
+                                       {{ old('welcome_modal_enabled', $settings->welcome_modal_enabled) ? 'checked' : '' }}
+                                       class="sr-only peer" id="toggle_welcome_modal" />
+                                <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:bg-primary transition-colors duration-200"></div>
+                                <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform duration-200"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <p class="text-sm text-on-surface-variant">Show or hide the welcome offer popup on the homepage.</p>
                     <label class="block text-sm font-medium">Title</label>
                     <input type="text" name="welcome_modal_title" value="{{ old('welcome_modal_title', $settings->welcome_modal_title) }}" class="w-full rounded-lg border border-outline-variant/40 px-sm py-xs" />
 

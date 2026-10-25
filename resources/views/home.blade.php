@@ -1303,6 +1303,7 @@
   {{-- Live Purchase Notification (hidden) --}}
 
   <!-- Welcome Offer Modal -->
+  @if($promotionSettings->welcome_modal_enabled)
   <div id="welcomeModal" class="welcome-modal" data-testid="welcome-modal">
     <div class="wm-overlay" id="wmOverlay"></div>
     <div class="wm-card">
@@ -1327,6 +1328,7 @@
       <button class="wm-nope" id="wmNope" data-testid="wm-nope">No thanks, I'll pay full price</button>
     </div>
   </div>
+  @endif
 
   <!-- Sticky Mobile Buy Bar -->
   @php

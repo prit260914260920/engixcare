@@ -13,11 +13,14 @@ class PromotionSettingsTest extends TestCase
     use RefreshDatabase;
     public function test_admin_promotions_page_renders(): void
     {
-        $response = $this->get('/admin/promotions');
+        $admin = User::factory()->create(['is_admin' => true]);
+        $response = $this->actingAs($admin)->get('/admin/promotions');
 
         $response->assertStatus(200);
         $response->assertSee('Promotion Settings');
         $response->assertSee('Special Offer');
+        $response->assertSee('Welcome Modal');
+        $response->assertSee('welcome_modal_enabled');
     }
 
     public function test_home_page_uses_dynamic_promotion_settings(): void
@@ -60,6 +63,44 @@ class PromotionSettingsTest extends TestCase
         $response->assertSee('FLASH30');
         $response->assertSee('First Order Offer');
         $response->assertSee('FIRST10');
+    }
+
+    public function test_admin_can_disable_and_enable_the_welcome_offer_modal(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true]);
+        $settings = PromotionSetting::current();
+        $promotionFields = [
+            'special_offer_heading' => 'Special Offer',
+            'special_offer_discount' => '25% OFF',
+            'special_offer_coupon_code' => 'ENGIX25',
+            'floating_coupon_title' => '25% OFF your first order',
+            'floating_coupon_code' => 'ENGIX25',
+            'welcome_modal_title' => 'Welcome Offer',
+            'welcome_modal_description' => 'A welcome discount.',
+            'welcome_modal_code' => 'WELCOME15',
+            'scroll_offer_title' => 'Flash Sale',
+            'scroll_offer_code' => 'FLASH40',
+        ];
+
+        $this->actingAs($admin)
+            ->put(route('admin.promotions.update'), $promotionFields)
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('promotion_settings', [
+            'id' => $settings->id,
+            'welcome_modal_enabled' => false,
+        ]);
+        $this->get('/')->assertDontSee('id="welcomeModal"');
+
+        $this->actingAs($admin)
+            ->put(route('admin.promotions.update'), $promotionFields + ['welcome_modal_enabled' => '1'])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('promotion_settings', [
+            'id' => $settings->id,
+            'welcome_modal_enabled' => true,
+        ]);
+        $this->get('/')->assertSee('id="welcomeModal"');
     }
 
     public function test_checkout_applies_percentage_coupon_discount(): void

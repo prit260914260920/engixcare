@@ -42,6 +42,7 @@ class PromotionController extends Controller
             'welcome_modal_description'  => 'nullable|string',
             'welcome_modal_code'         => 'required|string|max:100',
             'welcome_modal_percentage'   => 'nullable|integer|min:0|max:100',
+            'welcome_modal_enabled'      => 'boolean',
             'scroll_offer_title'         => 'required|string|max:255',
             'scroll_offer_description'   => 'nullable|string',
             'scroll_offer_code'          => 'required|string|max:100',
@@ -78,6 +79,7 @@ class PromotionController extends Controller
                 'welcome_modal_description',
                 'welcome_modal_code',
                 'welcome_modal_percentage',
+                'welcome_modal_enabled',
                 'scroll_offer_title',
                 'scroll_offer_description',
                 'scroll_offer_code',
@@ -91,6 +93,7 @@ class PromotionController extends Controller
                 // checkboxes are absent from the request when unchecked
                 'show_engix_club'              => $request->boolean('show_engix_club'),
                 'show_offer_cards'             => $request->boolean('show_offer_cards'),
+                'welcome_modal_enabled'        => $request->boolean('welcome_modal_enabled'),
                 'announcement_bar_enabled'     => $request->boolean('announcement_bar_enabled'),
                 'announcement_bar_text'        => $request->input('announcement_bar_text'),
                 'announcement_bar_bg_color'    => $request->input('announcement_bar_bg_color', '#1a1a1a'),
