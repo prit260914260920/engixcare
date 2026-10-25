@@ -403,7 +403,7 @@ h1, h2, h3, h4, h5, h6, .brand-text {
 .product-img {
   height: 220px;
   overflow: hidden;
-  background: var(--soft);
+  background: #fff;
   display: flex; align-items: center; justify-content: center;
 }
 .product-img img {
