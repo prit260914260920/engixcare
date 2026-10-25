@@ -1149,7 +1149,8 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   font-family: 'Manrope', sans-serif;
   font-weight: 800; font-size: 1.4rem;
   color: #fff; text-decoration: none;
-  margin-bottom: 18px;
+  width: max-content; max-width: 100%;
+  margin: 0 auto 18px;
 }
 .footer-brand span:not(.brand-icon) { color: #fff; }
 .footer-desc { font-size: 0.92rem; color: #94a3b8; margin-bottom: 22px; line-height: 1.7; }
@@ -4538,6 +4539,7 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   }
 
   .navbar-engix > .container {
+    position: relative;
     flex-wrap: wrap;
     width: 100%;
     max-width: 100%;
@@ -4546,6 +4548,10 @@ h1, h2, h3, h4, h5, h6, .brand-text {
   }
 
   .navbar-engix .navbar-brand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     min-width: 0;
     max-width: calc(100% - 56px);
   }

@@ -20,7 +20,7 @@
   <nav class="navbar navbar-expand-lg fixed-top navbar-engix" id="mainNav" data-testid="main-nav">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="#home" data-testid="brand-logo">
-        <img src="{{ asset('asset/logo.png') }}" alt="engix CARE" class="navbar-logo" />
+        <img src="{{ asset('asset/logo.png') }}" alt="ENGIX CARE" class="navbar-logo" />
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation" data-testid="nav-toggle">
@@ -1056,7 +1056,7 @@
     <div class="container">
       <div class="row g-4">
         <div class="col-lg-4">
-          <a href="#home" class="footer-brand"><img src="{{ asset('asset/logo.png') }}" alt="engix CARE" style="height:40px;width:auto;object-fit:contain;margin-right:10px;" /><span>engix<span class="brand-accent">CARE</span></span></a>
+          <a href="#home" class="footer-brand"><img src="{{ asset('asset/logo.png') }}" alt="ENGIX CARE" style="height:40px;width:auto;object-fit:contain;margin-right:10px;" /><span>ENGIX<span class="brand-accent">CARE</span></span></a>
           <p class="footer-desc">Premium effervescent health supplements crafted for real Indian lifestyles. Doctor formulated, WHO-GMP &amp; HACCP certified manufacturing, FSSAI approved.</p>
           <div class="social">
             <a href="#" aria-label="Facebook" data-testid="social-fb"><i class="fa-brands fa-facebook-f"></i></a>

@@ -6,7 +6,7 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-engix" id="mainNav" data-testid="main-nav">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}" data-testid="brand-logo">
-      <img src="{{ asset('asset/logo.png') }}" alt="engix CARE" class="navbar-logo" />
+      <img src="{{ asset('asset/logo.png') }}" alt="ENGIX CARE" class="navbar-logo" />
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent"
