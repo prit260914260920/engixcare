@@ -219,7 +219,7 @@
             </div>
 
             {{-- ── Visibility Toggles ───────────────────────────────── --}}
-            <div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/10 space-y-sm">
+            <div id="homepage-visibility" class="bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/10 space-y-sm">
                 <h3 class="font-headline-sm text-headline-sm text-on-surface">Visibility Controls</h3>
                 <p class="text-sm text-on-surface-variant">Toggle sections on or off on the public homepage.</p>
 
@@ -249,6 +249,21 @@
                             <input type="checkbox" name="is_spin_to_win_enabled" value="1"
                                    {{ old('is_spin_to_win_enabled', $settings->is_spin_to_win_enabled) ? 'checked' : '' }}
                                    class="sr-only peer" id="toggle_spin_to_win" />
+                            <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:bg-primary transition-colors duration-200"></div>
+                            <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform duration-200"></div>
+                        </div>
+                    </label>
+
+                    {{-- Articles section toggle --}}
+                    <label class="flex items-center justify-between gap-md cursor-pointer select-none rounded-lg border border-outline-variant/30 px-md py-sm hover:bg-surface-container-low/40 transition-colors">
+                        <div>
+                            <span class="font-semibold text-on-surface text-sm">Articles / Blog Section</span>
+                            <p class="text-xs text-on-surface-variant mt-0.5">Show or hide the Latest Articles section on the public homepage.</p>
+                        </div>
+                        <div class="relative flex-shrink-0">
+                            <input type="checkbox" name="show_articles" value="1"
+                                   {{ old('show_articles', $settings->show_articles) ? 'checked' : '' }}
+                                   class="sr-only peer" id="toggle_articles" />
                             <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:bg-primary transition-colors duration-200"></div>
                             <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform duration-200"></div>
                         </div>

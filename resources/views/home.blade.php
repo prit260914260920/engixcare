@@ -783,6 +783,7 @@
   </section>
 
   <!-- ============ LATEST ARTICLES / BLOG ============ -->
+  @if($promotionSettings->show_articles)
   <section class="section blog" data-testid="blog-section">
     <div class="container">
       <div class="section-head text-center" data-aos="fade-up">
@@ -829,6 +830,7 @@
       <div class="text-center mt-4"><a href="#" class="btn btn-outline-engix" data-testid="blog-view-all">View All Articles <i class="fa-solid fa-arrow-right ms-1"></i></a></div>
     </div>
   </section>
+  @endif
 
   <!-- ============ AI RECOMMENDATIONS ============ -->
   {{-- <section class="section ai-recommend" data-testid="ai-recommend-section">

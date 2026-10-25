@@ -53,6 +53,7 @@ class PromotionController extends Controller
             'spin_to_win_percentage'     => 'nullable|integer|min:0|max:100',
             'show_engix_club'              => 'boolean',
             'show_offer_cards'             => 'boolean',
+            'show_articles'                => 'boolean',
             'show_wellness_quiz'           => 'boolean',
             'show_lab_journey'             => 'boolean',
             'show_formulated_by'           => 'boolean',
@@ -96,6 +97,7 @@ class PromotionController extends Controller
                 // checkboxes are absent from the request when unchecked
                 'show_engix_club'              => $request->boolean('show_engix_club'),
                 'show_offer_cards'             => $request->boolean('show_offer_cards'),
+                'show_articles'                => $request->boolean('show_articles'),
                 'show_wellness_quiz'           => $request->boolean('show_wellness_quiz'),
                 'show_lab_journey'             => $request->boolean('show_lab_journey'),
                 'show_formulated_by'           => $request->boolean('show_formulated_by'),

@@ -21,6 +21,7 @@ class PromotionSettingsTest extends TestCase
         $response->assertSee('Special Offer');
         $response->assertSee('Welcome Modal');
         $response->assertSee('welcome_modal_enabled');
+        $response->assertSee('show_articles');
         $response->assertSee('show_wellness_quiz');
         $response->assertSee('show_lab_journey');
         $response->assertSee('show_formulated_by');
@@ -142,6 +143,44 @@ class PromotionSettingsTest extends TestCase
             'show_wellness_quiz' => true,
         ]);
         $this->get('/')->assertSee('data-testid="quiz-section"', false);
+    }
+
+    public function test_admin_can_disable_and_enable_the_articles_section(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true]);
+        $settings = PromotionSetting::current();
+        $promotionFields = [
+            'special_offer_heading' => 'Special Offer',
+            'special_offer_discount' => '25% OFF',
+            'special_offer_coupon_code' => 'ENGIX25',
+            'floating_coupon_title' => '25% OFF your first order',
+            'floating_coupon_code' => 'ENGIX25',
+            'welcome_modal_title' => 'Welcome Offer',
+            'welcome_modal_description' => 'A welcome discount.',
+            'welcome_modal_code' => 'WELCOME15',
+            'scroll_offer_title' => 'Flash Sale',
+            'scroll_offer_code' => 'FLASH40',
+        ];
+
+        $this->actingAs($admin)
+            ->put(route('admin.promotions.update'), $promotionFields)
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('promotion_settings', [
+            'id' => $settings->id,
+            'show_articles' => false,
+        ]);
+        $this->get('/')->assertDontSee('data-testid="blog-section"', false);
+
+        $this->actingAs($admin)
+            ->put(route('admin.promotions.update'), $promotionFields + ['show_articles' => '1'])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('promotion_settings', [
+            'id' => $settings->id,
+            'show_articles' => true,
+        ]);
+        $this->get('/')->assertSee('data-testid="blog-section"', false);
     }
 
     public function test_admin_can_manage_lab_journey_and_formulated_by_visibility_independently(): void

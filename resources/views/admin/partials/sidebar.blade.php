@@ -39,7 +39,7 @@
             <span class="font-label-md text-label-md">Hero Section</span>
         </a>
 
-        <a class="{{ $isActive('admin/articles') ? $navActive : $navInactive }}" href="#">
+        <a class="{{ $isActive('admin/articles') ? $navActive : $navInactive }}" href="{{ route('admin.promotions.index') }}#homepage-visibility">
             <span class="material-symbols-outlined group-hover:text-primary">article</span>
             <span class="font-label-md text-label-md">Articles / Blog</span>
         </a>
