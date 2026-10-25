@@ -273,9 +273,7 @@
   <section class="section products bg-soft" id="products" data-testid="products-section">
     <div class="container">
       <div class="section-head text-center" data-aos="fade-up">
-        <span class="eyebrow">Our Complete Range</span>
-        <h2 class="section-title">Science-Backed. <span class="text-gradient">Results-Proven.</span></h2>
-        <p class="section-sub">Effervescent formulas doctor-formulated for real Indian lifestyles.</p>
+        <span class="eyebrow">Explore Our Products</span>
       </div>
 
       <div class="row g-3 mt-2">
