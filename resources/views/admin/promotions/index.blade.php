@@ -254,6 +254,21 @@
                         </div>
                     </label>
 
+                    {{-- Wellness Quiz toggle --}}
+                    <label class="flex items-center justify-between gap-md cursor-pointer select-none rounded-lg border border-outline-variant/30 px-md py-sm hover:bg-surface-container-low/40 transition-colors">
+                        <div>
+                            <span class="font-semibold text-on-surface text-sm">Wellness Quiz Section</span>
+                            <p class="text-xs text-on-surface-variant mt-0.5">Show or hide the personalised wellness quiz on the homepage.</p>
+                        </div>
+                        <div class="relative flex-shrink-0">
+                            <input type="checkbox" name="show_wellness_quiz" value="1"
+                                   {{ old('show_wellness_quiz', $settings->show_wellness_quiz) ? 'checked' : '' }}
+                                   class="sr-only peer" id="toggle_wellness_quiz" />
+                            <div class="w-11 h-6 bg-outline-variant rounded-full peer peer-checked:bg-primary transition-colors duration-200"></div>
+                            <div class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform duration-200"></div>
+                        </div>
+                    </label>
+
                     {{-- Offer Cards toggle --}}
                     <label class="flex items-center justify-between gap-md cursor-pointer select-none rounded-lg border border-outline-variant/30 px-md py-sm hover:bg-surface-container-low/40 transition-colors">
                         <div>

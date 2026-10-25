@@ -444,6 +444,7 @@
   </section>
 
   <!-- ============ WELLNESS QUIZ ============ -->
+  @if($promotionSettings->show_wellness_quiz)
   <section class="section wellness-quiz" data-testid="quiz-section">
     <div class="container">
       <div class="quiz-wrap" data-aos="zoom-in">
@@ -505,6 +506,7 @@
       </div>
     </div>
   </section>
+  @endif
 
   <!-- ============ FROM LAB TO YOU ============ -->
   <section class="section lab-journey" data-testid="lab-section">

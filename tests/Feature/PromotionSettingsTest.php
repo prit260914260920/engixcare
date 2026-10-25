@@ -21,6 +21,7 @@ class PromotionSettingsTest extends TestCase
         $response->assertSee('Special Offer');
         $response->assertSee('Welcome Modal');
         $response->assertSee('welcome_modal_enabled');
+        $response->assertSee('show_wellness_quiz');
     }
 
     public function test_home_page_uses_dynamic_promotion_settings(): void
@@ -101,6 +102,44 @@ class PromotionSettingsTest extends TestCase
             'welcome_modal_enabled' => true,
         ]);
         $this->get('/')->assertSee('id="welcomeModal"');
+    }
+
+    public function test_admin_can_disable_and_enable_the_wellness_quiz(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true]);
+        $settings = PromotionSetting::current();
+        $promotionFields = [
+            'special_offer_heading' => 'Special Offer',
+            'special_offer_discount' => '25% OFF',
+            'special_offer_coupon_code' => 'ENGIX25',
+            'floating_coupon_title' => '25% OFF your first order',
+            'floating_coupon_code' => 'ENGIX25',
+            'welcome_modal_title' => 'Welcome Offer',
+            'welcome_modal_description' => 'A welcome discount.',
+            'welcome_modal_code' => 'WELCOME15',
+            'scroll_offer_title' => 'Flash Sale',
+            'scroll_offer_code' => 'FLASH40',
+        ];
+
+        $this->actingAs($admin)
+            ->put(route('admin.promotions.update'), $promotionFields)
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('promotion_settings', [
+            'id' => $settings->id,
+            'show_wellness_quiz' => false,
+        ]);
+        $this->get('/')->assertDontSee('data-testid="quiz-section"', false);
+
+        $this->actingAs($admin)
+            ->put(route('admin.promotions.update'), $promotionFields + ['show_wellness_quiz' => '1'])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('promotion_settings', [
+            'id' => $settings->id,
+            'show_wellness_quiz' => true,
+        ]);
+        $this->get('/')->assertSee('data-testid="quiz-section"', false);
     }
 
     public function test_checkout_applies_percentage_coupon_discount(): void
